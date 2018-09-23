@@ -1,0 +1,132 @@
+[[plugins]] repo = 'Valloric/YouCompleteMe'
+merged = 0
+#[[plugins]] repo = "osyo-manga/vim-monster"
+[[plugins]] repo = 't9md/vim-quickhl'
+[[plugins]] repo = 'Shougo/neosnippet.vim'
+[[plugins]] repo = 'Shougo/neosnippet-snippets'
+[[plugins]] repo = 'vim-jp/vital.vim'
+[[plugins]] repo = 'tpope/vim-pathogen'
+[[plugins]] repo = 'tpope/vim-surround'
+# Linter
+#[[plugins]] repo = 'scrooloose/syntastic'
+[[plugins]] repo = 'w0rp/ale'
+# 色んな言語のsyntax
+[[plugins]] repo = 'sheerun/vim-polyglot'
+build = 'sh build'
+# 言語サーバープロトコル
+[[plugins]] repo = 'prabirshrestha/async.vim'
+[[plugins]] repo ='felixfbecker/php-language-server'
+build = 'composer install && composer run-script parse-stubs'
+#[[plugins]] repo = 'autozimu/LanguageClient-neovim'
+#rev = 'next'
+[[plugins]] repo = 'prabirshrestha/vim-lsp'
+# 辞書
+[[plugins]] repo = 'thinca/vim-ref'
+# C++
+#[[plugins]] repo = 'justmao945/vim-clang'
+# Rust
+#[[plugins]] repo = 'rust-lang/rust.vim'
+#[[plugins]] repo = 'racer-rust/vim-racer'
+# Toml
+#[[plugins]] repo = 'cespare/vim-toml'
+#[[plugins]] repo = 'toml-lang/toml'
+# PHP
+#[[plugins]] repo = 'jwalton512/vim-blade'
+#[[plugins]] repo = 'stephpy/vim-php-cs-fixer'
+#[[plugins]] repo = 'violetyk/neocomplete-php.vim'
+#[[plugins]] repo = 'ervandew/supertab'
+#[[plugins]] repo = 'joonty/vdebug'
+#[[plugins]] repo = 'm2mdas/phpcomplete-extended'
+#[[plugins]] repo = 'm2mdas/phpcomplete-extended-laravel'
+# TypeScript
+#[[plugins]] repo = 'jason0x43/vim-js-indent'
+#[[plugins]] repo = 'leafgarland/typescript-vim'
+#[[plugins]] repo = 'clausreinke/typescript-tools.vim'
+# HTML
+#[[plugins]] repo = 'othree/html5.vim'
+[[plugins]] repo = 'mattn/emmet-vim'
+#[[plugins]] repo = 'hail2u/vim-css3-syntax'
+#[[plugins]] repo = 'JulesWang/css.vim'
+#[[plugins]] repo = 'ap/vim-css-color'
+#[[plugins]] repo = 'avelino/vim-bootstrap'
+# JavaScript
+#[[plugins]] repo = 'othree/yajs.vim'
+#[[plugins]] repo = 'pangloss/vim-javascript'
+#[[plugins]] repo = 'billyvg/tigris.nvim'
+# React
+#[[plugins]] repo = 'mxw/vim-jsx'
+#[[plugins]] repo = 'marijnh/tern_for_vim'
+# Vue.js
+#[[plugins]] repo = 'posva/vim-vue'
+# Ruby
+#[[plugins]] repo = 'vim-ruby/vim-ruby'
+#[[plugins]] repo = 'bbatsov/rubocop'
+#[[plugins]] repo = 'tpope/vim-endwise'
+# Python
+#[[plugins]] repo = 'davidhalter/jedi-vim'
+#[[plugins]] repo = 'kevinw/pyflakes-vim'
+#[[plugins]] repo = 'nvie/vim-flake8'
+# Scala
+#[[plugins]] repo = 'derekwyatt/vim-scala'
+# Kotlin
+#[[plugins]] repo = 'udalov/kotlin-vim'
+# Go
+# utf8の文字コードでマルチバイトを使う時上手く動かない
+[[plugins]] repo = 'fatih/vim-go'
+[[plugins]] repo = 'vim-jp/vim-go-extra'
+#[[plugins]] repo = 'golang/lint'
+# Other
+#[[plugins]] repo = 'chr4/nginx.vim'
+# Multi
+#[[plugins]] repo = 'sheerun/vim-polyglot'
+# Utility
+[[plugins]] repo = 'gregsexton/MatchTag'
+[[plugins]] repo = 'luochen1990/rainbow'
+[[plugins]] repo = 'rhysd/vim-clang-format'
+[[plugins]] repo = 'airblade/vim-rooter'
+[[plugins]] repo = 'kshenoy/vim-signature'
+#[[plugins]] repo = 'ctrlpvim/ctrlp.vim'
+#[[plugins]] repo = 'junegunn/fzf.vim'
+[[plugins]] repo = 'Shougo/denite.nvim'
+[[plugins]] repo = 'vim-scripts/MultipleSearch'
+[[plugins]] repo = 'mattn/libcallex-vim'
+[[plugins]] repo = 'wordijp/wincorrecthook-vim'
+[[plugins]] repo = 'yami-beta/vim-responsive-tabline'
+[[plugins]] repo = 'scrooloose/nerdcommenter'
+[[plugins]] repo = 'kana/vim-operator-user'
+[[plugins]] repo = 'haya14busa/vim-operator-flashy'
+[[plugins]] repo = 'vim-scripts/BlockDiff'
+[[plugins]] repo = 'easymotion/vim-easymotion'
+#[[plugins]] repo = 'tomtom/tcomment_vim'
+[[plugins]] repo = 'terryma/vim-smooth-scroll'
+#[[plugins]] repo = 'yuttie/comfortable-motion.vim'
+#[[plugins]] repo = 'koron/minimap-vim'
+#[[plugins]] repo = 'severin-lemaignan/vim-minimap'
+[[plugins]] repo = 'tyru/open-browser.vim'
+[[plugins]] repo = 'kannokanno/previm'
+[[plugins]] repo = 'thinca/vim-quickrun'
+[[plugins]] repo = 'thinca/vim-visualstar'
+[[plugins]] repo = 'junegunn/vim-easy-align'
+[[plugins]] repo = 'godlygeek/tabular'
+[[plugins]] repo = 'plasticboy/vim-markdown'
+#[[plugins]] repo = 'gabrielelana/vim-markdown'
+#[[plugins]] repo = 'tpope/vim-markdown'
+[[plugins]] repo = 'deris/vim-shot-f'
+[[plugins]] repo = 'rhysd/clever-f.vim'
+[[plugins]] repo = 'mattn/emmet-vim'
+[[plugins]] repo = 'Shougo/vimfiler.vim'
+[[plugins]] repo = 'Shougo/unite.vim'
+[[plugins]] repo = 'Shougo/unite-outline'
+[[plugins]] repo = 'dan-t/rusty-tags'
+[[plugins]] repo = 'majutsushi/tagbar'
+#[[plugins]] repo = 'szw/vim-tags'
+#[[plugins]] repo = 'soramugi/auto-ctags.vim'
+[[plugins]] repo = 'jlanzarotta/bufexplorer'
+[[plugins]] repo = 'thinca/vim-poslist'
+[[plugins]] repo = 'Shougo/vimproc'
+build = 'make'
+# VimScript
+[[plugins]] repo = 'mopp/layoutplugin.vim'
+# Game
+#[[plugins]] repo = 'mmisono/snake.vim'
+#[[plugins]] repo = 'osyo-manga/vim-sound'

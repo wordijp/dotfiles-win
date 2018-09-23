@@ -1,0 +1,11 @@
+includes:
+	# global require phpstan/phpstan-strict-rules
+	- C:/Users/f/AppData/Roaming/Composer/vendor/phpstan/phpstan-strict-rules/rules.neon
+
+parameters:
+	level: 3
+	bootstrap: %currentWorkingDirectory%/vendor/autoload.php
+	autoload_directories:
+		- %currentWorkingDirectory%/src
+	fileExtensions:
+		- php

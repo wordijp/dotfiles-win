@@ -1,0 +1,104 @@
+[color]
+	ui = auto
+[alias]
+	st = status
+	co = checkout
+	cod = checkout --detach
+	br = branch
+	; PPxで使用
+	; ブランチ一覧を最新更新順で
+	branch-sort-date = !git for-each-ref --sort=-committerdate --format=\"%(refname:short)\" refs/heads/
+	bsd = !git branch-sort-date
+	; 最新ブランチ
+	branch-latest = !git branch-sort-date | head -n 1 | tr -d '\n'
+	bl = !git branch-latest
+	;
+	branch-name = !git branch | grep -E '^\\*' | sed -E 's/^\\* //' | tr -d '\n'
+	bn = !git branch-name
+	title = !git log -1 --pretty=format:\"%s\"
+	revision = "!f() {                                \n\
+		[ -n \"$1\" ] && target=\"$1\" || target=HEAD \n\
+		git rev-parse --short $target | tr -d '\n' ;  \n\
+	}; f"
+	rev = !git revision
+	;
+	tagversion = describe --tags --abbrev=0
+	tagv = !git tagversion
+	;
+	sc = !git stash-commit
+	scl = !git stash-commit --list
+	scla = !git stash-commit --list --all
+	; TODO : -------------------------------------------------------
+	multi-cherry-pick = "!f() { \
+	}; f"
+	cp = !git cherry-pick
+	mcp = !git multi-cherry-pick
+	; git show-branchから---より後ろだけを表示
+	; NOTE : 空行(/^$/)はヒットしない(/^-/,/^$/で---以降を表示)
+    show-branch-body = "!f() {                                   \n\
+      git show-branch $1 | gawk '/^-/,/^$/ {print}' | tail -n +2 \n\
+    }; f"
+	; 分岐点のコミットハッシュを取得
+    divide-base = "!f() {                                                 \n\
+      git show-branch-body $1 |                                           \n\
+		gawk -F'[' 'match($1, /*/) && match($1, /[^ *]/) {print; exit}' | \n\
+		sed -E 's/^[^[]+\\[([^]]+)\\].+$/\\1/' |                          \n\
+        tr -d '\n'                                                        \n\
+	}; f"
+	; HEADから分岐点まで rebase -i
+	rebase-i-divide-base = !git rebase -i $(git divide-base)
+	ridb = !git rebase-i-divide-base
+	; HEADから指定数分 rebase -i
+	rebase-i-head = "!f() {          \n\
+		[ -n \"$1\" ] && n=$1 || n=2 \n\
+		git rebase -i HEAD~$n        \n\
+	}; f"
+	rih = !git rebase-i-head
+	;wip = "!f() { git add .; git commit -m \"wip\"; }; f"
+	;;;
+	log-stat = log --stat --decorate=short --pretty=format:\"%C(yellow)%h %C(green)%cr %C(magenta)[%cn]%C(red)%d %C(reset)%s %C(cyan)%b\"
+	ls = !git log-stat
+	log-merges = log --merges --pretty=format:\"%C(yellow)%h %C(green)%ci %C(magenta)[%cn]%C(red)%d %C(reset)%s %C(cyan)%b\"
+	lm = !git log-merges
+	log-branch = log --stat --decorate=short --pretty=format:\"%d\"
+	lb = !git log-branch
+	; GitExtensionsで良い
+	log-graph= log --graph --date=short --decorate=short --pretty=format:\"%C(yellow)%h %C(green)%cd %C(magenta)[%cn]%C(red)%d %C(reset)%s\"
+	lg = !git log-graph
+	;log-graph-all = !git log-graph --all
+	;lga = !git log-graph-all
+	;
+	unmerged = !git --no-pager diff --name-only --diff-filter=U
+	; マージ済みブランチを削除
+	delete-merged-branches = !git branch --merged | grep -v -E '^\\*|develop|master' | xargs git branch -d
+	delmgbr = !git delete-merged-branches
+	; 指定時間以内のcommitを取得
+	hour = "!f() {                                                                                                 \n\
+		[ -n \"$1\" ] && since=\"$1\" || since=8                                                                   \n\
+		echo \"since $since hour ago\"                                                                             \n\
+		git log --oneline --since=$since' hour ago' --pretty=format:\"%C(yellow)%h %C(magenta)[%cn] %C(reset)%s\"; \n\
+	}; f "
+	h = !git hour
+	today = !git hour 12
+	;
+[diff]
+	guitool = winmerge
+	tool = winmerge
+[difftool "winmerge"]
+	path = E:/tool/favorite/WinMerge/WinMergeU.exe
+	cmd = \"E:/tool/favorite/WinMerge/WinMergeU.exe\" -e -x -ub -wl -dl \"Base\" -fr -dr \"Mine\" \"$LOCAL\" \"$REMOTE\"
+[merge]
+	guitool = winmerge
+	tool = winmerge
+[mergetool "winmerge"]
+	path = E:/tool/favorite/WinMerge/WinMergeU.exe
+	cmd = \"E:/tool/favorite/WinMerge/WinMergeU.exe\" -e -x -ub -wl -dl \"Other\" -fm -dm \"Merge\" -wr -dr \"Mine\" \"$LOCAL\" \"$BASE\" \"$REMOTE\" -o \"$MERGED\"
+[core]
+	editor = \"E:/tool/Developer/GitExtensions/GitExtensions.exe\" fileeditor
+	autocrlf = false
+	excludesfile = ~/.gitignore
+	quotepath = false
+[credential]
+	;helper = !\"E:/tool/Developer/GitExtensions/GitCredentialWinStore/git-credential-winstore.exe\"
+[user]
+	name = wordi
