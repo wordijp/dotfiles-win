@@ -112,21 +112,6 @@ vmap <Leader>/  <Plug>NERDCommenterToggle
 nmap <Leader>/  <Plug>NERDCommenterTogglej
 " }}}
 
-
-"-----------
-" Golang {{{
-" 保存時に自動整形
-let g:go_fmt_autosave = 1
-let g:go_fmt_command = "gofmt"
-" }}}
-
-"---------
-" Rust {{{
-" 保存時に自動整形
-let g:rustfmt_autosave = 0
-let g:rustfmt_command = 'rustfmt'
-" }}}
-
 "-------------
 " VimFiler {{{
 let g:vimfiler_as_default_explorer = 1
@@ -414,6 +399,7 @@ nmap <Space>j <Plug>(quickhl-cword-toggle)
 " コード整形 
 " {{{
 autocmd FileType * noremap <Space><Tab> :call <SID>format()<CR>
+autocmd FileType javascript.jsx noremap <Space><Tab> :call BlaceRemoveIndent()<CR> :call <SID>format()<CR>
 function! s:format()
   let view = winsaveview()
   normal ggVG=
@@ -426,7 +412,15 @@ function! s:format()
     echo '末尾の空白を削除'
   endtry
 endfunction
-" }}}
+
+function! BlaceRemoveIndent()
+  try
+    " NOTE : mxw/vim-jsxで、)インデントを上手く動作させる応急処置
+    "        (インデントを空にしとかないと上手く動かない)
+    :%:s/\s\+)/)/g
+  catch
+  endtry
+endfunction
 
 nnoremap :trim :call Trim()
 command! -bar Trim call Trim()
@@ -444,17 +438,9 @@ function! Trim()
     echo '末尾の空白を削除'
   endtry
 endfunction
+" }}}
 
-autocmd FileType javascript.jsx noremap <Space><Tab> :call BlaceRemoveIndent()<CR> :call <SID>format()<CR>
 autocmd FileType markdown noremap <Space><Tab> "\<Tab>"
-function! BlaceRemoveIndent()
-  try
-    " NOTE : mxw/vim-jsxで、)インデントを上手く動作させる応急処置
-    "        (インデントを空にしとかないと上手く動かない)
-    :%:s/\s\+)/)/g
-  catch
-  endtry
-endfunction
 
 " ------------
 " filetype {{{
@@ -872,6 +858,20 @@ endfunction
 " -----------------------------------------------
 " 各言語の開発設定
 
+"-----------
+" Golang {{{
+" 保存時に自動整形
+let g:go_fmt_autosave = 1
+let g:go_fmt_command = "gofmt"
+" }}}
+
+"---------
+" Rust {{{
+" 保存時に自動整形
+let g:rustfmt_autosave = 0
+let g:rustfmt_command = 'rustfmt'
+" }}}
+
 " ----------
 " Python {{{
 " jedi-vim(Python用プラグイン)の設定
@@ -983,7 +983,6 @@ let g:user_emmet_mode='n'    "only enable normal mode functions.
 " vim-css-color
 let g:cssColorVimDoNotMessMyUpdatetime = 1
 " }}}
-
 " --------------
 " JavaScript {{{
 " JsDocを折り畳む
