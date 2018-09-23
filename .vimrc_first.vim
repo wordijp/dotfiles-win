@@ -168,6 +168,8 @@ let g:ale_linters = {
 " global config files
 let g:ale_php_phpstan_configuration = $HOME . '\.phpstan\phpstan.neon'
 let g:ale_typescript_tslint_config_path = $HOME . '\tslint.json'
+" 無くても動く
+"let g:ale_javascript_eslint_options = '--config '.$HOME.'\.eslintrc.yml'
 let g:ale_python_pylint_options = '--rcfile '.$HOME.'\.pylintrc'
 
 let g:ale_python_auto_pipenv = 0
