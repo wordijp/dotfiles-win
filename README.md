@@ -6,3 +6,12 @@ Windows dotfiles.
 ```
 > run_mklink.bat
 ```
+
+## Install mycommands
+
+```
+> cd mycommands
+> make
+```
+
+のあと、mycommandsにパスを通す
