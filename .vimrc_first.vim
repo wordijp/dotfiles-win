@@ -366,9 +366,9 @@ call denite#custom#source('grep', 'matchers', ['matcher_fuzzy'])
 
 " denite/insert モードの時に移動できるようにする
 call denite#custom#map('insert', "<C-j>" , '<denite:move_to_next_line>')
-"call denite#custom#map('insert', "<down>", '<denite:move_to_next_line>')
+call denite#custom#map('insert', "<down>", '<denite:move_to_next_line>')
 call denite#custom#map('insert', "<C-k>" , '<denite:move_to_previous_line>')
-"call denite#custom#map('insert', "<up>"  , '<denite:move_to_previous_line>')
+call denite#custom#map('insert', "<up>"  , '<denite:move_to_previous_line>')
 " prompt
 call denite#custom#option('_', 'prompt', '>')
 "    }}}
@@ -443,6 +443,8 @@ endfunction
 " }}}
 
 autocmd FileType markdown noremap <Space><Tab> "\<Tab>"
+" HTML内の/開始パスも開けるように
+autocmd FileType html setlocal includeexpr=substitute(v:fname,'^\\/','','') | setlocal path+=;/
 
 " ------------
 " filetype {{{
