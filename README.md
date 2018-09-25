@@ -1,17 +1,16 @@
 # dotfiles-win
 Windows dotfiles.
 
-## Initialize
+## Installation
 
 ```
-> run_mklink.bat
+> make install
 ```
 
-## Install mycommands
+## Requirement
 
-```
-> cd mycommands
-> make
-```
+下記ツールを利用しています
 
-のあと、mycommandsにパスを通す
+- [wordijp/mycommands(GitHub)](https://github.com/wordijp/mycommands)
+- [Make for Windows](http://gnuwin32.sourceforge.net/packages/make.htm)
+

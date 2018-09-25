@@ -1,3 +1,5 @@
+[include]
+	path = ~/.gitconfig.local
 [color]
 	ui = auto
 [alias]
@@ -100,5 +102,3 @@
 	quotepath = false
 [credential]
 	;helper = !\"E:/tool/Developer/GitExtensions/GitCredentialWinStore/git-credential-winstore.exe\"
-[user]
-	name = wordi
