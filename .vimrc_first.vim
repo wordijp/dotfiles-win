@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 23-Sep-2018.
+" Last Change: 26-Sep-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -297,7 +297,7 @@ nnoremap <silent> ;p :<C-u>Denite -buffer-name=search -resume -immediately -sele
 " QuickFix {{{
 " Enterでジャンプ
 autocmd FileType * noremap <Enter> <Enter>
-autocmd FileType qf noremap <Enter> :.cc<CR>
+autocmd FileType qf noremap <Enter> :.ll<CR>
 " }}}
 
 " ---------------------------------------
@@ -667,7 +667,6 @@ autocmd FileType javascript,javascript.jsx,typescript nnoremap <F2> :YcmComplete
 " ------------
 " QuickRun {{{
 " ビルド設定
-" outputter や runner はお好みで
 let g:loaded_quicklaunch = 1
 let g:quickrun_config = {
 \  "_": {
@@ -675,7 +674,7 @@ let g:quickrun_config = {
 \      "outputter/buffer/split" : ":botright 10sp",
 \      "outputter/error/split" : ":botright 10sp",
 \      "runner" : "vimproc",
-\      "outputter": "quickfix",
+\      "outputter": "loclist",
 \  },
 \  "make" : {
 \      "command"   : "make",
@@ -744,23 +743,19 @@ let g:quickrun_config = {
 \  "php-linter": {
 \      "command": "php-linter-run",
 \      "exec": "%c",
-\      "outputter": "quickfix",
 \  },
 \  "php-linter-phpmd": {
 \      "command": "phpmd-run",
 \      "args": "text codesize,design,unusedcode",
 \      "exec": "%c %a",
-\      "outputter": "quickfix",
 \  },
 \  "php-linter-phan": {
 \      "command": "phan-run",
 \      "exec": "%c",
-\      "outputter": "quickfix",
 \  },
 \  "php-linter-multi": {
 \      "command": "php-linter-multi-run",
 \      "exec": "%c",
-\      "outputter": "quickfix",
 \  },
 \}
 
@@ -811,45 +806,45 @@ autocmd FileType javascript nmap <F7> :QuickRun eslint-all<CR>
 " ----------------
 " QuickFix移動 {{{
 " 次へ
-nnoremap <F4> :call <SID>cNext()<CR>
-nnoremap ]q :call <SID>cNext()<CR>
-function s:cNext()
+nnoremap <F4> :call <SID>lNext()<CR>
+nnoremap ]q :call <SID>lNext()<CR>
+function s:lNext()
   try
-    :cc
-    :cn
+    :ll
+    :lne
   catch
   endtry
 endfunction
 " 前へ
-nnoremap <S-F4> :call <SID>cPrev()<CR>
-nnoremap [q :call <SID>cPrev()<CR>
-function s:cPrev()
+nnoremap <S-F4> :call <SID>lPrev()<CR>
+nnoremap [q :call <SID>lPrev()<CR>
+function s:lPrev()
   try
-    :cc
-    :cp
+    :ll
+    :lp
   catch
   endtry
 endfunction
 
 " 最初へ
-nnoremap [Q :call <SID>cFirst()<CR>
-function s:cFirst()
+nnoremap [Q :call <SID>lFirst()<CR>
+function s:lFirst()
   :cc
   while 1
     try
-      :cp 999
+      :lp 999
     catch
       break
     endtry
   endwhile
 endfunction
 " 最後へ
-nnoremap ]Q :call <SID>cLast()<CR>
-function s:cLast()
+nnoremap ]Q :call <SID>lLast()<CR>
+function s:lLast()
   :cc
   while 1
     try
-      :cn 999
+      :lne 999
     catch
       break
     endtry
