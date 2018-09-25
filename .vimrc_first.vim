@@ -741,21 +741,25 @@ let g:quickrun_config = {
 \  },
 \
 \  "php-linter": {
-\      "command": "php-linter-run",
-\      "exec": "%c",
+\      "command": "php-linter",
+\      "cmdopt": "php-l",
+\      "exec": "%c %o",
 \  },
 \  "php-linter-phpmd": {
-\      "command": "phpmd-run",
+\      "command": "php-linter",
+\      "cmdopt": "phpmd",
 \      "args": "text codesize,design,unusedcode",
-\      "exec": "%c %a",
+\      "exec": "%c %o %a",
 \  },
 \  "php-linter-phan": {
-\      "command": "phan-run",
-\      "exec": "%c",
+\      "command": "php-linter",
+\      "cmdopt": "phan",
+\      "exec": "%c %o",
 \  },
 \  "php-linter-multi": {
-\      "command": "php-linter-multi-run",
-\      "exec": "%c",
+\      "command": "php-linter",
+\      "cmdopt": "multi",
+\      "exec": "%c %o",
 \  },
 \}
 
