@@ -10,7 +10,8 @@ set guioptions-=e
 " docstring(上部の窓)は表示しない
 set completeopt-=preview
 
-set foldmethod=indent
+au FileType * set foldmethod=indent
+au FileType vim set foldmethod=marker
 set foldlevel=100 "Don't autofold anything
 " 新しいウインドウを下に表示する(コード補完時の関数定義が上に出ると邪魔な為)
 set splitbelow

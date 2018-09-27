@@ -38,6 +38,3 @@ ${USERPROFILE}\\%: ${CUR_DIR}\\%
 	else                          \
 		cmd /c "mklink $@ $<";    \
 	fi
-# -----------------------------------------------
-
-.PHONY: clean
