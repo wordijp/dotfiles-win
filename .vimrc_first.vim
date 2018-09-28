@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 27-Sep-2018.
+" Last Change: 29-Sep-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -30,7 +30,7 @@ scriptencoding utf-8
 "   :echo $HOME
 "   :echo $VIM
 "   :version
-
+set encoding=utf-8
 " このvimrcだけ使用する
 let g:vimrc_first_finish = 1
 
@@ -43,43 +43,161 @@ endif
 " helper
 let s:HOME = substitute($HOME, '\\', '/', 'g')
 
-"-------------
-" dein.vim {{{
-let s:dein_dir = expand('~/.vim/dein')
-let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+"---------
+" Plug {{{
+let s:plug_dir = expand('~/.vim/plugged')
+let s:plug_repo_dir = s:plug_dir . '/vim-plug'
 
-" dein.vimがなければgit clone
-if &runtimepath !~# '/dein.vim'
-  if !isdirectory(s:dein_repo_dir)
-    echo "install dein..."
-    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
-  endif
+" plug.vimがなければclone
+if !isdirectory(s:plug_repo_dir)
+  echo 'install vim-plug...'
+  call system('mkdir -p '.s:plug_repo_dir)
+  call system('git clone https://github.com/junegunn/vim-plug.git '.s:plug_repo_dir.'/autoload')
+end
+if &rtp !~# 'vim-plug'
   set nocompatible
-  execute 'set runtimepath+='.fnamemodify(s:dein_repo_dir, ':p')
+  execute 'set rtp+='.fnamemodify(s:plug_repo_dir, ':p')
 endif
 
-if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir)
+call plug#begin(s:plug_dir)
+Plug 'junegunn/vim-plug', {'dir': expand('~/.vim/plugged/vim-plug/autoload')}
 
-  " プラグインリストを収めた TOML ファイル
-  " 予め TOML ファイル(後述)を用意しておく
-  let g:rc_dir = s:dein_dir . '/rc'
-  let s:toml = g:rc_dir . '/dein.toml'
-  let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
-
-  " TOML を読み込み、キャッシュしておく
-  call dein#load_toml(s:toml, {'lazy': 0})
-  call dein#load_toml(s:lazy_toml, {'lazy': 1})
-
-  " 設定終了
-  call dein#end()
-  call dein#save_state()
-endif
-
-" 未インストールをインストール
-if dein#check_install()
-  call dein#install()
-endif
+Plug 'Valloric/YouCompleteMe'
+"Plug "osyo-manga/vim-monster"
+Plug 't9md/vim-quickhl'
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'vim-jp/vital.vim'
+Plug 'tpope/vim-pathogen'
+Plug 'tpope/vim-surround'
+" Linter
+"Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
+" 色んな言語のsyntax
+Plug 'sheerun/vim-polyglot', {'do': 'sh build'}
+" 言語サーバープロトコル
+Plug 'prabirshrestha/async.vim'
+Plug 'felixfbecker/php-language-server', {
+  \ 'do': 'composer install && composer run-script parse-stubs',
+  \ }
+Plug 'autozimu/LanguageClient-neovim', {
+  \ 'branch': 'next',
+  \ 'do': 'bash install.sh',
+  \ }
+Plug 'wordijp/LanguageServer-php-tcp-neovim', {
+  \ 'do': 'bash ./install.sh && composer install && composer run-script parse-stubs'
+  \ }
+"Plug 'prabirshrestha/vim-lsp'
+" 辞書
+Plug 'thinca/vim-ref'
+" C++
+"Plug 'justmao945/vim-clang'
+" Rust
+"Plug 'rust-lang/rust.vim'
+"Plug 'racer-rust/vim-racer'
+" Toml
+"Plug 'cespare/vim-toml'
+"Plug 'toml-lang/toml'
+" PHP
+"Plug 'jwalton512/vim-blade'
+"Plug 'stephpy/vim-php-cs-fixer'
+"Plug 'violetyk/neocomplete-php.vim'
+"Plug 'ervandew/supertab'
+"Plug 'joonty/vdebug'
+"Plug 'm2mdas/phpcomplete-extended'
+"Plug 'm2mdas/phpcomplete-extended-laravel'
+" TypeScript
+"Plug 'jason0x43/vim-js-indent'
+"Plug 'leafgarland/typescript-vim'
+"Plug 'clausreinke/typescript-tools.vim'
+" HTML
+"Plug 'othree/html5.vim'
+Plug 'mattn/emmet-vim'
+"Plug 'hail2u/vim-css3-syntax'
+"Plug 'JulesWang/css.vim'
+"Plug 'ap/vim-css-color'
+"Plug 'avelino/vim-bootstrap'
+" JavaScript
+"Plug 'othree/yajs.vim'
+"Plug 'pangloss/vim-javascript'
+"Plug 'billyvg/tigris.nvim'
+" React
+"Plug 'mxw/vim-jsx'
+"Plug 'marijnh/tern_for_vim'
+" Vue.js
+"Plug 'posva/vim-vue'
+" Ruby
+"Plug 'vim-ruby/vim-ruby'
+"Plug 'bbatsov/rubocop'
+"Plug 'tpope/vim-endwise'
+" Python
+"Plug 'davidhalter/jedi-vim'
+"Plug 'kevinw/pyflakes-vim'
+"Plug 'nvie/vim-flake8'
+" Scala
+"Plug 'derekwyatt/vim-scala'
+" Kotlin
+"Plug 'udalov/kotlin-vim'
+" Go
+" utf8の文字コードでマルチバイトを使う時上手く動かない
+Plug 'fatih/vim-go'
+Plug 'vim-jp/vim-go-extra'
+"Plug 'golang/lint'
+" Other
+"Plug 'chr4/nginx.vim'
+" Multi
+"Plug 'sheerun/vim-polyglot'
+" Utility
+Plug 'gregsexton/MatchTag'
+Plug 'luochen1990/rainbow'
+Plug 'rhysd/vim-clang-format'
+Plug 'airblade/vim-rooter'
+Plug 'kshenoy/vim-signature'
+"Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'junegunn/fzf.vim'
+Plug 'Shougo/denite.nvim'
+Plug 'vim-scripts/MultipleSearch'
+Plug 'mattn/libcallex-vim'
+Plug 'wordijp/wincorrecthook-vim'
+Plug 'yami-beta/vim-responsive-tabline'
+Plug 'scrooloose/nerdcommenter'
+Plug 'kana/vim-operator-user'
+Plug 'haya14busa/vim-operator-flashy'
+Plug 'vim-scripts/BlockDiff'
+Plug 'easymotion/vim-easymotion'
+"Plug 'tomtom/tcomment_vim'
+Plug 'terryma/vim-smooth-scroll'
+"Plug 'yuttie/comfortable-motion.vim'
+"Plug 'koron/minimap-vim'
+"Plug 'severin-lemaignan/vim-minimap'
+Plug 'tyru/open-browser.vim'
+Plug 'kannokanno/previm'
+Plug 'thinca/vim-quickrun'
+Plug 'thinca/vim-visualstar'
+Plug 'junegunn/vim-easy-align'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+"Plug 'gabrielelana/vim-markdown'
+"Plug 'tpope/vim-markdown'
+Plug 'deris/vim-shot-f'
+Plug 'rhysd/clever-f.vim'
+Plug 'mattn/emmet-vim'
+Plug 'Shougo/vimfiler.vim'
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/unite-outline'
+Plug 'dan-t/rusty-tags'
+Plug 'majutsushi/tagbar'
+"Plug 'szw/vim-tags'
+"Plug 'soramugi/auto-ctags.vim'
+Plug 'jlanzarotta/bufexplorer'
+Plug 'thinca/vim-poslist'
+Plug 'Shougo/vimproc', {'do': 'make'}
+" VimScript
+Plug 'mopp/layoutplugin.vim'
+" Game
+"Plug 'mmisono/snake.vim'
+"Plug 'osyo-manga/vim-sound'
+call plug#end()
 " }}}
 
 "--------------
@@ -934,6 +1052,7 @@ endfunction
 
 " ---------------------------------------------
 " vim-lsp(コード補完・構文解析ジャンプなど) {{{
+" こっちはtcp通信が未対応
 " ログ出力
 "let g:lsp_log_verbose = 1
 "let g:lsp_log_file = expand($HOME.'/.vim/tmp/vim-lsp.log')
@@ -959,19 +1078,21 @@ au User lsp_setup call lsp#register_server({
   \ 'whitelist': ['python'],
   \ })
 " 動かない
-" PHP(test)
+" PHP
+" FIXME: Windowsではstdin経由では動かない、だがvim-lspはtcp経由が未対応
 "au User lsp_setup call lsp#register_server({
-"    \ 'name': 'pls',
-"    \ 'cmd': {server_info->['php', expand('~/.vim/dein/repos/github.com/felixfbecker/php-language-server/bin/php-language-server.php')]},
-"    \ 'whitelist': ['php'],
-"    \ })
-"" Vue(test)
+"  \ 'name': 'pls',
+"  \ 'cmd': {server_info->['php', expand('~/.vim/dein/repos/github.com/felixfbecker/php-language-server/bin/php-language-server.php')]},
+"  \ 'whitelist': ['php'],
+"  \ })
+" Vue
+" FIXME: VS Code用の'vetur' not foundとなる
 "au User lsp_setup call lsp#register_server({
-"    \ 'name': 'vls',
-"    \ 'cmd': {server_info->['vls.cmd']}, " VS Code用の'vetur' not foundとなる
-"    \ 'whitelist': ['vue'],
-"    \ })
-"    }}}
+"  \ 'name': 'vls',
+"  \ 'cmd': {server_info->['vls.cmd']},
+"  \ 'whitelist': ['vue'],
+"  \ })
+"  }}}
 
 let g:lsp_auto_enable = 1
 "let g:lsp_signs_enabled = 1         " enable signs
