@@ -757,10 +757,10 @@ nnoremap <C-k> :split<CR>:call <SID>defJump()<CR>
 function s:defJump()
   if &ft == 'go'
     :GoDef
-  elseif &ft ==# 'cpp' || &ft ==# 'python'
+  elseif &ft ==# 'cpp' || &ft ==# 'php'
     " 実装へジャンプ
-    :LspDefinition
-  elseif &ft ==# 'rust' || &ft ==# 'javascript' || &ft ==# 'javascript.jsx' || &ft ==# 'typescript'
+    :call LanguageClient#textDocument_definition()
+  elseif &ft ==# 'rust' || &ft ==# 'javascript' || &ft ==# 'javascript.jsx' || &ft ==# 'typescript' || &ft ==# 'python'
     :YcmCompleter GoToDefinition
   else
     :exe("tjump ".expand('<cword>'))
@@ -1049,57 +1049,13 @@ function! s:keepPosExec(cmd)
 endfunction
 " }}}
 
-
-" ---------------------------------------------
-" vim-lsp(コード補完・構文解析ジャンプなど) {{{
-" こっちはtcp通信が未対応
-" ログ出力
-"let g:lsp_log_verbose = 1
-"let g:lsp_log_file = expand($HOME.'/.vim/tmp/vim-lsp.log')
-" 各Language Server {{{
-" C++
-au User lsp_setup call lsp#register_server({
-  \ 'name': 'cquery',
-  \ 'cmd': {server_info->['cquery']},
-  \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
-  \ 'initialization_options': { 'cacheDirectory': 'C:/Users/f/.cquery/cache' },
-  \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
-  \ })
-" Rust
-au User lsp_setup call lsp#register_server({
-  \ 'name': 'rls',
-  \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
-  \ 'whitelist': ['rust'],
-  \ })
-" Python
-au User lsp_setup call lsp#register_server({
-  \ 'name': 'pyls',
-  \ 'cmd': {server_info->['pyls']},
-  \ 'whitelist': ['python'],
-  \ })
-" 動かない
-" PHP
-" FIXME: Windowsではstdin経由では動かない、だがvim-lspはtcp経由が未対応
-"au User lsp_setup call lsp#register_server({
-"  \ 'name': 'pls',
-"  \ 'cmd': {server_info->['php', expand('~/.vim/dein/repos/github.com/felixfbecker/php-language-server/bin/php-language-server.php')]},
-"  \ 'whitelist': ['php'],
-"  \ })
-" Vue
-" FIXME: VS Code用の'vetur' not foundとなる
-"au User lsp_setup call lsp#register_server({
-"  \ 'name': 'vls',
-"  \ 'cmd': {server_info->['vls.cmd']},
-"  \ 'whitelist': ['vue'],
-"  \ })
-"  }}}
-
-let g:lsp_auto_enable = 1
-"let g:lsp_signs_enabled = 1         " enable signs
-"let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
-
-"let g:asyncomplete_auto_popup = 1
-let g:asyncomplete_completion_delay=10
+" -----------------------------
+" LanguageClient-neovim {{{ ---
+" NOTE: PHPは'wordijp/LanguageServer-php-tcp-neovim'で設定
+let g:LanguageClient_serverCommands = {
+  \ 'cpp': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
+  \ }
+  "\ 'rust': ['rustup', 'run', 'nightly', 'rls'],
 " }}}
 
 " --------
