@@ -62,10 +62,8 @@ endif
 call plug#begin(s:plug_dir)
 Plug 'junegunn/vim-plug', {'dir': expand('~/.vim/plugged/vim-plug/autoload')}
 
+" コード補完
 Plug 'Valloric/YouCompleteMe'
-Plug 'vim-jp/vital.vim'
-Plug 'tpope/vim-surround'
-Plug 't9md/vim-quickhl'
 " Linter
 Plug 'w0rp/ale'
 " 色んな言語のsyntax
@@ -78,6 +76,8 @@ Plug 'autozimu/LanguageClient-neovim', {
 Plug 'wordijp/LanguageServer-php-tcp-neovim', {
   \ 'do': 'bash ./install.sh && composer install && composer run-script parse-stubs'
   \ }
+" ビルド、Linter、etc
+Plug 'thinca/vim-quickrun'
 " 辞書
 Plug 'thinca/vim-ref'
 " HTML
@@ -87,11 +87,14 @@ Plug 'gregsexton/MatchTag'
 Plug 'fatih/vim-go'
 Plug 'vim-jp/vim-go-extra'
 " Utility
-Plug 'luochen1990/rainbow'
 Plug 'airblade/vim-rooter'
+Plug 'luochen1990/rainbow'
 Plug 'kshenoy/vim-signature'
 Plug 'Shougo/denite.nvim'
 Plug 'vim-scripts/MultipleSearch'
+Plug 'vim-jp/vital.vim'
+Plug 'tpope/vim-surround'
+Plug 't9md/vim-quickhl'
 Plug 'yami-beta/vim-responsive-tabline'
 Plug 'scrooloose/nerdcommenter'
 Plug 'kana/vim-operator-user'
@@ -100,7 +103,6 @@ Plug 'haya14busa/vim-operator-flashy'
 Plug 'mah/BlockDiff' " クリップボード対応版
 Plug 'easymotion/vim-easymotion'
 Plug 'terryma/vim-smooth-scroll'
-Plug 'thinca/vim-quickrun'
 Plug 'junegunn/vim-easy-align'
 Plug 'godlygeek/tabular'
 Plug 'rhysd/clever-f.vim'
@@ -222,12 +224,6 @@ augroup rainbow_toggle_on
 augroup END
 " }}}
 
-" ------------
-" MarkDown {{{
-let g:vim_markdown_folding_disabled = 1
-"let g:vim_markdown_override_foldtext = 0
-"}}}
-
 " ----------------------------------
 " MultipleSearch(複数ワード検索) {{{
 " default
@@ -304,9 +300,17 @@ nnoremap <silent> ;n :<C-u>Denite -buffer-name=search -resume -immediately -sele
 nnoremap <silent> ;p :<C-u>Denite -buffer-name=search -resume -immediately -select=-1<CR>
 "    }}}
 
+" IDE風の画面
+nmap <F3> :VimFilerTree<CR> :Tagbar<CR>
+" Tagbar更新
+nmap <F8> :TagbarTogglePause<CR>:TagbarTogglePause<CR>
+
 " poslist {{{
 map <C-o> <Plug>(poslist-prev-line)
 map <C-i> <Plug>(poslist-next-line)
+" これはデフォだが、忘れないように書いておく
+"map <C-o> <Plug>(poslist-prev-buf)
+"map <C-i> <Plug>(poslist-next-buf)
 "    }}}
 " }}}
 
@@ -347,13 +351,6 @@ call denite#custom#var('file_rec', 'command',
   \ '-E', '.*.*',
   \ ])
 call denite#custom#source('file_rec', 'matchers', ['matcher_fuzzy'])
-" customize ignore globs
-"call denite#custom#source('file_rec', 'matchers', ['matcher_fuzzy','matcher_ignore_globs'])
-"call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
-"  \ ['.git\', 'node_modules\', 'vendor\',
-"  \ '*.bak', '*.obj', '*.exe', '*.dll', '*.a', '*.lib',
-"  \ '.gitignore', '.*.*',
-"  \ ])
 
 " grep source
 " NOTE: ptでutf8、sjis両対応
@@ -379,7 +376,6 @@ call denite#custom#var('grep', 'command',
 call denite#custom#var('grep', 'default_opts', [])
 call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#source('grep', 'matchers', ['matcher_fuzzy'])
-"call denite#custom#source('grep', 'matchers', ['matcher_fuzzy','matcher_ignore_globs'])
 
 " denite/insert モードの時に移動できるようにする
 call denite#custom#map('insert', "<C-j>" , '<denite:move_to_next_line>')
@@ -501,26 +497,11 @@ autocmd FileType sh setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandta
 
 " ------------
 " 短縮入力 {{{
-" Previm
-let g:previm_open_cmd = ''
-nnoremap [previm] <Nop>
-nmap <Space>p [previm]
-nnoremap <silent> [previm]o :<C-u>PrevimOpen<CR>
-nnoremap <silent> [previm]r :call previm#refresh()<CR>
-
-" Unite bookmark
-nnoremap :uba :UniteBookmarkAdd
-nnoremap :ub :Unite bookmark
-nnoremap :uf :Unite file
 " VimFiler
 nnoremap :vf :VimFiler
 nnoremap :vft :VimFilerTree
 nnoremap :vfr :VimFilerTreeRefresh
 let g:vimfiler_enable_auto_cd = 1
-" IDE風の画面
-nmap <F3> :VimFilerTree<CR> :Tagbar<CR>
-" Tagbar更新
-nmap <F8> :TagbarTogglePause<CR>:TagbarTogglePause<CR>
 
 " QuickRun
 nnoremap :qr :QuickRun
@@ -533,11 +514,6 @@ nnoremap <silent>bn :bnext<CR>
 nnoremap <silent>bb :b#<CR>
 "nnoremap <silent>bd :bdelete<CR>
 nnoremap <silent>be :BufExplorer<CR>
-" poslistによるMRUの戻る・進む
-" これはデフォだが、忘れないように書いておく
-"map <C-o> <Plug>(poslist-prev-buf)
-"map <C-i> <Plug>(poslist-next-buf)
-
 " easy-align
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 vmap ea <Plug>(EasyAlign)
@@ -851,18 +827,9 @@ let g:rustfmt_command = 'rustfmt'
 
 " ----------
 " Python {{{
-" jedi-vim(Python用プラグイン)の設定
-" rename用のマッピングを無効にしたため、代わりにコマンドを定義
-command! -nargs=0 JediRename :call jedi#rename()
-
 " pythonのrename用のマッピングがquickrunとかぶるため回避させる
 let g:jedi#rename_command = ""
 let g:jedi#pydoc = "k"
-
-" flake8の設定
-nnoremap <Leader>l :call Flake8()
-
-"let python_dir = 'E:\work\Python'
 " }}}
 
 " -------
