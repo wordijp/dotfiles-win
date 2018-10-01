@@ -86,6 +86,8 @@ Plug 'gregsexton/MatchTag'
 " Go
 Plug 'fatih/vim-go'
 Plug 'vim-jp/vim-go-extra'
+" Python
+Plug 'davidhalter/jedi-vim'
 " Utility
 Plug 'airblade/vim-rooter'
 Plug 'luochen1990/rainbow'
@@ -612,6 +614,7 @@ endfunction
 " rename {{{
 autocmd FileType go         nnoremap <F2> :GoRename<CR>
 autocmd FileType cpp,rust   nnoremap <F2> :LspRename<CR>
+autocmd FileType python     nnoremap <F2> :call jedi#rename()<CR>
 autocmd FileType javascript,javascript.jsx,typescript nnoremap <F2> :YcmCompleter RefactorRename 
 " }}}
 
