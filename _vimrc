@@ -4,8 +4,7 @@
 set encoding=utf-8
 set fileformats=unix,dos,mac
 " ヤンクしたテキストをそのままクリップボードへ
-" NOTE : BlockDiffのときはこれを無効かしないと正常に動かないが、普段使いを優先して有効化
-set clipboard=unnamed
+set clipboard+=unnamed
 
 " 貼り付け自にyankされるのを防ぐ
 vnoremap <silent> <C-p> "0p

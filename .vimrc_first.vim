@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 29-Sep-2018.
+" Last Change: 02-Oct-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -63,23 +63,14 @@ call plug#begin(s:plug_dir)
 Plug 'junegunn/vim-plug', {'dir': expand('~/.vim/plugged/vim-plug/autoload')}
 
 Plug 'Valloric/YouCompleteMe'
-"Plug "osyo-manga/vim-monster"
-Plug 't9md/vim-quickhl'
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
 Plug 'vim-jp/vital.vim'
-Plug 'tpope/vim-pathogen'
 Plug 'tpope/vim-surround'
+Plug 't9md/vim-quickhl'
 " Linter
-"Plug 'scrooloose/syntastic'
 Plug 'w0rp/ale'
 " 色んな言語のsyntax
 Plug 'sheerun/vim-polyglot', {'do': 'sh build'}
 " 言語サーバープロトコル
-Plug 'prabirshrestha/async.vim'
-Plug 'felixfbecker/php-language-server', {
-  \ 'do': 'composer install && composer run-script parse-stubs',
-  \ }
 Plug 'autozimu/LanguageClient-neovim', {
   \ 'branch': 'next',
   \ 'do': 'bash install.sh',
@@ -87,116 +78,41 @@ Plug 'autozimu/LanguageClient-neovim', {
 Plug 'wordijp/LanguageServer-php-tcp-neovim', {
   \ 'do': 'bash ./install.sh && composer install && composer run-script parse-stubs'
   \ }
-"Plug 'prabirshrestha/vim-lsp'
 " 辞書
 Plug 'thinca/vim-ref'
-" C++
-"Plug 'justmao945/vim-clang'
-" Rust
-"Plug 'rust-lang/rust.vim'
-"Plug 'racer-rust/vim-racer'
-" Toml
-"Plug 'cespare/vim-toml'
-"Plug 'toml-lang/toml'
-" PHP
-"Plug 'jwalton512/vim-blade'
-"Plug 'stephpy/vim-php-cs-fixer'
-"Plug 'violetyk/neocomplete-php.vim'
-"Plug 'ervandew/supertab'
-"Plug 'joonty/vdebug'
-"Plug 'm2mdas/phpcomplete-extended'
-"Plug 'm2mdas/phpcomplete-extended-laravel'
-" TypeScript
-"Plug 'jason0x43/vim-js-indent'
-"Plug 'leafgarland/typescript-vim'
-"Plug 'clausreinke/typescript-tools.vim'
 " HTML
-"Plug 'othree/html5.vim'
 Plug 'mattn/emmet-vim'
-"Plug 'hail2u/vim-css3-syntax'
-"Plug 'JulesWang/css.vim'
-"Plug 'ap/vim-css-color'
-"Plug 'avelino/vim-bootstrap'
-" JavaScript
-"Plug 'othree/yajs.vim'
-"Plug 'pangloss/vim-javascript'
-"Plug 'billyvg/tigris.nvim'
-" React
-"Plug 'mxw/vim-jsx'
-"Plug 'marijnh/tern_for_vim'
-" Vue.js
-"Plug 'posva/vim-vue'
-" Ruby
-"Plug 'vim-ruby/vim-ruby'
-"Plug 'bbatsov/rubocop'
-"Plug 'tpope/vim-endwise'
-" Python
-"Plug 'davidhalter/jedi-vim'
-"Plug 'kevinw/pyflakes-vim'
-"Plug 'nvie/vim-flake8'
-" Scala
-"Plug 'derekwyatt/vim-scala'
-" Kotlin
-"Plug 'udalov/kotlin-vim'
+Plug 'gregsexton/MatchTag'
 " Go
-" utf8の文字コードでマルチバイトを使う時上手く動かない
 Plug 'fatih/vim-go'
 Plug 'vim-jp/vim-go-extra'
-"Plug 'golang/lint'
-" Other
-"Plug 'chr4/nginx.vim'
-" Multi
-"Plug 'sheerun/vim-polyglot'
 " Utility
-Plug 'gregsexton/MatchTag'
 Plug 'luochen1990/rainbow'
-Plug 'rhysd/vim-clang-format'
 Plug 'airblade/vim-rooter'
 Plug 'kshenoy/vim-signature'
-"Plug 'ctrlpvim/ctrlp.vim'
-"Plug 'junegunn/fzf.vim'
 Plug 'Shougo/denite.nvim'
 Plug 'vim-scripts/MultipleSearch'
-Plug 'mattn/libcallex-vim'
-Plug 'wordijp/wincorrecthook-vim'
 Plug 'yami-beta/vim-responsive-tabline'
 Plug 'scrooloose/nerdcommenter'
 Plug 'kana/vim-operator-user'
 Plug 'haya14busa/vim-operator-flashy'
-Plug 'vim-scripts/BlockDiff'
+"Plug 'vim-scripts/BlockDiff'
+Plug 'mah/BlockDiff' " クリップボード対応版
 Plug 'easymotion/vim-easymotion'
-"Plug 'tomtom/tcomment_vim'
 Plug 'terryma/vim-smooth-scroll'
-"Plug 'yuttie/comfortable-motion.vim'
-"Plug 'koron/minimap-vim'
-"Plug 'severin-lemaignan/vim-minimap'
-Plug 'tyru/open-browser.vim'
-Plug 'kannokanno/previm'
 Plug 'thinca/vim-quickrun'
-Plug 'thinca/vim-visualstar'
 Plug 'junegunn/vim-easy-align'
 Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-"Plug 'gabrielelana/vim-markdown'
-"Plug 'tpope/vim-markdown'
-Plug 'deris/vim-shot-f'
 Plug 'rhysd/clever-f.vim'
-Plug 'mattn/emmet-vim'
-Plug 'Shougo/vimfiler.vim'
 Plug 'Shougo/unite.vim'
-Plug 'Shougo/unite-outline'
-Plug 'dan-t/rusty-tags'
+Plug 'Shougo/vimfiler.vim'
+Plug 'mattesgroeger/vim-bookmarks'
 Plug 'majutsushi/tagbar'
-"Plug 'szw/vim-tags'
 "Plug 'soramugi/auto-ctags.vim'
+Plug 'wordijp/auto-ctags.vim' " tagsファイル名固定版
 Plug 'jlanzarotta/bufexplorer'
 Plug 'thinca/vim-poslist'
 Plug 'Shougo/vimproc', {'do': 'make'}
-" VimScript
-Plug 'mopp/layoutplugin.vim'
-" Game
-"Plug 'mmisono/snake.vim'
-"Plug 'osyo-manga/vim-sound'
 call plug#end()
 " }}}
 
@@ -312,29 +228,6 @@ let g:vim_markdown_folding_disabled = 1
 "let g:vim_markdown_override_foldtext = 0
 "}}}
 
-" -----------
-" Key map {{{
-augroup term_vim_c_space
-  autocmd!
-  autocmd VimEnter * map <Nul> <C-Space>
-  autocmd VimEnter * map! <Nul> <C-Space>
-augroup END
-
-let my_action = {'is_selectable' : 1}
-function! my_action.func(candidates)
-    wincmd p
-    exec 'split '. a:candidates[0].action__path
-endfunction
-call unite#custom_action('file', 'my_split', my_action)
-
-let my_action = {'is_selectable' : 1}
-function! my_action.func(candidates)
-    wincmd p
-    exec 'vsplit '. a:candidates[0].action__path
-endfunction
-call unite#custom_action('file', 'my_vsplit', my_action)
-" }}}
-
 " ----------------------------------
 " MultipleSearch(複数ワード検索) {{{
 " default
@@ -409,6 +302,11 @@ nnoremap <silent> ;r :<C-u>Denite -buffer-name=search -resume<CR>
 nnoremap <silent> ;n :<C-u>Denite -buffer-name=search -resume -immediately -select=+1<CR>
 " 前へ
 nnoremap <silent> ;p :<C-u>Denite -buffer-name=search -resume -immediately -select=-1<CR>
+"    }}}
+
+" poslist {{{
+map <C-o> <Plug>(poslist-prev-line)
+map <C-i> <Plug>(poslist-next-line)
 "    }}}
 " }}}
 
@@ -597,6 +495,8 @@ autocmd FileType vue setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandt
 autocmd FileType vue syntax sync fromstart
 " React
 autocmd FileType javascript.jsx setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
+" sh
+autocmd FileType sh setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
 " }}}
 
 " ------------
@@ -675,7 +575,7 @@ let g:ycm_global_ycm_extra_conf = $HOME . '/.ycm_extra_conf.py'
 " 読み込むかの確認ダイアログを 1:出す 0:出さない
 let g:ycm_confirm_extra_conf = 0
 " Ycmサーバ再起動
-imap <C-Space> <ESC>:call <SID>ycmRestartServer()<CR>a <BS>
+autocmd FileType php imap <C-Space> <ESC>:call <SID>ycmRestartServer()<CR>a <BS>
 function s:ycmRestartServer()
   :YcmRestartServer
   sleep 350m
@@ -684,53 +584,9 @@ endfunction
 
 " --------
 " tags {{{
-" tagsファイルを.gitディレクトリへ作成する
-" NOtE : .gitディレトリが、プロジェクトのルートディレクトリ取得も兼ねている
-function! Make_tags_gitdir()
-  let l:toplevel = system('git rev-parse --show-toplevel')
-  if v:shell_error
-    echo 'failed: git dir is not found'
-  endif
-  let l:toplevel = substitute(l:toplevel, '[\r\n]', '', 'g')
-  
-  let l:cache_pwd = ''
-  redir => l:cache_pwd
-    silent pwd
-  redir END
-  let l:cache_pwd = substitute(l:cache_pwd, '[\r\n]', '', 'g')
-  
-  let l:opt = ''
-  if &filetype ==# 'cpp'
-    let l:opt = l:opt.' --languages=c++'
-  elseif &filetype !=# ''
-    let l:opt = l:opt.' --languages='.&filetype
-  endif
-  
-  let l:tagfile = l:toplevel.'/.git/tags'
-
-  " tags作成
-  try
-    exe 'lcd '.l:toplevel
-    call system('ctags '.l:opt.' -f '.l:tagfile.' '.l:toplevel) " 絶対パスで作成
-    echo 'done'
-  catch
-    echo 'error:' . v:exception
-  finally
-    exe 'lcd '.l:cache_pwd
-  endtry
-endfunction
-
-" tagsファイルをカレントディレクトリへ作成する
-function! Make_tags_currentdir()
-  let l:opt = ''
-  if &filetype ==# 'cpp'
-    let l:opt = l:opt.' --languages=c++'
-  elseif &filetype !=# ''
-    let l:opt = l:opt.' --languages='.&filetype
-  endif
-
-  call system('ctags '.l:opt) " 絶対パスで作成
-endfunction
+let g:auto_ctags_directory_list = ['.git', '.svn']
+let g:auto_ctags_filetype_mode = 1
+let g:auto_ctags_tags_name_fixed = 'tags' " 全filetype共通名
 
 " tagsファイル作成
 au FileType * call s:tagBuildCmd()
@@ -738,9 +594,7 @@ function s:tagBuildCmd()
   if &filetype ==# 'go'
     nnoremap :tags :GoBuildTags tags
   else
-    nnoremap :tags :call Make_tags_gitdir()
-    nnoremap :tagsg :call Make_tags_gitdir()
-    nnoremap :tagsc :call Make_tags_currentdir()
+    nnoremap :tags :Ctags
   endif
 endfunction
 
@@ -757,7 +611,7 @@ nnoremap <C-k> :split<CR>:call <SID>defJump()<CR>
 function s:defJump()
   if &ft == 'go'
     :GoDef
-  elseif &ft ==# 'cpp' || &ft ==# 'php'
+  elseif &ft ==# 'cpp' || &ft ==# 'php' || &ft ==# 'ruby'
     " 実装へジャンプ
     :call LanguageClient#textDocument_definition()
   elseif &ft ==# 'rust' || &ft ==# 'javascript' || &ft ==# 'javascript.jsx' || &ft ==# 'typescript' || &ft ==# 'python'
@@ -1054,8 +908,8 @@ endfunction
 " NOTE: PHPは'wordijp/LanguageServer-php-tcp-neovim'で設定
 let g:LanguageClient_serverCommands = {
   \ 'cpp': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
+  \ 'ruby': ['cmd', '/c', 'solargraph stdio'],
   \ }
-  "\ 'rust': ['rustup', 'run', 'nightly', 'rls'],
 " }}}
 
 " --------
