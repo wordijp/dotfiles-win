@@ -40,9 +40,6 @@ if has('win32')
   set runtimepath^=~/.vim,~/.vim/after
 endif
 
-" helper
-let s:HOME = substitute($HOME, '\\', '/', 'g')
-
 "---------
 " Plug {{{
 let s:plug_dir = expand('~/.vim/plugged')
@@ -60,7 +57,9 @@ if &rtp !~# 'vim-plug'
 endif
 
 call plug#begin(s:plug_dir)
-Plug 'junegunn/vim-plug', {'dir': expand('~/.vim/plugged/vim-plug/autoload')}
+Plug 'junegunn/vim-plug', {
+  \ 'dir': expand('~/.vim/plugged/vim-plug/autoload')
+  \ }
 
 " コード補完
 Plug 'Valloric/YouCompleteMe'
@@ -89,7 +88,7 @@ Plug 'vim-jp/vim-go-extra'
 " Python
 Plug 'davidhalter/jedi-vim'
 " Utility
-Plug 'airblade/vim-rooter'
+Plug 'airblade/vim-rooter' " .gitプロジェクトでは常にルートをカレントディレクトリへ
 Plug 'luochen1990/rainbow'
 Plug 'kshenoy/vim-signature'
 Plug 'Shougo/denite.nvim'
@@ -135,7 +134,7 @@ set synmaxcol=500
 " <leader>をスペースへ
 let mapleader = "\<Space>"
 
-" git
+" vim-rooter
 let g:rooter_change_directory_for_non_project_files = 'current'
 "let g:rooter_manual_only = 1
 
