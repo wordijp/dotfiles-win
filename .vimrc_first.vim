@@ -569,7 +569,7 @@ let g:auto_ctags_tags_name_fixed = 'tags' " 全filetype共通名
 au FileType * call s:tagBuildCmd()
 function s:tagBuildCmd()
   if &filetype ==# 'go'
-    nnoremap :tags :GoBuildTags tags
+    nnoremap :tags :GoBuildTags mycustomtag
   else
     nnoremap :tags :Ctags
   endif
@@ -818,6 +818,13 @@ endfunction
 " 保存時に自動整形
 let g:go_fmt_autosave = 1
 let g:go_fmt_command = "gofmt"
+
+let g:go_build_tags = "mycustomtag"
+let g:go_highlight_types = 1
+let g:go_highlight_functions = 1
+"let g:go_highlight_function_calls = 1
+"let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
 " }}}
 
 "---------
