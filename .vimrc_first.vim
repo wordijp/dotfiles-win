@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 02-Oct-2018.
+" Last Change: 04-Oct-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -82,6 +82,8 @@ Plug 'thinca/vim-ref'
 " HTML
 Plug 'mattn/emmet-vim'
 Plug 'gregsexton/MatchTag'
+" Rust
+Plug 'racer-rust/vim-racer'
 " Go
 Plug 'fatih/vim-go'
 Plug 'vim-jp/vim-go-extra'
@@ -591,7 +593,9 @@ function s:defJump()
   elseif &ft ==# 'cpp' || &ft ==# 'php' || &ft ==# 'ruby'
     " 実装へジャンプ
     :call LanguageClient#textDocument_definition()
-  elseif &ft ==# 'rust' || &ft ==# 'javascript' || &ft ==# 'javascript.jsx' || &ft ==# 'typescript' || &ft ==# 'python'
+  elseif &ft ==# 'rust'
+    :execute "normal \<Plug>(rust-def)"
+  elseif &ft ==# 'javascript' || &ft ==# 'javascript.jsx' || &ft ==# 'typescript' || &ft ==# 'python'
     :YcmCompleter GoToDefinition
   else
     :exe("tjump ".expand('<cword>'))
@@ -607,14 +611,6 @@ function s:decJump()
     echo "noop"
   end
 endfunction
-" }}}
-
-" ----------
-" rename {{{
-autocmd FileType go         nnoremap <F2> :GoRename<CR>
-autocmd FileType cpp,rust   nnoremap <F2> :LspRename<CR>
-autocmd FileType python     nnoremap <F2> :call jedi#rename()<CR>
-autocmd FileType javascript,javascript.jsx,typescript nnoremap <F2> :YcmCompleter RefactorRename 
 " }}}
 
 " ------------
@@ -715,8 +711,12 @@ let g:quickrun_config = {
 \      "exec": "%c %o",
 \  },
 \}
+" }}}
 
+" --------------
+" 言語別設定 {{{
 " C++
+autocmd FileType cpp nmap <F2> :call LanguageClient#textDocument_rename()<CR>
 autocmd FileType cpp nmap <F5> :QuickRun make-run<CR>
 autocmd FileType cpp nmap <C-F5> :QuickRun make-run-shell<CR>
 autocmd FileType cpp nmap <F7> :QuickRun make<CR>
@@ -725,6 +725,8 @@ autocmd FileType cpp nmap <F8> :QuickRun make-clean<CR>
 autocmd FileType cpp setlocal errorformat+=make:\ 'all'\ is\ up\ to\ date.
 
 " rust
+autocmd FileType rust nmap <F1> <Plug>(rust-doc)
+autocmd FileType rust nmap <F2> :call LanguageClient#textDocument_rename()<CR>
 autocmd FileType rust nmap <F5> :QuickRun cargo-run<CR>
 autocmd FileType rust nmap <C-F5> :QuickRun cargo-run-shell<CR>
 autocmd FileType rust nmap <F7> :QuickRun cargo-build<CR>
@@ -737,11 +739,11 @@ function! s:cargo_build_lib()
 endfunction
 
 " Go
+autocmd FileType go nmap <F1> :GoDoc<CR>
+autocmd FileType go nmap <F2> :GoRename<CR>
 autocmd FileType go nmap <F5> :QuickRun go-run<CR>
 autocmd FileType go nmap <C-F5> :QuickRun go-run-shell<CR>
 autocmd FileType go nmap <F7> :QuickRun go-build<CR>
-autocmd FileType go nmap <F1> :GoDoc<CR>
-autocmd FileType go nmap <F2> :GoRename<CR>
 
 " PHP
 "autocmd FileType php nmap <F7> :QuickRun php-linter<CR>
@@ -758,7 +760,12 @@ autocmd FileType php setlocal errorformat+=%f:%l\	%m
 autocmd FileType php setlocal errorformat+=%f:%l\ %m
 
 " JavaScript
+autocmd FileType javascript,javascript.jsx,typescript nmap <F2> :YcmCompleter RefactorRename 
+autocmd FileType nmap <F2> :YcmCompleter RefactorRename 
 autocmd FileType javascript nmap <F7> :QuickRun eslint-all<CR>
+
+" Python
+autocmd FileType python nmap <F2> :call jedi#rename()<CR>
 " }}}
 
 " ----------------
@@ -832,6 +839,9 @@ let g:go_highlight_build_constraints = 1
 " 保存時に自動整形
 let g:rustfmt_autosave = 0
 let g:rustfmt_command = 'rustfmt'
+
+let g:racer_cmd = 'racer'
+let g:racer_experimental_completer = 1
 " }}}
 
 " ----------
@@ -885,6 +895,7 @@ endfunction
 let g:LanguageClient_serverCommands = {
   \ 'cpp': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
   \ 'ruby': ['cmd', '/c', 'solargraph stdio'],
+  \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
   \ }
 " }}}
 

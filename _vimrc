@@ -8,6 +8,7 @@ set clipboard+=unnamed
 
 " 貼り付け自にyankされるのを防ぐ
 vnoremap <silent> <C-p> "0p
+inoremap <silent> <C-v> <ESC>pa
 " 改行でコメントを入れない
 autocmd FileType * setlocal formatoptions-=ro
 " C++11用
