@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 04-Oct-2018.
+" Last Change: 11-Oct-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -848,7 +848,7 @@ let g:racer_experimental_completer = 1
 " Python {{{
 " pythonのrename用のマッピングがquickrunとかぶるため回避させる
 let g:jedi#rename_command = ""
-let g:jedi#pydoc = "k"
+let g:jedi#documentation_command = "k"
 " }}}
 
 " -------
