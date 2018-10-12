@@ -726,16 +726,26 @@ autocmd FileType cpp nmap <F8> :QuickRun make-clean<CR>
 autocmd FileType cpp setlocal errorformat+=make:\ 'all'\ is\ up\ to\ date.
 
 " rust
-autocmd FileType rust nmap <F1> :call <SID>ycmGetDocRust()<CR>
-function! s:ycmGetDocRust()
+autocmd FileType rust nmap <F1> :call <SID>getDocRust()<CR>
+function! s:getDocRust()
+  " 1. try YouCompleteMe
   let l:prev_bufnr = bufnr('$')
   :YcmCompleter GetDoc
   let l:after_bufnr = bufnr('$')
 
-  " 開いたならフォーカス
   if l:after_bufnr != l:prev_bufnr
+    " success
     :call win_gotoid(bufwinid(l:after_bufnr))
     :set filetype=rustdoc
+    return
+  endif
+
+  " 2. try vim-racer
+  let l:prev_bufnr = bufnr('%')
+  :execute "normal \<Plug>(rust-doc)"
+  if bufnr('%') != l:prev_bufnr
+    " success
+    return
   endif
 endfunction
 autocmd FileType rust nmap <F2> :call LanguageClient#textDocument_rename()<CR>
