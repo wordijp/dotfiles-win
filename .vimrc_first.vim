@@ -400,6 +400,7 @@ function! s:trySearchReset()
   try
     " t9md/vim-quickhl用
     :call quickhl#manual#reset()
+    :call quickhl#cword#disable()
   catch
   endtry
 endfunction
