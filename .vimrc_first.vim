@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 12-Oct-2018.
+" Last Change: 13-Oct-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -726,7 +726,18 @@ autocmd FileType cpp nmap <F8> :QuickRun make-clean<CR>
 autocmd FileType cpp setlocal errorformat+=make:\ 'all'\ is\ up\ to\ date.
 
 " rust
-autocmd FileType rust nmap <F1> <Plug>(rust-doc)
+autocmd FileType rust nmap <F1> :call <SID>ycmGetDocRust()<CR>
+function! s:ycmGetDocRust()
+  let l:prev_bufnr = bufnr('$')
+  :YcmCompleter GetDoc
+  let l:after_bufnr = bufnr('$')
+
+  " 開いたならフォーカス
+  if l:after_bufnr != l:prev_bufnr
+    :call win_gotoid(bufwinid(l:after_bufnr))
+    :set filetype=rustdoc
+  endif
+endfunction
 autocmd FileType rust nmap <F2> :call LanguageClient#textDocument_rename()<CR>
 autocmd FileType rust nmap <F5> :QuickRun cargo-run<CR>
 autocmd FileType rust nmap <C-F5> :QuickRun cargo-run-shell<CR>
