@@ -3,4 +3,4 @@
 title %CD%
 prompt $P$_$G
 
-doskey /macrofile=cmd_macros.txt
+doskey /macrofile=%USERPROFILE%\cmd_macros.txt
