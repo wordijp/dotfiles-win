@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 13-Oct-2018.
+" Last Change: 19-Oct-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -118,6 +118,8 @@ Plug 'wordijp/auto-ctags.vim' " tagsファイル名固定版
 Plug 'jlanzarotta/bufexplorer'
 Plug 'thinca/vim-poslist'
 Plug 'Shougo/vimproc', {'do': 'make'}
+Plug 'tyru/open-browser.vim'
+Plug 'mattn/vim-pixela'
 call plug#end()
 " }}}
 
@@ -178,6 +180,11 @@ function! s:my_vimfiler_settings()
     nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<CR>
 endfunction
 "    }}}
+" }}}
+
+"------------------
+" vim-bookmarks {{{
+let g:bookmark_auto_save_file = expand('~/.vim/tmp/.vim-bookmarks')
 " }}}
 
 
@@ -965,6 +972,12 @@ let g:ref_detect_filetype = {
 let g:ref_phpmanual_path = $HOME . '/.vim/vim-ref/php-chunked-xhtml'
 let g:ref_use_vimproc = 1
 "    }}}
+" }}}
+
+" vim-pixela(草生やすやつ) {{{
+source $HOME/.vimrc_pixela_private.vim
+"let g:pixela_username = 'XXXXX'
+"let g:pixela_token = 'XXXXXXXXXX'
 " }}}
 
 " 追加ここまで -------------------------------------------------------------
