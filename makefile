@@ -11,16 +11,14 @@ FILES	= \
 	.gvimrc_first.vim \
 	.pylintrc \
 	.ycm_extra_conf.py \
-	tslint.json \
-	cmd_autorun.bat \
-	cmd_macros.txt \
-	cmd_macro_cd.bat
+	tslint.json
 
 DIRS	= \
 	.phan \
 	.phpstan \
 	.vim \
-	.vscode
+	.vscode \
+	.cmd
 
 CUR_DIR	= $(subst /,\,${CURDIR})
 
