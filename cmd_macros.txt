@@ -1,0 +1,1 @@
+cd=%USERPROFILE%\cmd_macro_cd.bat $*
