@@ -11,7 +11,8 @@ FILES	= \
 	.gvimrc_first.vim \
 	.pylintrc \
 	.ycm_extra_conf.py \
-	tslint.json
+	tslint.json \
+	.nyagos
 
 DIRS	= \
 	.phan \
