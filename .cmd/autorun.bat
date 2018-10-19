@@ -17,4 +17,4 @@ set DEFAULT=[0m
 title %CD%
 prompt %GREEN%%USERNAME%@%COMPUTERNAME%%DEFAULT%$S%PURPLE%cmd%DEFAULT%$S%YELLOW%$P%DEFAULT%$_$G$S
 
-doskey /macrofile=%USERPROFILE%\.cmd\macros.txt
+call %USERPROFILE%\.cmd\macros.bat
