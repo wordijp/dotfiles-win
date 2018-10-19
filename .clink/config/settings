@@ -52,7 +52,7 @@ terminate_autoanswer = 0
 # When set to a positive integer this is the number of lines of history that
 # will persist when Clink saves the command history to disk. Use 0 for infinite
 # lines and <0 to disable history persistence.
-history_file_lines = 10000
+history_file_lines = 100
 
 # name: Skip adding lines prefixed with whitespace
 # type: bool
