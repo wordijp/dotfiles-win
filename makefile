@@ -11,15 +11,15 @@ FILES	= \
 	.gvimrc_first.vim \
 	.pylintrc \
 	.ycm_extra_conf.py \
-	tslint.json \
-	.nyagos
+	tslint.json
 
 DIRS	= \
 	.phan \
 	.phpstan \
 	.vim \
 	.vscode \
-	.cmd
+	.cmd \
+	.clink
 
 CUR_DIR	= $(subst /,\,${CURDIR})
 
