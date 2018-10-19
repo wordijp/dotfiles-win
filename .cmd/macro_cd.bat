@@ -1,6 +1,6 @@
 @echo off
 
-@rem å¼•æ•°ç„¡ã—ãªã‚‰ãƒ›ãƒ¼ãƒ ã¸
+@rem ˆø”–³‚µ‚È‚çƒz[ƒ€‚Ö
 if %1. == . cd /d %USERPROFILE% && goto end
 cd /d %1
 
