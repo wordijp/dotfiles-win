@@ -1,4 +1,5 @@
 @echo off
+rem cmd /k <this bat file>
 
 rem --------------
 rem å©ÇΩÇﬂí≤êÆ ---
