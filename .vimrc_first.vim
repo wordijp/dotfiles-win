@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 19-Oct-2018.
+" Last Change: 01-Nov-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -790,7 +790,6 @@ autocmd FileType php setlocal errorformat+=%f:%l\ %m
 
 " JavaScript
 autocmd FileType javascript,javascript.jsx,typescript nmap <F2> :YcmCompleter RefactorRename 
-autocmd FileType nmap <F2> :YcmCompleter RefactorRename 
 autocmd FileType javascript nmap <F7> :QuickRun eslint-all<CR>
 
 " Python

@@ -8,12 +8,6 @@ Windows dotfiles.
 > make install
 ```
 
-コマンドプロンプトのAutoRun設定
-```
-> set_cmd_autorun.reg
-```
-
-
 ## Requirement
 
 下記ツールを利用しています
