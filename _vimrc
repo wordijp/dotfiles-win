@@ -2,9 +2,15 @@
 "----------------------
 " 編集に関する設定: {{{
 set encoding=utf-8
-set fileformats=unix,dos,mac
+au FileType * set fileformats=unix,dos,mac
+au FileType dosbatch set fenc=cp932
+au FileType dosbatch set fileformats=dos
 " ヤンクしたテキストをそのままクリップボードへ
 set clipboard+=unnamed
+
+au FileType * set foldmethod=indent
+au FileType vim set foldmethod=marker
+set foldlevel=100 "Don't autofold anything
 
 " 貼り付け自にyankされるのを防ぐ
 vnoremap <silent> <C-p> "0p

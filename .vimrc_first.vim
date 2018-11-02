@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 01-Nov-2018.
+" Last Change: 02-Nov-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -30,7 +30,6 @@ scriptencoding utf-8
 "   :echo $HOME
 "   :echo $VIM
 "   :version
-set encoding=utf-8
 " このvimrcだけ使用する
 let g:vimrc_first_finish = 1
 
