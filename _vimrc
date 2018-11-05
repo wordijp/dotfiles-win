@@ -43,5 +43,7 @@ set noswapfile
 " メニューは使わない
 set guioptions+=M
 set guioptions-=m
+
+set conceallevel=2 concealcursor=i
 " }}}
 

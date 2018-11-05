@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 02-Nov-2018.
+" Last Change: 05-Nov-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -125,10 +125,6 @@ call plug#end()
 "--------------
 " emmet-vim {{{
 let g:user_emmet_removetag_key='<c-t>'
-
-if has('conceal')
-    set conceallevel=2 concealcursor=i
-endif
 " }}}
 
 " 負荷対策
@@ -503,6 +499,8 @@ autocmd FileType vue syntax sync fromstart
 autocmd FileType javascript.jsx setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
 " sh
 autocmd FileType sh setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
+" AutoHotkey
+autocmd FileType autohotkey setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
 " }}}
 
 " ------------
@@ -560,7 +558,7 @@ let g:ycm_global_ycm_extra_conf = $HOME . '/.ycm_extra_conf.py'
 "let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 " 読み込むかの確認ダイアログを 1:出す 0:出さない
 let g:ycm_confirm_extra_conf = 0
-" Ycmサーバ再起動
+" Ycmサーバ再起動(補完候補の更新)
 autocmd FileType php imap <C-Space> <ESC>:call <SID>ycmRestartServer()<CR>a <BS>
 function s:ycmRestartServer()
   :YcmRestartServer
@@ -821,7 +819,7 @@ endfunction
 " 最初へ
 nnoremap [Q :call <SID>lFirst()<CR>
 function s:lFirst()
-  :cc
+  :ll
   while 1
     try
       :lp 999
@@ -833,7 +831,7 @@ endfunction
 " 最後へ
 nnoremap ]Q :call <SID>lLast()<CR>
 function s:lLast()
-  :cc
+  :ll
   while 1
     try
       :lne 999
