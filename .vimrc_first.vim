@@ -88,6 +88,8 @@ Plug 'fatih/vim-go'
 Plug 'vim-jp/vim-go-extra'
 " Python
 Plug 'davidhalter/jedi-vim'
+" PHP
+Plug 'stephpy/vim-php-cs-fixer'
 " Utility
 Plug 'airblade/vim-rooter' " .gitプロジェクトでは常にルートをカレントディレクトリへ
 Plug 'Shougo/denite.nvim'
@@ -921,8 +923,8 @@ let g:cssColorVimDoNotMessMyUpdatetime = 1
 " -------
 " PHP {{{
 " PHP-CS-Fixer(コード整形) {{{
-nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory_withReload()<CR>
-nnoremap <silent><leader>pcf :call PhpCsFixerFixFile_withReload()<CR>
+autocmd FileType php nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory_withReload()<CR>
+autocmd FileType php nnoremap <silent><leader>pcf :call PhpCsFixerFixFile_withReload()<CR>
 function! PhpCsFixerFixDirectory_withReload()
   call PhpCsFixerFixDirectory()
   :e!
