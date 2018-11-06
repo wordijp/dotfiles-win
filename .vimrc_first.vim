@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 05-Nov-2018.
+" Last Change: 06-Nov-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -90,11 +90,12 @@ Plug 'vim-jp/vim-go-extra'
 Plug 'davidhalter/jedi-vim'
 " Utility
 Plug 'airblade/vim-rooter' " .gitプロジェクトでは常にルートをカレントディレクトリへ
-Plug 'luochen1990/rainbow'
-Plug 'kshenoy/vim-signature'
 Plug 'Shougo/denite.nvim'
-Plug 'vim-scripts/MultipleSearch'
-Plug 'vim-jp/vital.vim'
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimfiler.vim'
+Plug 'Shougo/vimproc', {'do': 'make'}
+Plug 'majutsushi/tagbar'
+Plug 'luochen1990/rainbow'
 Plug 'tpope/vim-surround'
 Plug 't9md/vim-quickhl'
 Plug 'yami-beta/vim-responsive-tabline'
@@ -106,19 +107,15 @@ Plug 'mah/BlockDiff' " クリップボード対応版
 Plug 'easymotion/vim-easymotion'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'junegunn/vim-easy-align'
-Plug 'godlygeek/tabular'
 Plug 'rhysd/clever-f.vim'
-Plug 'Shougo/unite.vim'
-Plug 'Shougo/vimfiler.vim'
 Plug 'mattesgroeger/vim-bookmarks'
-Plug 'majutsushi/tagbar'
 "Plug 'soramugi/auto-ctags.vim'
 Plug 'wordijp/auto-ctags.vim' " tagsファイル名固定版
 Plug 'jlanzarotta/bufexplorer'
 Plug 'thinca/vim-poslist'
-Plug 'Shougo/vimproc', {'do': 'make'}
 Plug 'tyru/open-browser.vim'
-Plug 'mattn/vim-pixela'
+" Other
+Plug 'mattn/vim-pixela' " Vim利用履歴
 call plug#end()
 " }}}
 
@@ -229,18 +226,6 @@ augroup rainbow_toggle_on
 augroup END
 " }}}
 
-" ----------------------------------
-" MultipleSearch(複数ワード検索) {{{
-" default
-" let g:MultipleSearchColorSequence = "red,yellow,blue,green,magenta,cyan,gray,brown"
-let g:MultipleSearchColorSequence = "magenta,gray,brown,red,yellow,blue,green,cyan"
-" default
-" let g:MultipleSearchTextColorSequence = "white,black,white,black,white,black,black,white"
-let g:MultipleSearchTextColorSequence = "white,black,white,white,black,white,black,black"
-let g:MultipleSearchMaxColors = 8
-" }}}
-
-
 " ------------------
 " ショートカット {{{
 " 新規タブ
@@ -329,9 +314,9 @@ autocmd FileType qf noremap <Enter> :.ll<CR>
 " ---------------------------------------
 " 検索、大文字と小文字区別 & 単語単位 {{{
 " カーソル単語検索
-nmap * :Search \C\<<C-R><C-W>\><CR><Right><S-N>
+nmap * "zyiw:let @/ = '\C\<'.@z.'\>'<CR><Right><S-N>
 " 選択文字列検索
-vmap * "zy:let @/ = @z<CR>n<S-N>"
+vmap * "zy:let @/ = @z<CR><Right><S-N>
 
 " denite {{{
 " find source
@@ -394,11 +379,6 @@ call denite#custom#option('_', 'prompt', '>')
 " 検索・ハイライト取り消し
 nmap <Esc> :nohlsearch<CR> :call <SID>trySearchReset()<CR><Left>
 function! s:trySearchReset()
-  try
-    " vim-scripts/MultipleSearch用
-    SearchReset
-  catch
-  endtry
   try
     " t9md/vim-quickhl用
     :call quickhl#manual#reset()
@@ -940,7 +920,7 @@ let g:cssColorVimDoNotMessMyUpdatetime = 1
 
 " -------
 " PHP {{{
-" PHP-CS-Fixer {{{
+" PHP-CS-Fixer(コード整形) {{{
 nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory_withReload()<CR>
 nnoremap <silent><leader>pcf :call PhpCsFixerFixFile_withReload()<CR>
 function! PhpCsFixerFixDirectory_withReload()
