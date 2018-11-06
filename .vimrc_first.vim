@@ -441,6 +441,12 @@ function! Trim()
     echo '末尾の空白を削除'
   endtry
 endfunction
+
+" 空白削除
+command! -range CollectSpace <line1>,<line2>call s:CollectSpace()
+function! s:CollectSpace() range
+  :'<,'>:s/\%V[ ]\+/ /g
+endfunction
 " }}}
 
 autocmd FileType markdown noremap <Space><Tab> "\<Tab>"
@@ -518,12 +524,6 @@ endfunction
 " 「:PPx」「:ppx」の両対応
 nnoremap :ppx :call Open_ppx()
 command! -bar PPx call Open_ppx()
-
-" 空白削除
-command! -range CollectSpace <line1>,<line2>call s:CollectSpace()
-function! s:CollectSpace() range
-  :'<,'>:s/\%V[ ]\+/ /g
-endfunction
 "    }}}
 " }}}
 
@@ -532,7 +532,6 @@ map y <Plug>(operator-flashy)
 nmap Y <Plug>(operator-flashy)$
 let g:operator#flashy#flash_time = 120
 let g:operator#flashy#group = "MatchParen"
-
 
 " -----------------
 " YouCompleteMe {{{
