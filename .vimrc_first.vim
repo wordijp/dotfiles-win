@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 06-Nov-2018.
+" Last Change: 22-Nov-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -232,8 +232,8 @@ augroup END
 " ショートカット {{{
 " 新規タブ
 nmap <C-N> :tabnew<CR>
-nmap <A-Left> :tabprev<CR>
-nmap <A-Right> :tabnext<CR>
+nmap <A-Left> :tabrewind<CR>
+nmap <A-Right> :tablast<CR>
 nmap <S-A-Left> :tabmove -1<CR>
 nmap <S-A-Right> :tabmove +1<CR>
 
