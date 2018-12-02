@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version gvimrc file.
 " 日本語版のデフォルトGUI設定ファイル(gvimrc) - Vim 8.1
 "
-" Last Change: 23-Sep-2018.
+" Last Change: 09-Nov-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -42,6 +42,8 @@ au FileType * colorscheme desert
 au FileType python colorscheme darkblue
 " C#
 au FileType cs   colorscheme slate
+" Markdown
+au FileType markdown colorscheme peachpuff
 
 " カーソル位置の表示 {{{
 augroup vimrc-auto-cursorline
