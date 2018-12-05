@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version gvimrc file.
 " 日本語版のデフォルトGUI設定ファイル(gvimrc) - Vim 8.1
 "
-" Last Change: 09-Nov-2018.
+" Last Change: 06-Dec-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -104,6 +104,10 @@ map <S-Insert>		"+gP
 
 cmap <C-V>		<C-R>+
 cmap <S-Insert>		<C-R>+
+
+" CTRL-S are Save
+noremap <C-S> :w<CR>
+inoremap <C-S> <ESC>:w<CR>a
 " }}}
 
 
