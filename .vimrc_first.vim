@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 23-Nov-2018.
+" Last Change: 08-Dec-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -298,8 +298,8 @@ nmap <F3> :VimFilerTree<CR> :Tagbar<CR>
 nmap <F8> :TagbarTogglePause<CR>:TagbarTogglePause<CR>
 
 " poslist {{{
-map <C-o> <Plug>(poslist-prev-line)
-map <C-i> <Plug>(poslist-next-line)
+map <C-o> <Plug>(poslist-prev-pos)
+map <C-i> <Plug>(poslist-next-pos)
 " これはデフォだが、忘れないように書いておく
 "map <C-o> <Plug>(poslist-prev-buf)
 "map <C-i> <Plug>(poslist-next-buf)
@@ -751,6 +751,7 @@ autocmd FileType go nmap <F2> :GoRename<CR>
 autocmd FileType go nmap <F5> :QuickRun go-run<CR>
 autocmd FileType go nmap <C-F5> :QuickRun go-run-shell<CR>
 autocmd FileType go nmap <F7> :QuickRun go-build<CR>
+"autocmd FileType go nmap <F7> :QuickRun make<CR>
 
 " PHP
 "autocmd FileType php nmap <F7> :QuickRun php-linter<CR>
