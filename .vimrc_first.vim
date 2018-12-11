@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 11-Dec-2018.
+" Last Change: 08-Dec-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -98,7 +98,6 @@ Plug 'Shougo/vimfiler.vim'
 Plug 'Shougo/vimproc', {'do': 'make'}
 Plug 'majutsushi/tagbar'
 Plug 'luochen1990/rainbow'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-surround'
 Plug 't9md/vim-quickhl'
 Plug 'yami-beta/vim-responsive-tabline'
@@ -227,18 +226,6 @@ augroup rainbow_toggle_on
   autocmd!
   autocmd VimEnter,BufEnter,BufWritePost * :RainbowToggleOn
 augroup END
-" }}}
-
-" ------------------------
-" vim-multiple-cursors {{{
-" NOTE: vmode中のfはclever-fと競合するので使わない
-let g:multi_cursor_use_default_mapping = 0
-let g:multi_cursor_start_word_key = '<Leader><C-n>'
-let g:multi_cursor_next_key = '<C-n>'
-let g:multi_cursor_start_key = 'g<C-n>'
-let g:multi_cursor_prev_key = '<S-n>'
-let g:multi_cursor_skip_key = '<C-x>'
-let g:multi_cursor_quit_key = '<Esc>'
 " }}}
 
 " ------------------
@@ -909,8 +896,8 @@ function! s:keepPosExec(cmd)
 endfunction
 " }}}
 
-" -------------------------
-" LanguageClient-neovim {{{
+" -----------------------------
+" LanguageClient-neovim {{{ ---
 " NOTE: PHPは'wordijp/LanguageServer-php-tcp-neovim'で設定
 let g:LanguageClient_serverCommands = {
   \ 'cpp': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
