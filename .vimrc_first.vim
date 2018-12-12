@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 08-Dec-2018.
+" Last Change: 12-Dec-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -91,6 +91,7 @@ Plug 'davidhalter/jedi-vim'
 " PHP
 Plug 'stephpy/vim-php-cs-fixer'
 " Utility
+Plug 'cpiger/NeoDebug' " NOTE: Vim上で動くgdbフロントエンド、cgdbと併用してみる
 Plug 'airblade/vim-rooter' " .gitプロジェクトでは常にルートをカレントディレクトリへ
 Plug 'Shougo/denite.nvim'
 Plug 'Shougo/unite.vim'
