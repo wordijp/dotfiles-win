@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version gvimrc file.
 " 日本語版のデフォルトGUI設定ファイル(gvimrc) - Vim 8.1
 "
-" Last Change: 06-Dec-2018.
+" Last Change: 13-Dec-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -36,14 +36,34 @@ let g:gvimrc_first_finish = 1
 
 "let g:molokai_original = 1
 " 共通
-au FileType * colorscheme desert
-" ここから個別設定 ---
-" Python
-au FileType python colorscheme darkblue
-" C#
-au FileType cs   colorscheme slate
-" Markdown
-au FileType markdown colorscheme peachpuff
+
+" カラースキーム {{{
+au FileType * call <SID>changeColorscheme()
+function! s:changeColorscheme()
+  if &ft == 'python'
+    " Python
+    if get(g:, 'colors_name', '') != 'darkblue'
+      colorscheme darkblue
+    end
+  elseif &ft == 'cs'
+    " C#
+    if get(g:, 'colors_name', '') != 'slate'
+      colorscheme slate
+    end
+  elseif &ft == 'markdown'
+    " Markdown
+    if get(g:, 'colors_name', '') != 'peachpuff'
+      colorscheme peachpuff 
+    end
+  else
+    if get(g:, 'colors_name', '') != 'desert'
+      colorscheme desert
+    end
+  end
+endfunction
+
+syntax on
+" }}}
 
 " カーソル位置の表示 {{{
 augroup vimrc-auto-cursorline
@@ -133,14 +153,6 @@ if filereadable(g:save_window_file)
   execute 'source' g:save_window_file
 endif
 " }}}
-
-
-" syntaxが崩れる事があるので応急処置
-augroup SyntaxOn
-  au!
-  au BufRead * :syntax on
-augroup END
-
 
 " 追加ここまで -------------------------------------------------------------
 "---------------------------------------------------------------------------
