@@ -41,24 +41,19 @@ let g:gvimrc_first_finish = 1
 au FileType * call <SID>changeColorscheme()
 function! s:changeColorscheme()
   if &ft == 'python'
-    " Python
-    if get(g:, 'colors_name', '') != 'darkblue'
-      colorscheme darkblue
-    end
+    call s:ifNeedColorScheme('darkblue')
   elseif &ft == 'cs'
-    " C#
-    if get(g:, 'colors_name', '') != 'slate'
-      colorscheme slate
-    end
+    call s:ifNeedColorScheme('slate')
   elseif &ft == 'markdown'
-    " Markdown
-    if get(g:, 'colors_name', '') != 'peachpuff'
-      colorscheme peachpuff 
-    end
+    call s:ifNeedColorScheme('peachpuff')
   else
-    if get(g:, 'colors_name', '') != 'desert'
-      colorscheme desert
-    end
+    call s:ifNeedColorScheme('desert')
+  end
+endfunction
+
+function! s:ifNeedColorScheme(scheme)
+  if get(g:, 'colors_name', '') != a:scheme
+    execute 'colorscheme ' . a:scheme
   end
 endfunction
 
