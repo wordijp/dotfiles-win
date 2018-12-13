@@ -302,14 +302,14 @@ nmap <F8> :TagbarTogglePause<CR>:TagbarTogglePause<CR>
 " poslist {{{
 map <C-o> <Plug>(poslist-prev-pos)
 map <C-i> <Plug>(poslist-next-pos)
-" これはデフォだが、忘れないように書いておく
-"map <C-o> <Plug>(poslist-prev-buf)
-"map <C-i> <Plug>(poslist-next-buf)
+
+map <C-S-o> <Plug>(poslist-prev-buf)
+map <C-S-i> <Plug>(poslist-next-buf)
 "    }}}
 " }}}
 
 " NeoDebug {{{
-let g:neodbg_keymap_print_variable = '<C-I>' " defaul(<C-P>)はctrlpと被る
+let g:neodbg_keymap_print_variable = '<C-Enter>' " defaul(<C-P>)はctrlpと被る
 let g:neodbg_openbreaks_default    = 1 " breakpoints
 let g:neodbg_openwatchs_default    = 1 " watchpoints: expressionsと共用窓なので、ONにしとく
 " }}}
