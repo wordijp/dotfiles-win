@@ -254,6 +254,15 @@ packadd! editexisting
 " 1画面用
 "nmap <C-F1> :set columns=120<CR> :set lines=50<CR>
 
+" 画面リサイズ
+nmap <C-E> [winsize]
+nnoremap <silent> [winsize]_ :resize 5<CR>
+nnoremap <silent> [winsize]- :resize -3<CR>
+nnoremap <silent> [winsize]+ :resize +3<CR>
+nnoremap <silent> [winsize]v_ :vertical resize 20<CR>
+nnoremap <silent> [winsize]v- :vertical resize -3<CR>
+nnoremap <silent> [winsize]v+ :vertical resize +3<CR>
+
 " :q等をスペースqでも押せるように
 nnoremap <Space>w  :<C-u>w<CR>
 nnoremap <Space>q  :<C-u>q<CR>
