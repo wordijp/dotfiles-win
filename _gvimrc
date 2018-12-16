@@ -2,7 +2,7 @@
 set guioptions-=T
 " タイトルバーの先頭に'..'を付ける
 " NOTE : PPxのD&D一覧で一番上に来るように
-set titlestring=..\ %<%f\ %M\ (%F)\ -\ GVIM
+set titlestring=..\ %<%f\ %M\ (%{getcwd()})\ -\ GVIM
 " 文字コードと改行コードを表示する
 set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l/%L,%c%V%8P
 " gVimでもテキストベースのタブページを使う
