@@ -2,7 +2,7 @@
 "----------------------
 " 編集に関する設定: {{{
 set encoding=utf-8
-set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
+set fileencodings=utf-8,sjis,euc-jp
 au FileType * set fileformats=unix,dos,mac
 au FileType dosbatch set fenc=cp932
 au FileType dosbatch set fileformats=dos
