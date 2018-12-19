@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 14-Dec-2018.
+" Last Change: 20-Dec-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -254,14 +254,30 @@ packadd! editexisting
 " 1画面用
 "nmap <C-F1> :set columns=120<CR> :set lines=50<CR>
 
-" 画面リサイズ
+" 画面リサイズ {{{
 nmap <C-E> [winsize]
-nnoremap <silent> [winsize]_ :resize 5<CR>
+nnoremap <silent> [winsize]^ :resize 5<CR>
+nnoremap <silent> [winsize]_ :call <SID>resizeMax(5)<CR>
+nnoremap <silent> [winsize]\ :call <SID>resizeMax(5)<CR>
 nnoremap <silent> [winsize]- :resize -3<CR>
 nnoremap <silent> [winsize]+ :resize +3<CR>
-nnoremap <silent> [winsize]v_ :vertical resize 20<CR>
-nnoremap <silent> [winsize]v- :vertical resize -3<CR>
-nnoremap <silent> [winsize]v+ :vertical resize +3<CR>
+nnoremap <silent> [winsize]; :resize +3<CR>
+function! s:resizeMax(invsize)
+  silent! execute "normal! \<C-W>_"
+  silent! execute "resize " . (winheight(0) - a:invsize)
+endfunction
+
+nnoremap <silent> [winsize]m :vertical resize 20<CR>
+nnoremap <silent> [winsize]< :vertical resize -3<CR>
+nnoremap <silent> [winsize], :vertical resize -3<CR>
+nnoremap <silent> [winsize]> :vertical resize +3<CR>
+nnoremap <silent> [winsize]. :vertical resize +3<CR>
+nnoremap <silent> [winsize]/ :call <SID>verticalResizeMax(20)<CR>
+function! s:verticalResizeMax(invsize)
+  silent! execute "normal! \<C-W>|"
+  silent! execute "vertical resize " . (winwidth(0) - a:invsize)
+endfunction
+" }}}
 
 " :q等をスペースqでも押せるように
 nnoremap <Space>w  :<C-u>w<CR>
