@@ -115,7 +115,7 @@ Plug 'mattesgroeger/vim-bookmarks'
 "Plug 'soramugi/auto-ctags.vim'
 Plug 'wordijp/auto-ctags.vim' " tagsファイル名固定版
 Plug 'jlanzarotta/bufexplorer'
-Plug 'thinca/vim-poslist'
+"Plug 'thinca/vim-poslist'
 Plug 'tyru/open-browser.vim'
 " Other
 Plug 'mattn/vim-pixela' " Vim利用履歴
@@ -324,11 +324,11 @@ nmap <F3> :VimFilerTree<CR> :Tagbar<CR>
 nmap <F8> :TagbarTogglePause<CR>:TagbarTogglePause<CR>
 
 " poslist {{{
-map <C-o> <Plug>(poslist-prev-pos)
-map <C-i> <Plug>(poslist-next-pos)
+"map <C-o> <Plug>(poslist-prev-pos)
+"map <C-i> <Plug>(poslist-next-pos)
 
-map <C-S-o> <Plug>(poslist-prev-buf)
-map <C-S-i> <Plug>(poslist-next-buf)
+"map <C-S-o> <Plug>(poslist-prev-buf)
+"map <C-S-i> <Plug>(poslist-next-buf)
 "    }}}
 " }}}
 
