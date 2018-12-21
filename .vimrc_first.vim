@@ -609,7 +609,9 @@ nnoremap <C-]> :call <SID>defJump()<CR>
 nnoremap <C-h> :vsp<CR>:call <SID>defJump()<CR>
 nnoremap <C-k> :split<CR>:call <SID>defJump()<CR>
 function s:defJump()
-  if &ft ==# 'go' || &ft ==# 'cpp' || &ft ==# 'php' || &ft ==# 'ruby'
+  if &ft ==# 'go'
+    :GoDef
+  elseif &ft ==# 'cpp' || &ft ==# 'php' || &ft ==# 'ruby'
     " 実装へジャンプ
     :call LanguageClient#textDocument_definition()
   elseif &ft ==# 'rust'
@@ -934,10 +936,10 @@ endfunction
 " NOTE: PHPは'wordijp/LanguageServer-php-tcp-neovim'で設定
 let g:LanguageClient_serverCommands = {
   \ 'cpp': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
-  \ 'go': ['golsp', '-mode', 'stdio'],
   \ 'ruby': ['cmd', '/c', 'solargraph stdio'],
   \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
   \ }
+  "\ 'go': ['golsp', '-mode', 'stdio'],
 " }}}
 
 " --------
