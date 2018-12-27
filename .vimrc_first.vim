@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 21-Dec-2018.
+" Last Change: 27-Dec-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -193,13 +193,14 @@ let g:ale_linters = {
   \ 'php': ['phpstan'],
   \ 'rust': ['cargo'],
   \ 'go': ['golint', 'gobuild'],
-  \ 'cpp': ['cquery'],
+  \ 'cpp': ['clangd'],
   \ 'javascript': ['eslint'],
   \ 'javascript.jsx': ['eslint'],
   \ 'typescript': ['tsserver'],
   \ 'python': ['pylint'],
   \ 'ruby': ['ruby'],
   \}
+  "\ 'cpp': ['cquery'],
   " flake8は親切過ぎ
   " rlsは動作が遅い
   "\ 'python': ['pylint'],
@@ -935,10 +936,12 @@ endfunction
 " LanguageClient-neovim {{{ ---
 " NOTE: PHPは'wordijp/LanguageServer-php-tcp-neovim'で設定
 let g:LanguageClient_serverCommands = {
-  \ 'cpp': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
+  \ 'cpp': ['clangd'],
+  \ 'c': ['clangd'],
   \ 'ruby': ['cmd', '/c', 'solargraph stdio'],
   \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
   \ }
+  "\ 'cpp': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
   "\ 'go': ['golsp', '-mode', 'stdio'],
 " }}}
 
