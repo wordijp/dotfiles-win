@@ -193,7 +193,8 @@ let g:ale_linters = {
   \ 'php': ['phpstan'],
   \ 'rust': ['cargo'],
   \ 'go': ['golint', 'gobuild'],
-  \ 'cpp': ['clangd'],
+  \ 'cpp': ['cquery'],
+  \ 'c': ['cquery'],
   \ 'javascript': ['eslint'],
   \ 'javascript.jsx': ['eslint'],
   \ 'typescript': ['tsserver'],
@@ -201,6 +202,7 @@ let g:ale_linters = {
   \ 'ruby': ['ruby'],
   \}
   "\ 'cpp': ['cquery'],
+  "\ 'cpp': ['clangd'],
   " flake8は親切過ぎ
   " rlsは動作が遅い
   "\ 'python': ['pylint'],
@@ -936,12 +938,13 @@ endfunction
 " LanguageClient-neovim {{{ ---
 " NOTE: PHPは'wordijp/LanguageServer-php-tcp-neovim'で設定
 let g:LanguageClient_serverCommands = {
-  \ 'cpp': ['clangd'],
-  \ 'c': ['clangd'],
+  \ 'cpp': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
+  \ 'c': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
   \ 'ruby': ['cmd', '/c', 'solargraph stdio'],
   \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
   \ }
   "\ 'cpp': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
+  "\ 'cpp': ['clangd'],
   "\ 'go': ['golsp', '-mode', 'stdio'],
 " }}}
 
