@@ -286,6 +286,14 @@ nnoremap <Space>w  :<C-u>w<CR>
 nnoremap <Space>q  :<C-u>q<CR>
 nnoremap <Space>Q  :<C-u>q!<CR>
 
+" ()入力
+inoremap <C-8> (
+inoremap <C-F8> (
+inoremap <F8> (
+inoremap <C-9> )
+inoremap <C-F9> )
+inoremap <F9> )
+
 " smooth_scroll.vim {{{
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 1)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 1)<CR>
