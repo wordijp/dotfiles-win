@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 27-Dec-2018.
+" Last Change: 29-Dec-2018.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -877,6 +877,9 @@ endfunction
 " Golang {{{
 " 保存時に自動整形
 let g:go_fmt_autosave = 1
+command! -bar GoFmtOff let g:go_fmt_autosave = 0
+command! -bar GoFmtOn let g:go_fmt_autosave = 1
+
 let g:go_fmt_command = "gofmt"
 
 let g:go_build_tags = "mycustomtag"
