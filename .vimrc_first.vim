@@ -833,6 +833,7 @@ autocmd FileType javascript nmap <F7> :QuickRun eslint-all<CR>
 
 " Python
 autocmd FileType python nmap <F2> :call jedi#rename()<CR>
+autocmd FileType python nmap <F2> :call jedi#show_documentation()<CR>
 " }}}
 
 " ----------------
@@ -919,7 +920,7 @@ let g:racer_experimental_completer = 1
 " pythonのrename用のマッピングがquickrunとかぶるため回避させる
 "autocmd FileType python
 let g:jedi#rename_command = ""
-let g:jedi#documentation_command = "<S-F1>"
+let g:jedi#documentation_command = ""
 " }}}
 
 " -------
