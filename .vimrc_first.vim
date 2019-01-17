@@ -86,7 +86,7 @@ Plug 'racer-rust/vim-racer'
 " Go
 Plug 'fatih/vim-go'
 " Python
-"Plug 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim'
 " PHP
 Plug 'stephpy/vim-php-cs-fixer'
 " Utility
@@ -832,7 +832,7 @@ autocmd FileType javascript,javascript.jsx,typescript nmap <F2> :YcmCompleter Re
 autocmd FileType javascript nmap <F7> :QuickRun eslint-all<CR>
 
 " Python
-"autocmd FileType python nmap <F2> :call jedi#rename()<CR>
+autocmd FileType python nmap <F2> :call jedi#rename()<CR>
 " }}}
 
 " ----------------
@@ -918,8 +918,8 @@ let g:racer_experimental_completer = 1
 " Python {{{
 " pythonのrename用のマッピングがquickrunとかぶるため回避させる
 "autocmd FileType python
-"let g:jedi#rename_command = ""
-"let g:jedi#documentation_command = "<S-F1>"
+let g:jedi#rename_command = ""
+let g:jedi#documentation_command = "<S-F1>"
 " }}}
 
 " -------
