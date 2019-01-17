@@ -10,8 +10,9 @@ FILES	= \
 	_gvimrc \
 	.gvimrc_first.vim \
 	.pylintrc \
+	.pycodestyle \
 	.ycm_extra_conf.py \
-	tslint.json
+	tslint.json \
 
 DIRS	= \
 	.phan \

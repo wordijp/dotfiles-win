@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 29-Dec-2018.
+" Last Change: 18-Jan-2019.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -86,7 +86,7 @@ Plug 'racer-rust/vim-racer'
 " Go
 Plug 'fatih/vim-go'
 " Python
-Plug 'davidhalter/jedi-vim'
+"Plug 'davidhalter/jedi-vim'
 " PHP
 Plug 'stephpy/vim-php-cs-fixer'
 " Utility
@@ -198,7 +198,6 @@ let g:ale_linters = {
   \ 'javascript': ['eslint'],
   \ 'javascript.jsx': ['eslint'],
   \ 'typescript': ['tsserver'],
-  \ 'python': ['pylint'],
   \ 'ruby': ['ruby'],
   \}
   "\ 'cpp': ['cquery'],
@@ -215,9 +214,24 @@ let g:ale_php_phpstan_configuration = $HOME . '\.phpstan\phpstan.neon'
 let g:ale_typescript_tslint_config_path = $HOME . '\tslint.json'
 " 無くても動く
 "let g:ale_javascript_eslint_options = '--config '.$HOME.'\.eslintrc.yml'
-let g:ale_python_pylint_options = '--rcfile '.$HOME.'\.pylintrc'
 
-let g:ale_python_auto_pipenv = 0
+" NOTE: Pythonはlspを使う
+"let g:ale_python_pylint_options = '--rcfile '.$HOME.'\.pylintrc'
+"let g:ale_python_auto_pipenv = 0
+" NOTE: 何故か明示的に無効化が必要
+let g:ale_python_autopep8_executable = ''
+let g:ale_python_black_executable = ''
+let g:ale_python_flake8_executable = ''
+let g:ale_python_isort_executable = ''
+let g:ale_python_mypy_executable = ''
+let g:ale_python_prospector_options = ''
+let g:ale_python_pyflakes_executable = ''
+let g:ale_python_pylint_executable = ''
+let g:ale_python_pyls_executable = ''
+let g:ale_python_pyre_executable = ''
+let g:ale_python_vulture_executable = ''
+let g:ale_python_yapf_executable = ''
+let g:ale_python_pycodestyle_executable = ''
 " }}}
 
 " -----------
@@ -818,7 +832,7 @@ autocmd FileType javascript,javascript.jsx,typescript nmap <F2> :YcmCompleter Re
 autocmd FileType javascript nmap <F7> :QuickRun eslint-all<CR>
 
 " Python
-autocmd FileType python nmap <F2> :call jedi#rename()<CR>
+"autocmd FileType python nmap <F2> :call jedi#rename()<CR>
 " }}}
 
 " ----------------
@@ -903,8 +917,9 @@ let g:racer_experimental_completer = 1
 " ----------
 " Python {{{
 " pythonのrename用のマッピングがquickrunとかぶるため回避させる
-let g:jedi#rename_command = ""
-let g:jedi#documentation_command = "<S-F1>"
+"autocmd FileType python
+"let g:jedi#rename_command = ""
+"let g:jedi#documentation_command = "<S-F1>"
 " }}}
 
 " -------
@@ -951,6 +966,7 @@ endfunction
 let g:LanguageClient_serverCommands = {
   \ 'cpp': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
   \ 'c': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
+  \ 'python': ['pyls'],
   \ 'ruby': ['cmd', '/c', 'solargraph stdio'],
   \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
   \ }

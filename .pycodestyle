@@ -1,0 +1,4 @@
+[pycodestyle]
+select =
+ignore = E226,E302
+max_line_length = 200
