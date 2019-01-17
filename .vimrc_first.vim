@@ -636,12 +636,12 @@ nnoremap <C-k> :split<CR>:call <SID>defJump()<CR>
 function s:defJump()
   if &ft ==# 'go'
     :GoDef
-  elseif &ft ==# 'c' || &ft ==# 'cpp' || &ft ==# 'php' || &ft ==# 'ruby'
+  elseif &ft ==# 'c' || &ft ==# 'cpp' || &ft ==# 'php' || &ft ==# 'ruby' || &ft ==# 'python'
     " 実装へジャンプ
     :call LanguageClient#textDocument_definition()
   elseif &ft ==# 'rust'
     :execute "normal \<Plug>(rust-def)"
-  elseif &ft ==# 'javascript' || &ft ==# 'javascript.jsx' || &ft ==# 'typescript' || &ft ==# 'python'
+  elseif &ft ==# 'javascript' || &ft ==# 'javascript.jsx' || &ft ==# 'typescript'
     :YcmCompleter GoToDefinition
   else
     :exe("tjump ".expand('<cword>'))
