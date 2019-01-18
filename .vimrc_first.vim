@@ -832,7 +832,29 @@ autocmd FileType javascript,javascript.jsx,typescript nmap <F2> :YcmCompleter Re
 autocmd FileType javascript nmap <F7> :QuickRun eslint-all<CR>
 
 " Python
-autocmd FileType python nmap <F1> :call jedi#show_documentation()<CR>
+autocmd FileType python nmap <F1> :call <SID>getDocPython()<CR>
+function! s:getDocPython()
+  " 1. try jedi
+  let l:prev_bufnr = bufnr('%')
+  :call jedi#show_documentation()
+  if bufnr('%') != l:prev_bufnr
+    " success
+    return
+  endif
+
+  " 2. try YouCompleteMe
+  let l:prev_bufnr = bufnr('$')
+  :YcmCompleter GetDoc
+  let l:after_bufnr = bufnr('$')
+
+  if l:after_bufnr != l:prev_bufnr
+    " success
+    :call win_gotoid(bufwinid(l:after_bufnr))
+    :set filetype=rustdoc
+    return
+  endif
+endfunction
+
 autocmd FileType python nmap <F2> :call jedi#rename()<CR>
 " }}}
 
@@ -919,6 +941,9 @@ let g:racer_experimental_completer = 1
 " Python {{{
 " pythonのrename用のマッピングがquickrunとかぶるため回避させる
 "autocmd FileType python
+let g:jedi#completions_enabled = 0
+let g:jedi#force_py_version = 3
+
 let g:jedi#rename_command = ""
 let g:jedi#documentation_command = ""
 " }}}
