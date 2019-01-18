@@ -942,7 +942,7 @@ let g:racer_experimental_completer = 1
 " pythonのrename用のマッピングがquickrunとかぶるため回避させる
 "autocmd FileType python
 let g:jedi#completions_enabled = 0
-let g:jedi#force_py_version = 3
+"let g:jedi#force_py_version = 3
 
 let g:jedi#rename_command = ""
 let g:jedi#documentation_command = ""
