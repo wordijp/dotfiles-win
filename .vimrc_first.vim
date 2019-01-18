@@ -832,8 +832,8 @@ autocmd FileType javascript,javascript.jsx,typescript nmap <F2> :YcmCompleter Re
 autocmd FileType javascript nmap <F7> :QuickRun eslint-all<CR>
 
 " Python
+autocmd FileType python nmap <F1> :call jedi#show_documentation()<CR>
 autocmd FileType python nmap <F2> :call jedi#rename()<CR>
-autocmd FileType python nmap <F2> :call jedi#show_documentation()<CR>
 " }}}
 
 " ----------------
