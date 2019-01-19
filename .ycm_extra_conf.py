@@ -63,7 +63,7 @@ flags = [
 'C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include',
 # Boost
 '-I',
-'E:/SDKs/boost_1_67_0',
+'E:/SDKs/boost_1_69_0',
 # '-isystem',
 # 'cpp/pybind11',
 # '-isystem',
