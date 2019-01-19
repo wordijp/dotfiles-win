@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 18-Jan-2019.
+" Last Change: 19-Jan-2019.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -189,17 +189,21 @@ let g:bookmark_auto_save_file = expand('~/.vim/tmp/.vim-bookmarks')
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 
+" NOTE: 未指定でdisableになる
+"       lsp側のみ使う場合にdisable
 let g:ale_linters = {
+  \ 'c': [],
+  \ 'cpp': [],
+  \ 'python': [],
   \ 'php': ['phpstan'],
   \ 'rust': ['cargo'],
   \ 'go': ['golint', 'gobuild'],
-  \ 'cpp': ['cquery'],
-  \ 'c': ['cquery'],
   \ 'javascript': ['eslint'],
   \ 'javascript.jsx': ['eslint'],
   \ 'typescript': ['tsserver'],
   \ 'ruby': ['ruby'],
   \}
+  "\ 'c': ['cquery'],
   "\ 'cpp': ['cquery'],
   "\ 'cpp': ['clangd'],
   " flake8は親切過ぎ
@@ -218,20 +222,6 @@ let g:ale_typescript_tslint_config_path = $HOME . '\tslint.json'
 " NOTE: Pythonはlspを使う
 "let g:ale_python_pylint_options = '--rcfile '.$HOME.'\.pylintrc'
 "let g:ale_python_auto_pipenv = 0
-" NOTE: 何故か明示的に無効化が必要
-let g:ale_python_autopep8_executable = ''
-let g:ale_python_black_executable = ''
-let g:ale_python_flake8_executable = ''
-let g:ale_python_isort_executable = ''
-let g:ale_python_mypy_executable = ''
-let g:ale_python_prospector_options = ''
-let g:ale_python_pyflakes_executable = ''
-let g:ale_python_pylint_executable = ''
-let g:ale_python_pyls_executable = ''
-let g:ale_python_pyre_executable = ''
-let g:ale_python_vulture_executable = ''
-let g:ale_python_yapf_executable = ''
-let g:ale_python_pycodestyle_executable = ''
 " }}}
 
 " -----------
@@ -990,12 +980,13 @@ endfunction
 " LanguageClient-neovim {{{ ---
 " NOTE: PHPは'wordijp/LanguageServer-php-tcp-neovim'で設定
 let g:LanguageClient_serverCommands = {
-  \ 'cpp': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
   \ 'c': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
+  \ 'cpp': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
   \ 'python': ['pyls'],
   \ 'ruby': ['cmd', '/c', 'solargraph stdio'],
   \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
   \ }
+  "\ 'c': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
   "\ 'cpp': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
   "\ 'cpp': ['clangd'],
   "\ 'go': ['golsp', '-mode', 'stdio'],
