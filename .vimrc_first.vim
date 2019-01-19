@@ -4,7 +4,7 @@ scriptencoding utf-8
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim 8.1
 "
-" Last Change: 19-Jan-2019.
+" Last Change: 20-Jan-2019.
 " Maintainer:  MURAOKA Taro <koron.kaoriya@gmail.com>
 "
 " 解説:
@@ -932,7 +932,7 @@ let g:racer_experimental_completer = 1
 " pythonのrename用のマッピングがquickrunとかぶるため回避させる
 "autocmd FileType python
 let g:jedi#completions_enabled = 0
-"let g:jedi#force_py_version = 3
+let g:jedi#force_py_version = 3
 
 let g:jedi#rename_command = ""
 let g:jedi#documentation_command = ""
@@ -980,8 +980,8 @@ endfunction
 " LanguageClient-neovim {{{ ---
 " NOTE: PHPは'wordijp/LanguageServer-php-tcp-neovim'で設定
 let g:LanguageClient_serverCommands = {
-  \ 'c': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
-  \ 'cpp': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
+  \ 'c': ['clangd'],
+  \ 'cpp': ['clangd'],
   \ 'python': ['pyls'],
   \ 'ruby': ['cmd', '/c', 'solargraph stdio'],
   \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
