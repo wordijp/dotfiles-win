@@ -61,6 +61,7 @@ Plug 'junegunn/vim-plug', {
   \ }
 
 " コード補完
+" NOTE: rustのracerdは入れない、もしくは削除(lspを使う)
 Plug 'Valloric/YouCompleteMe'
 " Linter
 Plug 'w0rp/ale'
@@ -81,8 +82,6 @@ Plug 'thinca/vim-ref'
 " HTML
 Plug 'mattn/emmet-vim'
 Plug 'gregsexton/MatchTag'
-" Rust
-Plug 'racer-rust/vim-racer'
 " Go
 Plug 'fatih/vim-go'
 " Python
@@ -626,11 +625,9 @@ nnoremap <C-k> :split<CR>:call <SID>defJump()<CR>
 function s:defJump()
   if &ft ==# 'go'
     :GoDef
-  elseif &ft ==# 'c' || &ft ==# 'cpp' || &ft ==# 'php' || &ft ==# 'ruby' || &ft ==# 'python'
+  elseif &ft ==# 'c' || &ft ==# 'cpp' || &ft ==# 'php' || &ft ==# 'ruby' || &ft ==# 'python' || &ft ==# 'rust'
     " 実装へジャンプ
     :call LanguageClient#textDocument_definition()
-  elseif &ft ==# 'rust'
-    :execute "normal \<Plug>(rust-def)"
   elseif &ft ==# 'javascript' || &ft ==# 'javascript.jsx' || &ft ==# 'typescript'
     :YcmCompleter GoToDefinition
   else
@@ -763,25 +760,45 @@ autocmd FileType cpp setlocal errorformat+=make:\ 'all'\ is\ up\ to\ date.
 " rust
 autocmd FileType rust nmap <F1> :call <SID>getDocRust()<CR>
 function! s:getDocRust()
-  " 1. try YouCompleteMe
-  let l:prev_bufnr = bufnr('$')
-  :YcmCompleter GetDoc
-  let l:after_bufnr = bufnr('$')
+  " try YouCompleteMe
+  "let l:prev_bufnr = bufnr('$')
+  ":YcmCompleter GetDoc
+  "let l:after_bufnr = bufnr('$')
 
-  if l:after_bufnr != l:prev_bufnr
+  "if l:after_bufnr != l:prev_bufnr
+  "  " success
+  "  :call win_gotoid(bufwinid(l:after_bufnr))
+  "  :set filetype=rustdoc
+  "  return
+  "endif
+  
+  " try lsp
+  let l:prev_bufnr = bufnr('%')
+  :call LanguageClient#textDocument_hover()
+  let l:after_bufnr = bufnr('$')
+  let l:i = 0
+  " hoverは非同期なので、ポーリングで待つ
+  while (l:after_bufnr == l:prev_bufnr || win_getid(l:after_bufnr) == 0) && l:i < 20
+    redraw
+    sleep 100m
+    let l:after_bufnr = bufnr('$')
+    let l:i = l:i + 1
+  endwhile
+
+  if l:after_bufnr != l:prev_bufnr && win_getid(l:after_bufnr) != 0
     " success
     :call win_gotoid(bufwinid(l:after_bufnr))
     :set filetype=rustdoc
     return
   endif
 
-  " 2. try vim-racer
-  let l:prev_bufnr = bufnr('%')
-  :execute "normal \<Plug>(rust-doc)"
-  if bufnr('%') != l:prev_bufnr
-    " success
-    return
-  endif
+  " try vim-racer
+  "let l:prev_bufnr = bufnr('%')
+  ":execute "normal \<Plug>(rust-doc)"
+  "if bufnr('%') != l:prev_bufnr
+  "  " success
+  "  return
+  "endif
 endfunction
 autocmd FileType rust nmap <F2> :call LanguageClient#textDocument_rename()<CR>
 autocmd FileType rust nmap <F5> :QuickRun cargo-run<CR>
@@ -922,9 +939,6 @@ let g:go_highlight_build_constraints = 1
 " 保存時に自動整形
 let g:rustfmt_autosave = 0
 let g:rustfmt_command = 'rustfmt'
-
-let g:racer_cmd = 'racer'
-let g:racer_experimental_completer = 1
 " }}}
 
 " ----------
