@@ -45,7 +45,7 @@ function! s:changeColorscheme()
   elseif &ft == 'cs'
     call s:ifNeedColorScheme('slate')
   elseif &ft == 'markdown'
-    call s:ifNeedColorScheme('peachpuff')
+    "call s:ifNeedColorScheme('peachpuff')
   else
     call s:ifNeedColorScheme('desert')
   end
