@@ -456,6 +456,10 @@ function! s:format()
     \ &ft == 'json' || &ft == 'graphql' || &ft == 'markdown' || &ft == 'vue' || &ft == 'yaml' || &ft == 'html' ||
     \ &ft == 'blade'
     :PrettierAsync
+  elseif &ft == 'php'
+    silent call <SID>basicFormat()
+    silent w
+    silent call PhpCsFixerFixFile()
   else
     :call <SID>basicFormat()
   end
@@ -951,7 +955,7 @@ let g:rustfmt_command = 'rustfmt'
 augroup Formatter
   au!
   " 選択範囲のコードを整形する
-  autocmd FileType c,cpp xnoremap <buffer> <Leader>f :call <SID>formatClang()<CR>
+  autocmd FileType c,cpp xnoremap <buffer> <Space>f :call <SID>formatClang()<CR>
 augroup END
 
 " コード整形(外部コマンドを直接利用)
@@ -1017,19 +1021,10 @@ let g:cssColorVimDoNotMessMyUpdatetime = 1
 " -------
 " PHP {{{
 " PHP-CS-Fixer(コード整形) {{{
-autocmd FileType php nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory_withReload()<CR>
-autocmd FileType php nnoremap <silent><leader>pcf :call PhpCsFixerFixFile_withReload()<CR>
-function! PhpCsFixerFixDirectory_withReload()
-  call PhpCsFixerFixDirectory()
-  :e!
-  :w
-endfunction
+let g:php_cs_fixer_cache = expand('~/.cache/php_cs.cache')
 
-function! PhpCsFixerFixFile_withReload()
-  call PhpCsFixerFixFile()
-  :e!
-  :w
-endfunction
+autocmd FileType php nnoremap <silent><Space>pcd :call PhpCsFixerFixDirectory()<CR>
+"autocmd FileType php nnoremap <silent><Space>pcf :call PhpCsFixerFixFile()<CR>
 "    }}}
 
 " vim-ref {{{
