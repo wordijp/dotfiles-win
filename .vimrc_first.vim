@@ -77,6 +77,10 @@ Plug 'wordijp/LanguageServer-php-tcp-neovim', {
   \ }
 " ビルド、Linter、etc
 Plug 'thinca/vim-quickrun'
+" 整形
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'npm install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html', 'blade'] }
 " 辞書
 Plug 'thinca/vim-ref'
 " HTML
@@ -123,6 +127,10 @@ call plug#end()
 "--------------
 " emmet-vim {{{
 let g:user_emmet_removetag_key='<c-t>'
+" }}}
+
+" pretteir {{{
+let g:prettier#autoformat = 0
 " }}}
 
 " 負荷対策
@@ -442,9 +450,18 @@ nmap <Space>j <Plug>(quickhl-cword-toggle)
 " --------------------------------------------------
 " コード整形 
 " {{{
-autocmd FileType * noremap <Space><Tab> :call <SID>format()<CR>
-autocmd FileType javascript.jsx noremap <Space><Tab> :call BlaceRemoveIndent()<CR> :call <SID>format()<CR>
+noremap <Space><Tab> :call <SID>format()<CR>
 function! s:format()
+  if &ft == 'javascript' || &ft == 'typescript' || &ft == 'css' || &ft == 'less' || &ft == 'scss' ||
+    \ &ft == 'json' || &ft == 'graphql' || &ft == 'markdown' || &ft == 'vue' || &ft == 'yaml' || &ft == 'html' ||
+    \ &ft == 'blade'
+    :PrettierAsync
+  else
+    :call <SID>basicFormat()
+  end
+endfunction
+
+function! s:basicFormat()
   let view = winsaveview()
   normal ggVG=
   silent call winrestview(view)
@@ -454,15 +471,6 @@ function! s:format()
   catch
   finally
     echo '末尾の空白を削除'
-  endtry
-endfunction
-
-function! BlaceRemoveIndent()
-  try
-    " NOTE : mxw/vim-jsxで、)インデントを上手く動作させる応急処置
-    "        (インデントを空にしとかないと上手く動かない)
-    :%:s/\s\+)/)/g
-  catch
   endtry
 endfunction
 
