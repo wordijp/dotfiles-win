@@ -81,7 +81,6 @@ Plug 'thinca/vim-quickrun'
 Plug 'thinca/vim-ref'
 " HTML
 Plug 'mattn/emmet-vim'
-Plug 'gregsexton/MatchTag'
 " Go
 Plug 'fatih/vim-go'
 " Python
