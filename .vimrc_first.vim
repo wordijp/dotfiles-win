@@ -522,7 +522,8 @@ autocmd BufNewFile,BufRead *.{erb} setlocal shiftwidth=2 tabstop=2 softtabstop=2
 " Vim Script
 autocmd FileType vim setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
 " HTML & CSS
-autocmd FileType html,css setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
+" template files(PHP blade)
+autocmd FileType html,css,blade setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
 " VB
 autocmd FileType vb setlocal shiftwidth=4 tabstop=4 softtabstop=4 | set expandtab
 "autocmd BufNewFile,BufRead *.{cls,dcm,frm} setlocal shiftwidth=4 tabstop=4 softtabstop=4 | set expandtab
