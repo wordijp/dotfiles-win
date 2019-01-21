@@ -202,14 +202,7 @@ let g:ale_linters = {
   \ 'typescript': ['tsserver'],
   \ 'ruby': ['ruby'],
   \}
-  "\ 'c': ['cquery'],
-  "\ 'cpp': ['cquery'],
-  "\ 'cpp': ['clangd'],
-  " flake8は親切過ぎ
-  " rlsは動作が遅い
   "\ 'python': ['pylint'],
-  "\ 'python': ['flake8', 'pylint'],
-  "\ 'rust': ['cargo', 'rls'],
   "\ 'ruby': ['rubocop'],
 
 " global config files
@@ -777,7 +770,7 @@ function! s:getDocRust()
   :call LanguageClient#textDocument_hover()
   let l:after_bufnr = bufnr('$')
   let l:i = 0
-  " hoverは非同期なので、ポーリングで待つ
+  " NOTE: hoverは非同期なので、ポーリングで待つ
   while (l:after_bufnr == l:prev_bufnr || win_getid(l:after_bufnr) == 0) && l:i < 20
     redraw
     sleep 100m
@@ -791,14 +784,6 @@ function! s:getDocRust()
     :set filetype=rustdoc
     return
   endif
-
-  " try vim-racer
-  "let l:prev_bufnr = bufnr('%')
-  ":execute "normal \<Plug>(rust-doc)"
-  "if bufnr('%') != l:prev_bufnr
-  "  " success
-  "  return
-  "endif
 endfunction
 autocmd FileType rust nmap <F2> :call LanguageClient#textDocument_rename()<CR>
 autocmd FileType rust nmap <F5> :QuickRun cargo-run<CR>
@@ -1002,6 +987,7 @@ let g:LanguageClient_serverCommands = {
   \ }
   "\ 'c': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
   "\ 'cpp': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
+  "\ 'c': ['clangd'],
   "\ 'cpp': ['clangd'],
   "\ 'go': ['golsp', '-mode', 'stdio'],
 " }}}
