@@ -453,9 +453,11 @@ nmap <Space>j <Plug>(quickhl-cword-toggle)
 noremap <Space><Tab> :call <SID>format()<CR>
 function! s:format()
   if &ft == 'javascript' || &ft == 'typescript' || &ft == 'css' || &ft == 'less' || &ft == 'scss' ||
-    \ &ft == 'json' || &ft == 'graphql' || &ft == 'markdown' || &ft == 'vue' || &ft == 'yaml' || &ft == 'html' ||
-    \ &ft == 'blade'
+    \ &ft == 'json' || &ft == 'graphql' || &ft == 'markdown' || &ft == 'vue' || &ft == 'yaml' || &ft == 'html'
     :PrettierAsync
+  elseif &ft == 'blade'
+    :Prettier
+    :call <SID>basicFormat()
   elseif &ft == 'php'
     silent call <SID>basicFormat()
     silent w
