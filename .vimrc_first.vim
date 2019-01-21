@@ -459,9 +459,8 @@ function! s:format()
     :Prettier
     :call <SID>basicFormat()
   elseif &ft == 'php'
-    silent call <SID>basicFormat()
-    silent w
     silent call PhpCsFixerFixFile()
+    silent call <SID>basicFormat()
   else
     :call <SID>basicFormat()
   end
