@@ -7,6 +7,13 @@ env:
   jquery: true
   # no-undefでブラウザ用グローバル変数を許可する
   browser: true
+
+extends:
+  - plugin:vue/recommended
+
+parserOptions:
+  ecmaVersion: 6
+
 # 0: 無効
 # 1: 警告
 # 2: エラー
@@ -30,7 +37,7 @@ rules:
     - 1
   no-unused-vars:
     # グローバル関数も引っかかるので場合に応じて切り替え
-    - 0
+    - 1
   block-scoped-var:
     - 1
   no-global-assign:
