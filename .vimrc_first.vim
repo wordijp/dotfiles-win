@@ -80,7 +80,7 @@ Plug 'thinca/vim-quickrun'
 " 整形
 Plug 'prettier/vim-prettier', {
   \ 'do': 'npm install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html', 'blade'] }
+  \ 'for': ['javascript', 'javascript.jsx', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html', 'blade'] }
 " 辞書
 Plug 'thinca/vim-ref'
 " HTML
@@ -452,7 +452,8 @@ nmap <Space>j <Plug>(quickhl-cword-toggle)
 " {{{
 noremap <Space><Tab> :call <SID>format()<CR>
 function! s:format()
-  if &ft == 'javascript' || &ft == 'typescript' || &ft == 'css' || &ft == 'less' || &ft == 'scss' ||
+  if &ft == 'javascript' || &ft == 'javascript.jsx' || &ft == 'typescript' ||
+    \ &ft == 'css' || &ft == 'less' || &ft == 'scss' ||
     \ &ft == 'json' || &ft == 'graphql' || &ft == 'markdown' || &ft == 'vue' || &ft == 'yaml' || &ft == 'html'
     :PrettierAsync
   elseif &ft == 'blade'
