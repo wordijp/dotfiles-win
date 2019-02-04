@@ -67,6 +67,9 @@ Plug 'Valloric/YouCompleteMe'
 Plug 'w0rp/ale'
 " 色んな言語のsyntax
 Plug 'sheerun/vim-polyglot', {'do': 'sh build'}
+" filetype切り替え
+Plug 'osyo-manga/vim-precious'
+Plug 'Shougo/context_filetype.vim'
 " 言語サーバープロトコル
 Plug 'autozimu/LanguageClient-neovim', {
   \ 'branch': 'next',
@@ -456,7 +459,7 @@ noremap <Space><Tab> :call <SID>format()<CR>
 function! s:format()
   if &ft == 'javascript' || &ft == 'javascript.jsx' || &ft == 'typescript' ||
     \ &ft == 'css' || &ft == 'less' || &ft == 'scss' ||
-    \ &ft == 'json' || &ft == 'graphql' || &ft == 'markdown' || &ft == 'vue' || &ft == 'yaml' || &ft == 'html'
+    \ &ft == 'json' || &ft == 'graphql' || &ft == 'markdown' || &ft == 'yaml' || &ft == 'html'
     :PrettierAsync
   elseif &ft == 'blade'
     :Prettier
@@ -1021,30 +1024,6 @@ let g:cssColorVimDoNotMessMyUpdatetime = 1
 " JsDocを折り畳む
 "setlocal foldmethod=marker
 "setlocal foldmarker=/*,*/
-" }}}
-
-" -------
-" Vue {{{
-" NERDCommenterのコメントアウトが常にHTMLなのを防ぐ
-let g:ft = ''
-function! NERDCommenter_before()
-  if &ft == 'vue'
-    let g:ft = 'vue'
-    let stack = synstack(line('.'), col('.'))
-    if len(stack) > 0
-      let syn = synIDattr((stack)[0], 'name')
-      if len(syn) > 0
-        exe 'setf ' . substitute(tolower(syn), '^vue_', '', '')
-      endif
-    endif
-  endif
-endfunction
-function! NERDCommenter_after()
-  if g:ft == 'vue'
-    setf vue
-    let g:ft = ''
-  endif
-endfunction
 " }}}
 
 " -------
