@@ -135,6 +135,8 @@ let g:prettier#autoformat = 0
 
 " 負荷対策
 set synmaxcol=500
+set ttyfast
+set lazyredraw
 
 " <leader>をスペースへ
 let mapleader = "\<Space>"
@@ -999,6 +1001,7 @@ let g:LanguageClient_serverCommands = {
   \ 'ruby': ['cmd', '/c', 'solargraph stdio'],
   \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
   \ }
+  "\ 'vue': ['vls'],
   "\ 'c': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
   "\ 'cpp': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
   "\ 'c': ['clangd'],
@@ -1018,6 +1021,30 @@ let g:cssColorVimDoNotMessMyUpdatetime = 1
 " JsDocを折り畳む
 "setlocal foldmethod=marker
 "setlocal foldmarker=/*,*/
+" }}}
+
+" -------
+" Vue {{{
+" NERDCommenterのコメントアウトが常にHTMLなのを防ぐ
+let g:ft = ''
+function! NERDCommenter_before()
+  if &ft == 'vue'
+    let g:ft = 'vue'
+    let stack = synstack(line('.'), col('.'))
+    if len(stack) > 0
+      let syn = synIDattr((stack)[0], 'name')
+      if len(syn) > 0
+        exe 'setf ' . substitute(tolower(syn), '^vue_', '', '')
+      endif
+    endif
+  endif
+endfunction
+function! NERDCommenter_after()
+  if g:ft == 'vue'
+    setf vue
+    let g:ft = ''
+  endif
+endfunction
 " }}}
 
 " -------
