@@ -12,7 +12,7 @@ extends:
   - plugin:vue/recommended
 
 parserOptions:
-  ecmaVersion: 6
+  ecmaVersion: 8
 
 # 0: 無効
 # 1: 警告
@@ -22,7 +22,7 @@ rules:
     - 0
     - tab
   linebreak-style:
-    - 1
+    - 0
     - unix
   semi:
     - 0
@@ -45,3 +45,12 @@ rules:
   no-undef:
     # グローバル定義も引っかかるので場合に応じて切り替え
     - 0
+  # Vue
+  vue/max-attributes-per-line:
+    - off
+  vue/singleline-html-element-content-newline:
+    - off
+  vue/html-self-closing:
+    - off
+  vue/require-default-prop:
+    - off
