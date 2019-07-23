@@ -89,7 +89,7 @@ Plug 'thinca/vim-ref'
 " HTML
 Plug 'mattn/emmet-vim'
 " Go
-Plug 'fatih/vim-go'
+"Plug 'fatih/vim-go'
 " Python
 "Plug 'davidhalter/jedi-vim' " pylsもrename対応したらコメントアウトも削除
 " PHP
@@ -635,9 +635,7 @@ nnoremap <C-]> :call <SID>defJump()<CR>
 nnoremap <C-h> :vsp<CR>:call <SID>defJump()<CR>
 nnoremap <C-k> :split<CR>:call <SID>defJump()<CR>
 function s:defJump()
-  if &ft ==# 'go'
-    :GoDef
-  elseif &ft ==# 'c' || &ft ==# 'cpp' || &ft ==# 'php' || &ft ==# 'ruby' || &ft ==# 'python' || &ft ==# 'rust'
+  if &ft ==# 'go' || &ft ==# 'c' || &ft ==# 'cpp' || &ft ==# 'php' || &ft ==# 'ruby' || &ft ==# 'python' || &ft ==# 'rust'
     " 実装へジャンプ
     :call LanguageClient#textDocument_definition()
   elseif &ft ==# 'javascript' || &ft ==# 'javascript.jsx' || &ft ==# 'typescript'
@@ -755,6 +753,11 @@ let g:quickrun_config = {
 \      "cmdopt": "multi",
 \      "exec": "%c %o",
 \  },
+\  "php-linter-laravel": {
+\      "command": "php-linter",
+\      "cmdopt": "php-l,phpmd",
+\      "exec": "%c %o",
+\  },
 \}
 " }}}
 
@@ -818,7 +821,7 @@ endfunction
 
 " Go
 autocmd FileType go nmap <F1> :GoDoc<CR>
-autocmd FileType go nmap <F2> :GoRename<CR>
+autocmd FileType go nmap <F2> :call LanguageClient#textDocument_rename()<CR>
 autocmd FileType go nmap <F5> :QuickRun go-run<CR>
 autocmd FileType go nmap <C-F5> :QuickRun go-run-shell<CR>
 autocmd FileType go nmap <F7> :QuickRun go-build<CR>
@@ -1000,6 +1003,7 @@ endfunction
 let g:LanguageClient_serverCommands = {
   \ 'c': ['clangd'],
   \ 'cpp': ['clangd'],
+  \ 'go': ['gopls', '-mode', 'stdio'],
   \ 'python': ['pyls'],
   \ 'ruby': ['cmd', '/c', 'solargraph stdio'],
   \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
@@ -1009,7 +1013,6 @@ let g:LanguageClient_serverCommands = {
   "\ 'cpp': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
   "\ 'c': ['clangd'],
   "\ 'cpp': ['clangd'],
-  "\ 'go': ['golsp', '-mode', 'stdio'],
 " }}}
 
 " --------
