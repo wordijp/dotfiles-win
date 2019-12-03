@@ -86,6 +86,11 @@ Plug 'prettier/vim-prettier', {
   \ 'for': ['javascript', 'javascript.jsx', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html', 'blade'] }
 " 辞書
 Plug 'thinca/vim-ref'
+" React(TypeScript)
+"Plug 'leafgarland/typescript-vim'
+"Plug 'peitalin/vim-jsx-typescript'
+Plug 'othree/yajs.vim'
+Plug 'MaxMEllon/vim-jsx-pretty'
 " HTML
 Plug 'mattn/emmet-vim'
 " Go
@@ -520,6 +525,8 @@ autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 autocmd BufRead,BufNewFile *.{cls,dcm,frm} set filetype=vb
 " ruby
 autocmd BufNewFile,BufRead Guardfile  set filetype=ruby
+" typescript.tsx
+autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
 " }}}
 
 " --------------
@@ -617,7 +624,7 @@ let g:auto_ctags_tags_name_fixed = 'tags' " 全filetype共通名
 " tagsファイル作成
 au FileType * call s:tagBuildCmd()
 function s:tagBuildCmd()
-  if &filetype ==# 'go'
+  if &filetype == 'go'
     nnoremap :tags :GoBuildTags mycustomtag
   else
     nnoremap :tags :Ctags
@@ -775,38 +782,44 @@ autocmd FileType cpp setlocal errorformat+=make:\ 'all'\ is\ up\ to\ date.
 " rust
 autocmd FileType rust nmap <F1> :call <SID>getDocRust()<CR>
 function! s:getDocRust()
-  " try YouCompleteMe
-  "let l:prev_bufnr = bufnr('$')
-  ":YcmCompleter GetDoc
-  "let l:after_bufnr = bufnr('$')
-
-  "if l:after_bufnr != l:prev_bufnr
-  "  " success
-  "  :call win_gotoid(bufwinid(l:after_bufnr))
-  "  :set filetype=rustdoc
-  "  return
-  "endif
-  
-  " try lsp
-  let l:prev_bufnr = bufnr('%')
+  let l:prev_winids = s:getWinDict()
   :call LanguageClient#textDocument_hover()
-  let l:after_bufnr = bufnr('$')
+  let l:after_winids = s:getWinDict()
+
+  " NOTE: hoverは非同期・同期が混ざっているので、ポーリングで待つ
   let l:i = 0
-  " NOTE: hoverは非同期なので、ポーリングで待つ
-  while (l:after_bufnr == l:prev_bufnr || win_getid(l:after_bufnr) == 0) && l:i < 20
+  while len(l:prev_winids) == len(l:after_winids) && l:i < 3 " 3で十分
     redraw
     sleep 100m
-    let l:after_bufnr = bufnr('$')
-    let l:i = l:i + 1
+    let l:after_winids = s:getWinDict()
+    let l:i += 1
   endwhile
 
-  if l:after_bufnr != l:prev_bufnr && win_getid(l:after_bufnr) != 0
+  " XXX: 既に開いている時はフォーカスしない
+  if len(l:prev_winids) != len(l:after_winids)
     " success
-    :call win_gotoid(bufwinid(l:after_bufnr))
-    :set filetype=rustdoc
-    return
+    for l:key in keys(l:after_winids)
+      if !has_key(l:prev_winids, l:key)
+        :call win_gotoid(l:after_winids[l:key])
+        ":set filetype=rustdoc
+        break
+      endif
+    endfor
   endif
 endfunction
+function! s:getWinDict()
+  let l:dic = {}
+
+  for l:i in range(1, bufnr('$'))
+    let l:winid = bufwinid(l:i)
+    if l:winid > 0
+      let l:dic[l:i] = l:winid
+    endif
+  endfor
+
+  return l:dic
+endfunction
+
 autocmd FileType rust nmap <F2> :call LanguageClient#textDocument_rename()<CR>
 autocmd FileType rust nmap <F5> :QuickRun cargo-run<CR>
 autocmd FileType rust nmap <C-F5> :QuickRun cargo-run-shell<CR>
@@ -857,15 +870,19 @@ function! s:getDocPython()
   "endif
 
   " 2. try YouCompleteMe
-  let l:prev_bufnr = bufnr('$')
+  let l:prev_winids = s:getWinDict()
   :YcmCompleter GetDoc
-  let l:after_bufnr = bufnr('$')
+  let l:after_winids = s:getWinDict()
 
-  if l:after_bufnr != l:prev_bufnr
+  if len(l:prev_winids) != len(l:after_winids)
     " success
-    :call win_gotoid(bufwinid(l:after_bufnr))
-    :set filetype=rustdoc
-    return
+    for l:key in keys(l:after_winids)
+      if !has_key(l:prev_winids, l:key)
+        :call win_gotoid(l:after_winids[l:key])
+        ":set filetype=rustdoc
+        break
+      endif
+    endfor
   endif
 endfunction
 

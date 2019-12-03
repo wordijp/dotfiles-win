@@ -52,7 +52,7 @@ flags = [
 '-DNDEBUG',
 # For a C project, you would set this to something like 'c99' instead of
 # 'c++11'.
-'-std=c++14',
+'-std=c++17',
 # THIS IS IMPORTANT! Without the '-x' flag, Clang won't know which language to
 # use when compiling headers. So it will guess. Badly. So C++ headers will be
 # compiled as C headers. You don't want that so ALWAYS specify the '-x' flag.
@@ -60,10 +60,10 @@ flags = [
 '-x',
 'c++',
 '-I',
-'C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include',
+'C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.20.27508/include',
 # Boost
 '-I',
-'E:/SDKs/boost_1_69_0',
+'E:/SDKs/boost_1_71_0',
 # '-isystem',
 # 'cpp/pybind11',
 # '-isystem',
@@ -199,21 +199,28 @@ def GetStandardLibraryIndexInSysPath( sys_path ):
 def PythonSysPath( **kwargs ):
   sys_path = kwargs[ 'sys_path' ]
 
-  interpreter_path = kwargs[ 'interpreter_path' ]
-  major_version = subprocess.check_output( [
-    interpreter_path, '-c', 'import sys; print( sys.version_info[ 0 ] )' ]
-  ).rstrip().decode( 'utf8' )
+  dependencies = [ p.join( DIR_OF_THIS_SCRIPT, 'python' ),
+                   p.join( DIR_OF_THIRD_PARTY, 'requests-futures' ),
+                   p.join( DIR_OF_THIRD_PARTY, 'ycmd' ),
+                   p.join( DIR_OF_THIRD_PARTY, 'requests_deps', 'idna' ),
+                   p.join( DIR_OF_THIRD_PARTY, 'requests_deps', 'chardet' ),
+                   p.join( DIR_OF_THIRD_PARTY,
+                           'requests_deps',
+                           'urllib3',
+                           'src' ),
+                   p.join( DIR_OF_THIRD_PARTY, 'requests_deps', 'certifi' ),
+                   p.join( DIR_OF_THIRD_PARTY, 'requests_deps', 'requests' ) ]
 
+  # The concurrent.futures module is part of the standard library on Python 3.
+  interpreter_path = kwargs[ 'interpreter_path' ]
+  major_version = int( subprocess.check_output( [
+    interpreter_path, '-c', 'import sys; print( sys.version_info[ 0 ] )' ]
+  ).rstrip().decode( 'utf8' ) )
+  if major_version == 2:
+    dependencies.append( p.join( DIR_OF_THIRD_PARTY, 'pythonfutures' ) )
+
+  sys_path[ 0:0 ] = dependencies
   sys_path.insert( GetStandardLibraryIndexInSysPath( sys_path ) + 1,
                    p.join( DIR_OF_THIRD_PARTY, 'python-future', 'src' ) )
-  sys_path[ 0:0 ] = [ p.join( DIR_OF_THIS_SCRIPT ),
-                      p.join( DIR_OF_THIRD_PARTY, 'bottle' ),
-                      p.join( DIR_OF_THIRD_PARTY, 'cregex',
-                              'regex_{}'.format( major_version ) ),
-                      p.join( DIR_OF_THIRD_PARTY, 'frozendict' ),
-                      p.join( DIR_OF_THIRD_PARTY, 'jedi' ),
-                      p.join( DIR_OF_THIRD_PARTY, 'parso' ),
-                      p.join( DIR_OF_THIRD_PARTY, 'requests' ),
-                      p.join( DIR_OF_THIRD_PARTY, 'waitress' ) ]
 
   return sys_path
