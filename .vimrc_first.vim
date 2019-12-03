@@ -61,7 +61,6 @@ Plug 'junegunn/vim-plug', {
   \ }
 
 " コード補完
-" NOTE: rustのracerdは入れない、もしくは削除(lspを使う)
 Plug 'Valloric/YouCompleteMe'
 " Linter
 Plug 'w0rp/ale'
@@ -642,10 +641,10 @@ nnoremap <C-]> :call <SID>defJump()<CR>
 nnoremap <C-h> :vsp<CR>:call <SID>defJump()<CR>
 nnoremap <C-k> :split<CR>:call <SID>defJump()<CR>
 function s:defJump()
-  if &ft ==# 'go' || &ft ==# 'c' || &ft ==# 'cpp' || &ft ==# 'php' || &ft ==# 'ruby' || &ft ==# 'python' || &ft ==# 'rust'
+  if &ft == 'go' || &ft == 'c' || &ft == 'cpp' || &ft == 'php' || &ft == 'ruby' || &ft == 'python'
     " 実装へジャンプ
     :call LanguageClient#textDocument_definition()
-  elseif &ft ==# 'javascript' || &ft ==# 'javascript.jsx' || &ft ==# 'typescript'
+  elseif &ft == 'rust' || &ft == 'javascript' || &ft == 'javascript.jsx' || &ft == 'typescript'
     :YcmCompleter GoToDefinition
   else
     :exe("tjump ".expand('<cword>'))
@@ -654,7 +653,7 @@ endfunction
 
 nnoremap <A-]> :call <SID>decJump()<CR>
 function s:decJump()
-  if &ft ==# 'cpp'
+  if &ft == 'cpp'
     " 定義へジャンプ
     :YcmCompleter GoToDeclaration
   else
@@ -1023,8 +1022,8 @@ let g:LanguageClient_serverCommands = {
   \ 'go': ['gopls', '-mode', 'stdio'],
   \ 'python': ['pyls'],
   \ 'ruby': ['cmd', '/c', 'solargraph stdio'],
-  \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
   \ }
+  "\ 'rust': ['rustup', 'run', 'nightly', 'rls'],
   "\ 'vue': ['vls'],
   "\ 'c': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
   "\ 'cpp': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
