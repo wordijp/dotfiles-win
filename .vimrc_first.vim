@@ -94,8 +94,6 @@ Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'mattn/emmet-vim'
 " Go
 "Plug 'fatih/vim-go'
-" Python
-"Plug 'davidhalter/jedi-vim' " pylsもrename対応したらコメントアウトも削除
 " PHP
 Plug 'stephpy/vim-php-cs-fixer'
 " Utility
@@ -860,15 +858,7 @@ autocmd FileType javascript nmap <F7> :QuickRun eslint-all<CR>
 " Python
 autocmd FileType python nmap <F1> :call <SID>getDocPython()<CR>
 function! s:getDocPython()
-  " 1. try jedi
-  "let l:prev_bufnr = bufnr('%')
-  ":call jedi#show_documentation()
-  "if bufnr('%') != l:prev_bufnr
-  "  " success
-  "  return
-  "endif
-
-  " 2. try YouCompleteMe
+  " try YouCompleteMe
   let l:prev_winids = s:getWinDict()
   :YcmCompleter GetDoc
   let l:after_winids = s:getWinDict()
@@ -885,7 +875,7 @@ function! s:getDocPython()
   endif
 endfunction
 
-"autocmd FileType python nmap <F2> :call jedi#rename()<CR>
+autocmd FileType python nmap <F2> :call LanguageClient#textDocument_rename()<CR>
 " }}}
 
 " ----------------
@@ -962,17 +952,6 @@ let g:go_highlight_build_constraints = 1
 " 保存時に自動整形
 let g:rustfmt_autosave = 0
 let g:rustfmt_command = 'rustfmt'
-" }}}
-
-" ----------
-" Python {{{
-" pythonのrename用のマッピングがquickrunとかぶるため回避させる
-"autocmd FileType python
-"let g:jedi#completions_enabled = 0
-"let g:jedi#force_py_version = 3
-
-"let g:jedi#rename_command = ""
-"let g:jedi#documentation_command = ""
 " }}}
 
 " -------
