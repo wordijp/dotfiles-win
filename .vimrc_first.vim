@@ -33,6 +33,8 @@ scriptencoding utf-8
 " このvimrcだけ使用する
 let g:vimrc_first_finish = 1
 
+let g:python3_host_prog = 'python.exe'
+
 " Windows用設定
 " afterを追加する
 if has('win32')
@@ -100,7 +102,11 @@ Plug 'stephpy/vim-php-cs-fixer'
 "Plug 'cpiger/NeoDebug'
 Plug 'wordijp/NeoDebug' " バグ修正 & cgdbライクに使えるようにした版
 Plug 'airblade/vim-rooter' " .gitプロジェクトでは常にルートをカレントディレクトリへ
+"
 Plug 'Shougo/denite.nvim'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
+"
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimfiler.vim'
 Plug 'Shougo/vimproc', {'do': 'make'}
@@ -324,7 +330,7 @@ hi EasyMotionShade  ctermbg=none ctermfg=blue
 
 " denite {{{
 " ctrlp like
-nnoremap <silent> <C-p> :<C-u>Denite file_rec<CR>
+nnoremap <silent> <C-p> :<C-u>Denite file/rec<CR>
 " grep(選択単語)
 nnoremap + :<C-u>Denite -buffer-name=search -no-empty grep -input=<C-R><C-W>
 " grep
@@ -385,9 +391,28 @@ nmap * "zyiw:let @/ = '\C\<'.@z.'\>'<CR><Right><S-N>
 vmap * "zy:let @/ = @z<CR><Right><S-N>
 
 " denite {{{
+" denite実行窓
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> <C-[>
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+endfunction
+" 絞り込み窓
+autocmd FileType denite-filter call s:denite_filter_my_settings()
+function! s:denite_filter_my_settings() abort
+  imap <silent><buffer><expr> <C-[>
+  \ denite#do_map('quit')
+endfunction
+
 " find source
 " NOTE: 除外もこっち
-call denite#custom#var('file_rec', 'command',
+call denite#custom#var('file/rec', 'command',
   \ ['fd', '.', '-HI', '--type', 'f',
   \ '-E', '.git',
   \ '-E', 'vendor',
@@ -406,7 +431,7 @@ call denite#custom#var('file_rec', 'command',
   \ '-E', '.gitignore',
   \ '-E', '.*.*',
   \ ])
-call denite#custom#source('file_rec', 'matchers', ['matcher_fuzzy'])
+call denite#custom#source('file/rec', 'matchers', ['matcher/fuzzy'])
 
 " grep source
 " NOTE: ptでutf8、sjis両対応
@@ -431,7 +456,7 @@ call denite#custom#var('grep', 'command',
   \ ])
 call denite#custom#var('grep', 'default_opts', [])
 call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#source('grep', 'matchers', ['matcher_fuzzy'])
+call denite#custom#source('grep', 'matchers', ['matcher/fuzzy'])
 
 " denite/insert モードの時に移動できるようにする
 call denite#custom#map('insert', "<C-j>" , '<denite:move_to_next_line>')
