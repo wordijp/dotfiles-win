@@ -104,7 +104,7 @@ Plug 'Shougo/denite.nvim'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimfiler.vim'
 Plug 'Shougo/vimproc', {'do': 'make'}
-Plug 'majutsushi/tagbar'
+Plug 'liuchengxu/vista.vim'
 Plug 'luochen1990/rainbow'
 Plug 'tpope/vim-surround'
 Plug 't9md/vim-quickhl'
@@ -340,9 +340,17 @@ nnoremap <silent> ;p :<C-u>Denite -buffer-name=search -resume -immediately -sele
 "    }}}
 
 " IDE風の画面
-nmap <F3> :VimFilerTree<CR> :Tagbar<CR>
-" Tagbar更新
-nmap <F8> :TagbarTogglePause<CR>:TagbarTogglePause<CR>
+nmap <F3> :call <SID>ideStyle()<CR>
+function s:ideStyle()
+  let l:id = bufnr('%')
+  :VimFilerTree
+  sleep 200m " ウィンドウが開くまで待つ、適当
+             " TODO: 開いたのを検知する方法へ
+  :call win_gotoid(bufwinid(l:id))
+  :Vista
+  sleep 200m " TODO: 同じく
+  :call win_gotoid(bufwinid(l:id))
+endfunction
 
 " poslist {{{
 "map <C-o> <Plug>(poslist-prev-pos)
