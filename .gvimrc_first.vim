@@ -54,6 +54,10 @@ endfunction
 function! s:ifNeedColorScheme(scheme)
   if get(g:, 'colors_name', '') != a:scheme
     execute 'colorscheme ' . a:scheme
+    try
+      execute 'colorscheme ' . a:scheme.'_after'
+    catch
+    endtry
   end
 endfunction
 
