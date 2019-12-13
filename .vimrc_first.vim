@@ -354,7 +354,7 @@ function s:ideStyle()
              " TODO: 開いたのを検知する方法へ
   :call win_gotoid(bufwinid(l:id))
   :Vista
-  sleep 200m " TODO: 同じく
+  sleep 1000m " TODO: 同じく
   :call win_gotoid(bufwinid(l:id))
 endfunction
 
