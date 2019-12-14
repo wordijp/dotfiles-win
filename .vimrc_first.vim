@@ -108,7 +108,7 @@ Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 "
 Plug 'Shougo/unite.vim'
-Plug 'Shougo/vimfiler.vim'
+Plug 'Shougo/defx.nvim'
 Plug 'Shougo/vimproc', {'do': 'make'}
 Plug 'liuchengxu/vista.vim'
 Plug 'luochen1990/rainbow'
@@ -167,40 +167,35 @@ vmap <Leader>/  <Plug>NERDCommenterToggle
 nmap <Leader>/  <Plug>NERDCommenterTogglej
 " }}}
 
-"-------------
-" VimFiler {{{
-let g:vimfiler_as_default_explorer = 1
-" VimFilerTree {{{
-command! VimFilerTree call VimFilerTree()
-function VimFilerTree()
-    exec ':VimFiler -buffer-name=explorer -split -simple -winwidth=40 -toggle -no-quit'
-    wincmd t
-    setl winfixwidth
-endfunction
-command! VimFilerTreeRefresh call VimFilerTreeRefresh()
-" explorerのカレントディレクトリを更新する
-function VimFilerTreeRefresh()
-  exec ':VimFilerClose explorer'
-  exec ':bdelete explorer'
-  " NOTE : 一端BufferDirで開くと、カレントディレクトリを変更できる
-  exec ':VimFilerBufferDir'
-  exec ':VimFilerClose default'
+" --------
+" Defx {{{
+call defx#custom#column('filename', {
+  \ 'min_width': 40,
+  \ 'max_width': 40,
+  \ })
+
+call defx#custom#option('_', {
+  \ 'columns': 'mark:indent:icon:filename:type:size:time',
+  \ })
+autocmd FileType defx call s:defx_my_settings()
+function! s:defx_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+    \ defx#is_directory() ?
+    \   defx#is_opened_tree() ?
+    \     defx#do_action('close_tree') :
+    \     defx#do_action('open_tree') :
+    \ defx#do_action('drop')
+  nnoremap <silent><buffer><expr> <BS> defx#do_action('cd', ['..'])
+  nnoremap <silent><buffer><expr> q defx#do_action('quit')
 endfunction
 
-autocmd! FileType vimfiler call s:my_vimfiler_settings()
-function! s:my_vimfiler_settings()
-    nmap     <buffer><expr><CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
-    nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<CR>
-    nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<CR>
-endfunction
-"    }}}
+command! DefxTree :Defx -split=vertical -winwidth=50 -direction=topleft
 " }}}
 
 "------------------
 " vim-bookmarks {{{
 let g:bookmark_auto_save_file = expand('~/.vim/tmp/.vim-bookmarks')
 " }}}
-
 
 " ---------------------
 " ale(非同期Linter) {{{
@@ -349,7 +344,7 @@ nnoremap <silent> ;p :<C-u>Denite -buffer-name=search -resume -immediately -sele
 nmap <F3> :call <SID>ideStyle()<CR>
 function s:ideStyle()
   let l:id = bufnr('%')
-  :VimFilerTree
+  :DefxTree
   sleep 200m " ウィンドウが開くまで待つ、適当
              " TODO: 開いたのを検知する方法へ
   :call win_gotoid(bufwinid(l:id))
@@ -591,11 +586,8 @@ autocmd FileType autohotkey setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set 
 
 " ------------
 " 短縮入力 {{{
-" VimFiler
-nnoremap :vf :VimFiler
-nnoremap :vft :VimFilerTree
-nnoremap :vfr :VimFilerTreeRefresh
-let g:vimfiler_enable_auto_cd = 1
+" Defx
+nnoremap :dft :DefxTree
 
 " QuickRun
 nnoremap :qr :QuickRun
