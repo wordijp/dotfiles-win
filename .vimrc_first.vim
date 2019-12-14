@@ -180,13 +180,25 @@ call defx#custom#option('_', {
 autocmd FileType defx call s:defx_my_settings()
 function! s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> <CR>
-    \ defx#is_directory() ?
-    \   defx#is_opened_tree() ?
-    \     defx#do_action('close_tree') :
-    \     defx#do_action('open_tree') :
     \ defx#do_action('drop')
+  nnoremap <silent><buffer><expr> E
+    \ defx#do_action('open', 'vsplit')
+  nnoremap <silent><buffer><expr> h
+    \ defx#do_action('close_tree')
+  nnoremap <silent><buffer><expr> <Left>
+    \ defx#do_action('close_tree')
+  nnoremap <silent><buffer><expr> l
+    \ defx#do_action('open_tree')
+  nnoremap <silent><buffer><expr> <Right>
+    \ defx#do_action('open_tree')
+  nnoremap <silent><buffer> ~ :call <SID>defxRoot()<CR>
   nnoremap <silent><buffer><expr> <BS> defx#do_action('cd', ['..'])
   nnoremap <silent><buffer><expr> q defx#do_action('quit')
+endfunction
+function! s:defxRoot() abort
+  " 開きなおしてプロジェクトRootに戻る
+  call defx#call_action('quit', [])
+  :DefxTree
 endfunction
 
 command! DefxTree :Defx -split=vertical -winwidth=50 -direction=topleft
