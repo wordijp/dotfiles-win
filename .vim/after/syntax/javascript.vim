@@ -1,18 +1,15 @@
-syn keyword cppNo false
-syn keyword cppYes true
+syn keyword jsNo false
+syn keyword jsYes true
 
-syn match cppNoWrong /!===\|!!!/ containedin=ALL
-syn match cppYesWrong /====/ containedin=ALL
-syn match cppNo /!==\|!=/ containedin=ALL
-syn match cppNo2 /[^!]!/hs=s+1 containedin=ALL
-syn match cppYes /===\|!!/ containedin=ALL
-syn match cppYes2 /[^!]==/hs=s+1 containedin=ALL
-hi link cppNoWrong  Error
-hi link cppNo		No
-hi link cppNo2		No
-hi link cppYesWrong Error
-hi link cppYes		Yes
-hi link cppYes2		Yes
+syn match jsNo /!=\?=\?/ containedin=CONTAINED
+syn match jsYes /===\?\|!!/  containedin=CONTAINED
+syn match jsNoWrong /!===\|!!!/ containedin=CONTAINED
+syn match jsYesWrong /====/  containedin=CONTAINED
+
+hi link jsNo		No
+hi link jsYes		Yes
+hi link jsNoWrong  Error
+hi link jsYesWrong Error
 " vim-javascriptëŒçÙ
 hi link jsBooleanFalse         No
 hi link jsBooleanTrue          Yes
