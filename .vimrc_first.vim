@@ -341,20 +341,21 @@ hi EasyMotionShade  ctermbg=none ctermfg=blue
 "    }}}
 
 " denite {{{
+nmap ; [denite]
 " ctrlp like
 nnoremap <silent> <C-p> :<C-u>Denite file/rec<CR>
 " grep(選択単語)
 nnoremap + :<C-u>Denite -buffer-name=search -no-empty grep -input=<C-R><C-W>
 " grep
-nnoremap <silent> ;g :<C-u>Denite -buffer-name=search -no-empty grep<CR>
+nnoremap <silent> [denite]g :<C-u>Denite -buffer-name=search -no-empty grep<CR>
 " 検索
-nnoremap <silent> ;/ :<C-u>Denite -buffer-name=search -auto-resize line<CR>
+nnoremap <silent> [denite]/ :<C-u>Denite -buffer-name=search -auto-resize line<CR>
 " 閉じたバッファをまた開く
-nnoremap <silent> ;r :<C-u>Denite -buffer-name=search -resume<CR>
+nnoremap <silent> [denite]r :<C-u>Denite -buffer-name=search -resume<CR>
 " 次へ
-nnoremap <silent> ;n :<C-u>Denite -buffer-name=search -resume -immediately -select=+1<CR>
+nnoremap <silent> [denite]n :<C-u>Denite -buffer-name=search -resume -immediately -cursor-pos=+1<CR>
 " 前へ
-nnoremap <silent> ;p :<C-u>Denite -buffer-name=search -resume -immediately -select=-1<CR>
+nnoremap <silent> [denite]p :<C-u>Denite -buffer-name=search -resume -immediately -cursor-pos=-1<CR>
 "    }}}
 
 " IDE風の画面
@@ -471,10 +472,11 @@ call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#source('grep', 'matchers', ['matcher/fuzzy'])
 
 " denite/insert モードの時に移動できるようにする
-call denite#custom#map('insert', "<C-j>" , '<denite:move_to_next_line>')
-call denite#custom#map('insert', "<down>", '<denite:move_to_next_line>')
-call denite#custom#map('insert', "<C-k>" , '<denite:move_to_previous_line>')
-call denite#custom#map('insert', "<up>"  , '<denite:move_to_previous_line>')
+"call denite#custom#map('insert', "<C-j>" , '<denite:move_to_next_line>', 'noremap')
+"call denite#custom#map('insert', "<down>", '<denite:move_to_next_line>', 'noremap')
+"call denite#custom#map('insert', "<C-k>" , '<denite:move_to_previous_line>', 'noremap')
+"call denite#custom#map('insert', "<up>"  , '<denite:move_to_previous_line>', 'noremap')
+
 " prompt
 call denite#custom#option('_', 'prompt', '>')
 "    }}}
