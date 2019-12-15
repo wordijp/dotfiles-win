@@ -189,9 +189,12 @@ function! s:defx_my_settings() abort
     \ defx#do_action('open_tree')
   nnoremap <silent><buffer><expr> <Right>
     \ defx#do_action('open_tree')
-  nnoremap <silent><buffer> ~ :call <SID>defxRoot()<CR>
-  nnoremap <silent><buffer><expr> <BS> defx#do_action('cd', ['..'])
-  nnoremap <silent><buffer><expr> q defx#do_action('quit')
+  nnoremap <silent><buffer> ~
+    \ :call <SID>defxRoot()<CR>
+  nnoremap <silent><buffer><expr> <BS>
+    \ defx#do_action('cd', ['..'])
+  nnoremap <silent><buffer><expr> q
+    \ defx#do_action('quit')
 endfunction
 function! s:defxRoot() abort
   " 開きなおしてプロジェクトRootに戻る
@@ -314,6 +317,10 @@ inoremap <F8> (
 inoremap <C-9> )
 inoremap <C-F9> )
 inoremap <F9> )
+" "入力
+inoremap <C-2> "
+inoremap <C-F2> "
+inoremap <F2> "
 
 " smooth_scroll.vim {{{
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 1)<CR>
