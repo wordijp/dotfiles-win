@@ -181,8 +181,6 @@ autocmd FileType defx call s:defx_my_settings()
 function! s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> <CR>
     \ defx#do_action('drop')
-  nnoremap <silent><buffer><expr> E
-    \ defx#do_action('open', 'vsplit')
   nnoremap <silent><buffer><expr> h
     \ defx#do_action('close_tree')
   nnoremap <silent><buffer><expr> <Left>
