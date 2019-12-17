@@ -606,6 +606,7 @@ autocmd FileType autohotkey setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set 
 " ------------
 " 短縮入力 {{{
 " Defx
+nnoremap :df :Defx
 nnoremap :dft :DefxTree
 
 " QuickRun
