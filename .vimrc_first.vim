@@ -321,6 +321,10 @@ inoremap <F9> )
 inoremap <C-2> "
 inoremap <C-F2> "
 inoremap <F2> "
+" '入力
+inoremap <C-7> '
+inoremap <C-F7> '
+inoremap <F7> '
 
 " smooth_scroll.vim {{{
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 1)<CR>
