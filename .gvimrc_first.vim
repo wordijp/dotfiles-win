@@ -53,15 +53,20 @@ endfunction
 
 function! s:ifNeedColorScheme(scheme)
   if get(g:, 'colors_name', '') != a:scheme
-    execute 'colorscheme ' . a:scheme
-    try
-      execute 'colorscheme ' . a:scheme.'_after'
-    catch
-    endtry
+    ColorScheme desert
   end
 endfunction
 
 syntax on
+
+command! -nargs=1 ColorScheme call ColorScheme(<f-args>)
+function! ColorScheme(scheme)
+  execute 'colorscheme ' . a:scheme
+  try
+    execute 'colorscheme ' . a:scheme.'_after'
+  catch
+  endtry
+endfunction
 " }}}
 
 " カーソル位置の表示 {{{
