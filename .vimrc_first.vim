@@ -91,7 +91,7 @@ Plug 'thinca/vim-ref'
 "Plug 'leafgarland/typescript-vim'
 "Plug 'peitalin/vim-jsx-typescript'
 Plug 'othree/yajs.vim'
-Plug 'MaxMEllon/vim-jsx-pretty'
+"Plug 'MaxMEllon/vim-jsx-pretty'
 " HTML
 Plug 'mattn/emmet-vim'
 " Go
