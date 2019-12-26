@@ -53,7 +53,7 @@ endfunction
 
 function! s:ifNeedColorScheme(scheme)
   if get(g:, 'colors_name', '') != a:scheme
-    ColorScheme desert
+    execute 'ColorScheme ' . a:scheme
   end
 endfunction
 
