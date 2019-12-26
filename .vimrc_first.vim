@@ -72,13 +72,11 @@ Plug 'sheerun/vim-polyglot', {'do': 'sh build'}
 Plug 'osyo-manga/vim-precious'
 Plug 'Shougo/context_filetype.vim'
 " 言語サーバープロトコル
-Plug 'autozimu/LanguageClient-neovim', {
-  \ 'branch': 'next',
-  \ 'do': 'bash install.sh',
-  \ }
-Plug 'wordijp/LanguageServer-php-tcp-neovim', {
-  \ 'do': 'bash ./install.sh && composer install && composer run-script parse-stubs'
-  \ }
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/vim-lsp'
+"Plug 'mattn/vim-lsp-settings'
 " ビルド、Linter、etc
 Plug 'thinca/vim-quickrun'
 " 整形
@@ -690,7 +688,7 @@ nnoremap <C-k> :split<CR>:call <SID>defJump()<CR>
 function s:defJump()
   if &ft == 'go' || &ft == 'c' || &ft == 'cpp' || &ft == 'php' || &ft == 'ruby' || &ft == 'python'
     " 実装へジャンプ
-    :call LanguageClient#textDocument_definition()
+    :LspDefinition
   elseif &ft == 'rust' || &ft == 'javascript' || &ft == 'javascript.jsx' || &ft == 'typescript'
     :YcmCompleter GoToDefinition
   else
@@ -817,7 +815,7 @@ let g:quickrun_config = {
 " --------------
 " 言語別設定 {{{
 " C++
-autocmd FileType cpp nmap <F2> :call LanguageClient#textDocument_rename()<CR>
+autocmd FileType cpp nmap <F2> :LspRename<CR>
 autocmd FileType cpp nmap <F5> :QuickRun make-run<CR>
 autocmd FileType cpp nmap <C-F5> :QuickRun make-run-shell<CR>
 autocmd FileType cpp nmap <F7> :QuickRun make<CR>
@@ -826,10 +824,11 @@ autocmd FileType cpp nmap <F8> :QuickRun make-clean<CR>
 autocmd FileType cpp setlocal errorformat+=make:\ 'all'\ is\ up\ to\ date.
 
 " rust
+"autocmd FileType rust nmap <F1> :LspHover<CR>
 autocmd FileType rust nmap <F1> :call <SID>getDocRust()<CR>
 function! s:getDocRust()
   let l:prev_winids = s:getWinDict()
-  :call LanguageClient#textDocument_hover()
+  :YcmCompleter GetDoc
   let l:after_winids = s:getWinDict()
 
   " NOTE: hoverは非同期・同期が混ざっているので、ポーリングで待つ
@@ -866,7 +865,7 @@ function! s:getWinDict()
   return l:dic
 endfunction
 
-autocmd FileType rust nmap <F2> :call LanguageClient#textDocument_rename()<CR>
+autocmd FileType rust nmap <F2> :LspRename<CR>
 autocmd FileType rust nmap <F5> :QuickRun cargo-run<CR>
 autocmd FileType rust nmap <C-F5> :QuickRun cargo-run-shell<CR>
 autocmd FileType rust nmap <F7> :QuickRun cargo-build<CR>
@@ -879,14 +878,15 @@ function! s:cargo_build_lib()
 endfunction
 
 " Go
-autocmd FileType go nmap <F1> :GoDoc<CR>
-autocmd FileType go nmap <F2> :call LanguageClient#textDocument_rename()<CR>
+autocmd FileType go nmap <F1> :LspHover<CR>
+autocmd FileType go nmap <F2> :LspRename<CR>
 autocmd FileType go nmap <F5> :QuickRun go-run<CR>
 autocmd FileType go nmap <C-F5> :QuickRun go-run-shell<CR>
 autocmd FileType go nmap <F7> :QuickRun go-build<CR>
 "autocmd FileType go nmap <F7> :QuickRun make<CR>
 
 " PHP
+autocmd FileType php nmap <F1> :LspHover<CR>
 "autocmd FileType php nmap <F7> :QuickRun php-linter<CR>
 "autocmd FileType php nmap <F7> :QuickRun php-linter-phpmd<CR>
 "autocmd FileType php nmap <F7> :QuickRun php-linter-phan<CR>
@@ -924,7 +924,7 @@ function! s:getDocPython()
   endif
 endfunction
 
-autocmd FileType python nmap <F2> :call LanguageClient#textDocument_rename()<CR>
+autocmd FileType python nmap <F2> :LspRename<CR>
 " }}}
 
 " ----------------
@@ -1041,22 +1041,40 @@ function! s:keepPosExec(cmd)
 endfunction
 " }}}
 
-" -----------------------------
-" LanguageClient-neovim {{{ ---
-" NOTE: PHPは'wordijp/LanguageServer-php-tcp-neovim'で設定
-let g:LanguageClient_serverCommands = {
-  \ 'c': ['clangd'],
-  \ 'cpp': ['clangd'],
-  \ 'go': ['gopls', '-mode', 'stdio'],
-  \ 'python': ['pyls'],
-  \ 'ruby': ['cmd', '/c', 'solargraph stdio'],
-  \ }
-  "\ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-  "\ 'vue': ['vls'],
-  "\ 'c': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
-  "\ 'cpp': ['cquery', '--init={"cacheDirectory": "C:/Users/f/.cquery/cache"}'],
-  "\ 'c': ['clangd'],
-  "\ 'cpp': ['clangd'],
+" -----------
+" vim-lsp {{{
+au User lsp_setup call lsp#register_server({
+  \ 'name': 'clangd',
+  \ 'cmd': {server_info->['clangd']},
+  \ 'whitelist': ['c', 'cpp'],
+  \ })
+au User lsp_setup call lsp#register_server({
+  \ 'name': 'gopls',
+  \ 'cmd': {server_info->['gopls', '-mode', 'stdio']},
+  \ 'whitelist': ['go'],
+  \ })
+au User lsp_setup call lsp#register_server({
+  \ 'name': 'rls',
+  \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
+  \ 'whitelist': ['rust'],
+  \ })
+au User lsp_setup call lsp#register_server({
+  \ 'name': 'pyls',
+  \ 'cmd': {server_info->['pyls']},
+  \ 'whitelist': ['python'],
+  \ })
+au User lsp_setup call lsp#register_server({
+  \ 'name': 'intelephense',
+  \ 'cmd': {server_info->['node', expand('$USERPROFILE').'\AppData\Roaming\npm\node_modules\intelephense\lib\intelephense.js', '--stdio']},
+  \ 'initialization_options': {'storagePath': expand('$TEMP').'/intelephense'},
+  \ 'whitelist': ['php'],
+  \ })
+au User lsp_setup call lsp#register_server({
+  \ 'name': 'solargraph',
+  \ 'cmd': {server_info->['cmd', '/c', 'solargraph', 'stdio']},
+  \ 'whitelist': ['ruby'],
+  \ })
+" 'vue': ['vls'],
 " }}}
 
 " --------
