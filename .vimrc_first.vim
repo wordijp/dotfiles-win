@@ -395,7 +395,15 @@ let g:neodbg_openwatchs_default    = 1 " watchpoints: expressionsと共用窓な
 " QuickFix {{{
 " Enterでジャンプ
 autocmd FileType * noremap <Enter> <Enter>
-autocmd FileType qf noremap <Enter> :.ll<CR>
+autocmd FileType qf noremap <Enter> :call <SID>quickFixJump()<CR>
+function! s:quickFixJump()
+  let wi = getwininfo(win_getid())[0]
+  if wi.loclist
+    :.ll
+  elseif wi.quickfix
+    :.cc
+  endif
+endfunction
 " }}}
 
 " ---------------------------------------
