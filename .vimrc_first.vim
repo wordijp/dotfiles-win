@@ -1056,7 +1056,7 @@ let g:lsp_settings = {
   \ 'clangd': {'cmd': ['clangd']},
   \ 'pyls': {'cmd': ['pyls']},
   \ 'rls': {'cmd': ['rustup', 'run', 'nightly', 'rls']},
-  \ 'javascript-typescript-langserver': {'cmd': [expand('~\.vim\plugged\vim-lsp-settings\servers\javascript-typescript-langserver\node_modules\.bin\javascript-typescript-stdio.cmd')]}
+  \ 'javascript-typescript-langserver': {'cmd': ['javascript-typescript-stdio.cmd']}
   \}
 " 'vue': ['vls'],
 " }}}
