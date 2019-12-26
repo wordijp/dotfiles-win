@@ -67,7 +67,7 @@ Plug 'Valloric/YouCompleteMe'
 " Linter
 Plug 'w0rp/ale'
 " 色んな言語のsyntax
-Plug 'sheerun/vim-polyglot', {'do': 'sh build'}
+Plug 'sheerun/vim-polyglot'
 " filetype切り替え
 Plug 'osyo-manga/vim-precious'
 Plug 'Shougo/context_filetype.vim'
@@ -76,7 +76,7 @@ Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/vim-lsp'
-"Plug 'mattn/vim-lsp-settings'
+Plug 'mattn/vim-lsp-settings'
 " ビルド、Linter、etc
 Plug 'thinca/vim-quickrun'
 " 整形
@@ -694,11 +694,8 @@ nnoremap <C-]> :call <SID>defJump()<CR>
 nnoremap <C-h> :vsp<CR>:call <SID>defJump()<CR>
 nnoremap <C-k> :split<CR>:call <SID>defJump()<CR>
 function s:defJump()
-  if &ft == 'go' || &ft == 'c' || &ft == 'cpp' || &ft == 'php' || &ft == 'ruby' || &ft == 'python'
-    " 実装へジャンプ
+  if &ft == 'go' || &ft == 'c' || &ft == 'rust' || &ft == 'cpp' || &ft == 'php' || &ft == 'ruby' || &ft == 'python' || &ft == 'javascript' || &ft == 'typescript'
     :LspDefinition
-  elseif &ft == 'rust' || &ft == 'javascript' || &ft == 'javascript.jsx' || &ft == 'typescript'
-    :YcmCompleter GoToDefinition
   else
     :exe("tjump ".expand('<cword>'))
   end
@@ -933,6 +930,10 @@ function! s:getDocPython()
 endfunction
 
 autocmd FileType python nmap <F2> :LspRename<CR>
+
+" Ruby
+autocmd FileType ruby nmap <F1> :LspHover<CR>
+autocmd FileType ruby nmap <F2> :LspRename<CR>
 " }}}
 
 " ----------------
@@ -1051,37 +1052,13 @@ endfunction
 
 " -----------
 " vim-lsp {{{
-au User lsp_setup call lsp#register_server({
-  \ 'name': 'clangd',
-  \ 'cmd': {server_info->['clangd']},
-  \ 'whitelist': ['c', 'cpp'],
-  \ })
-au User lsp_setup call lsp#register_server({
-  \ 'name': 'gopls',
-  \ 'cmd': {server_info->['gopls', '-mode', 'stdio']},
-  \ 'whitelist': ['go'],
-  \ })
-au User lsp_setup call lsp#register_server({
-  \ 'name': 'rls',
-  \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
-  \ 'whitelist': ['rust'],
-  \ })
-au User lsp_setup call lsp#register_server({
-  \ 'name': 'pyls',
-  \ 'cmd': {server_info->['pyls']},
-  \ 'whitelist': ['python'],
-  \ })
-au User lsp_setup call lsp#register_server({
-  \ 'name': 'intelephense',
-  \ 'cmd': {server_info->['node', expand('$USERPROFILE').'\AppData\Roaming\npm\node_modules\intelephense\lib\intelephense.js', '--stdio']},
-  \ 'initialization_options': {'storagePath': expand('$TEMP').'/intelephense'},
-  \ 'whitelist': ['php'],
-  \ })
-au User lsp_setup call lsp#register_server({
-  \ 'name': 'solargraph',
-  \ 'cmd': {server_info->['cmd', '/c', 'solargraph', 'stdio']},
-  \ 'whitelist': ['ruby'],
-  \ })
+" 既存のコマンドを使う場合
+let g:lsp_settings = {
+  \ 'clangd': {'cmd': ['clangd']},
+  \ 'pyls': {'cmd': ['pyls']},
+  \ 'rls': {'cmd': ['rustup', 'run', 'nightly', 'rls']},
+  \ 'javascript-typescript-langserver': {'cmd': [expand('~') . '\.vim\plugged\vim-lsp-settings\servers\javascript-typescript-langserver\node_modules\.bin\javascript-typescript-stdio.cmd']}
+  \}
 " 'vue': ['vls'],
 " }}}
 
