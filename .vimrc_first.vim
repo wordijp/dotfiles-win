@@ -82,7 +82,7 @@ Plug 'thinca/vim-quickrun'
 " 整形
 Plug 'prettier/vim-prettier', {
   \ 'do': 'npm install',
-  \ 'for': ['javascript', 'javascript.jsx', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html', 'blade'] }
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html', 'blade'] }
 " 辞書
 Plug 'thinca/vim-ref'
 " React(TypeScript)
@@ -224,7 +224,6 @@ let g:ale_linters = {
   \ 'rust': ['cargo'],
   \ 'go': ['golint', 'gobuild'],
   \ 'javascript': ['eslint'],
-  \ 'javascript.jsx': ['eslint'],
   \ 'typescript': ['tsserver'],
   \ 'ruby': ['ruby'],
   \}
@@ -516,7 +515,7 @@ nmap <Space>j <Plug>(quickhl-cword-toggle)
 " {{{
 noremap <Space><Tab> :call <SID>format()<CR>
 function! s:format()
-  if &ft == 'javascript' || &ft == 'javascript.jsx' || &ft == 'typescript' ||
+  if &ft == 'javascript' || &ft == 'typescript' ||
     \ &ft == 'css' || &ft == 'less' || &ft == 'scss' ||
     \ &ft == 'json' || &ft == 'graphql' || &ft == 'markdown' || &ft == 'yaml' || &ft == 'html'
     :PrettierAsync
@@ -602,11 +601,10 @@ autocmd FileType vb setlocal shiftwidth=4 tabstop=4 softtabstop=4 | set expandta
 " JavaScript
 "autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
+autocmd FileType typescript setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
 " Vue
 autocmd FileType vue setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
 autocmd FileType vue syntax sync fromstart
-" React
-autocmd FileType javascript.jsx setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
 " sh
 autocmd FileType sh setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
 " AutoHotkey
