@@ -906,7 +906,8 @@ autocmd FileType php setlocal errorformat+=%f:%l\	%m
 autocmd FileType php setlocal errorformat+=%f:%l\ %m
 
 " JavaScript
-autocmd FileType javascript,javascript.jsx,typescript nmap <F2> :YcmCompleter RefactorRename 
+autocmd FileType javascript,typescript nmap <F1> :LspHover<CR>
+autocmd FileType javascript,typescript nmap <F2> :LspRename<CR>
 autocmd FileType javascript nmap <F7> :QuickRun eslint-all<CR>
 
 " Python
@@ -1057,7 +1058,7 @@ let g:lsp_settings = {
   \ 'clangd': {'cmd': ['clangd']},
   \ 'pyls': {'cmd': ['pyls']},
   \ 'rls': {'cmd': ['rustup', 'run', 'nightly', 'rls']},
-  \ 'javascript-typescript-langserver': {'cmd': [expand('~') . '\.vim\plugged\vim-lsp-settings\servers\javascript-typescript-langserver\node_modules\.bin\javascript-typescript-stdio.cmd']}
+  \ 'javascript-typescript-langserver': {'cmd': [expand('~\.vim\plugged\vim-lsp-settings\servers\javascript-typescript-langserver\node_modules\.bin\javascript-typescript-stdio.cmd')]}
   \}
 " 'vue': ['vls'],
 " }}}
