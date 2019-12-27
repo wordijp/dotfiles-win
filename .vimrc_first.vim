@@ -76,7 +76,8 @@ Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
+"Plug 'mattn/vim-lsp-settings'
+Plug 'wordijp/vim-lsp-settings' " typescript関係をPR中
 " ビルド、Linter、etc
 Plug 'thinca/vim-quickrun'
 " 整形
