@@ -220,7 +220,7 @@ let g:ale_linters = {
   \ 'c': [],
   \ 'cpp': [],
   \ 'python': [],
-  \ 'php': ['phpstan'],
+  \ 'php': [],
   \ 'rust': ['cargo'],
   \ 'go': ['golint', 'gobuild'],
   \ 'javascript': ['eslint'],
@@ -231,7 +231,7 @@ let g:ale_linters = {
   "\ 'ruby': ['rubocop'],
 
 " global config files
-let g:ale_php_phpstan_configuration = $HOME . '\.phpstan\phpstan.neon'
+"let g:ale_php_phpstan_configuration = $HOME . '\.phpstan\phpstan.neon'
 let g:ale_typescript_tslint_config_path = $HOME . '\tslint.json'
 " 無くても動く
 "let g:ale_javascript_eslint_options = '--config '.$HOME.'\.eslintrc.yml'
@@ -657,11 +657,23 @@ let g:ycm_global_ycm_extra_conf = $HOME . '/.ycm_extra_conf.py'
 "let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 " 読み込むかの確認ダイアログを 1:出す 0:出さない
 let g:ycm_confirm_extra_conf = 0
-" Ycmサーバ再起動(補完候補の更新)
-autocmd FileType php imap <C-Space> <ESC>:call <SID>ycmRestartServer()<CR>a <BS>
-function s:ycmRestartServer()
-  :YcmRestartServer
-  sleep 350m
+" LSPサーバ再起動(補完候補の更新)
+autocmd FileType php nnoremap <C-Space> :call <SID>lspRestartServer()<CR>
+function s:lspRestartServer()
+  :LspStopServer
+
+  let l:i = 0
+  while execute(':LspStatus') =~ 'running' && l:i < 5
+    let l:i += 1
+    sleep 100m
+  endwhile
+
+  " 発火
+  try
+    :e
+  catch
+    :update
+  endtry
 endfunction
 " }}}
 
