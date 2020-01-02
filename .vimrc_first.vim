@@ -219,6 +219,7 @@ let g:ale_set_quickfix = 1
 let g:ale_linters = {
   \ 'c': [],
   \ 'cpp': [],
+  \ 'dart': [],
   \ 'python': [],
   \ 'php': [],
   \ 'rust': ['cargo'],
@@ -704,7 +705,7 @@ nnoremap <C-]> :call <SID>defJump()<CR>
 nnoremap <C-h> :vsp<CR>:call <SID>defJump()<CR>
 nnoremap <C-k> :split<CR>:call <SID>defJump()<CR>
 function s:defJump()
-  if &ft == 'go' || &ft == 'c' || &ft == 'rust' || &ft == 'cpp' || &ft == 'php' || &ft == 'ruby' || &ft == 'python' || &ft == 'javascript' || &ft == 'typescript'
+  if &ft == 'go' || &ft == 'c' || &ft == 'dart' || &ft == 'rust' || &ft == 'cpp' || &ft == 'php' || &ft == 'ruby' || &ft == 'python' || &ft == 'javascript' || &ft == 'typescript'
     :LspDefinition
   else
     :exe("tjump ".expand('<cword>'))
@@ -837,6 +838,10 @@ autocmd FileType cpp nmap <F7> :QuickRun make<CR>
 autocmd FileType cpp nmap <F8> :QuickRun make-clean<CR>
 " make
 autocmd FileType cpp setlocal errorformat+=make:\ 'all'\ is\ up\ to\ date.
+
+" Dart
+autocmd FileType dart nmap <F1> :LspHover<CR>
+autocmd FileType dart nmap <F2> :LspRename<CR>
 
 " rust
 "autocmd FileType rust nmap <F1> :LspHover<CR>
@@ -1064,10 +1069,13 @@ endfunction
 " -----------
 " vim-lsp {{{
 " 既存のコマンドを使う場合
+let s:dart_dir = fnamemodify(resolve(exepath('dart')), ':h')
+
 let g:lsp_settings = {
   \ 'clangd': {'cmd': ['clangd']},
   \ 'pyls': {'cmd': ['pyls']},
   \ 'rls': {'cmd': ['rustup', 'run', 'nightly', 'rls']},
+  \ 'analysis-server-dart-snapshot': {'cmd': ['dart', s:dart_dir.'/snapshots/analysis_server.dart.snapshot', '--lsp']}
   \}
 " 'vue': ['vls'],
 " }}}
