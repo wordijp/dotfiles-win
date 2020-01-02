@@ -179,6 +179,8 @@ autocmd FileType defx call s:defx_my_settings()
 function! s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> <CR>
     \ defx#do_action('drop')
+  nnoremap <silent><buffer><expr> <C-CR>
+    \ defx#do_action('open')
   nnoremap <silent><buffer><expr> h
     \ defx#do_action('close_tree')
   nnoremap <silent><buffer><expr> <Left>
@@ -200,6 +202,9 @@ function! s:defxRoot() abort
   :DefxTree
 endfunction
 
+" current file path
+command! DefxCurrent :Defx `expand('%:p:h')` -search=`expand('%:p')`
+" tree
 command! DefxTree :Defx -split=vertical -winwidth=50 -direction=topleft
 " }}}
 
@@ -616,6 +621,7 @@ autocmd FileType autohotkey setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set 
 " 短縮入力 {{{
 " Defx
 nnoremap :df :Defx
+nnoremap :dfc :DefxCurrent
 nnoremap :dft :DefxTree
 
 " QuickRun
