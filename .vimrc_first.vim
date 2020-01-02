@@ -705,7 +705,7 @@ nnoremap <C-]> :call <SID>defJump()<CR>
 nnoremap <C-h> :vsp<CR>:call <SID>defJump()<CR>
 nnoremap <C-k> :split<CR>:call <SID>defJump()<CR>
 function s:defJump()
-  if &ft == 'go' || &ft == 'c' || &ft == 'dart' || &ft == 'rust' || &ft == 'cpp' || &ft == 'php' || &ft == 'ruby' || &ft == 'python' || &ft == 'javascript' || &ft == 'typescript'
+  if execute(':LspStatus') =~ 'running'
     :LspDefinition
   else
     :exe("tjump ".expand('<cword>'))
