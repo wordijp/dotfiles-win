@@ -659,8 +659,9 @@ let g:ycm_global_ycm_extra_conf = $HOME . '/.ycm_extra_conf.py'
 " 読み込むかの確認ダイアログを 1:出す 0:出さない
 let g:ycm_confirm_extra_conf = 0
 " LSPサーバ再起動(補完候補の更新)
-autocmd FileType php nnoremap <C-Space> :call <SID>lspRestartServer()<CR>
+nnoremap <C-Space> :call <SID>lspRestartServer()<CR>
 function s:lspRestartServer()
+  :YcmRestartServer
   :LspStopServer
 
   let l:i = 0
