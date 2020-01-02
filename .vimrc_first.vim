@@ -686,14 +686,15 @@ let g:auto_ctags_filetype_mode = 1
 let g:auto_ctags_tags_name_fixed = 'tags' " 全filetype共通名
 
 " tagsファイル作成
-au FileType * call s:tagBuildCmd()
-function s:tagBuildCmd()
-  if &filetype == 'go'
-    nnoremap :tags :GoBuildTags mycustomtag
-  else
-    nnoremap :tags :Ctags
-  endif
-endfunction
+"au FileType * call s:tagBuildCmd()
+"function s:tagBuildCmd()
+"  if &filetype == 'go'
+"    nnoremap :tags :GoBuildTags mycustomtag
+"  else
+"    nnoremap :tags :Ctags
+"  endif
+"endfunction
+nnoremap :tags :Ctags
 
 set tags+=.git/tags
 " }}}
