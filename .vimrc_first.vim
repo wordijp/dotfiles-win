@@ -1069,6 +1069,7 @@ endfunction
 " -----------
 " vim-lsp {{{
 " 既存のコマンドを使う場合
+let g:lsp_settings_servers_dir = expand('~/.vim/vim-lsp-settings-servers')
 let s:dart_dir = fnamemodify(resolve(exepath('dart')), ':h')
 
 let g:lsp_settings = {
