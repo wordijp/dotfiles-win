@@ -94,6 +94,9 @@ Plug 'othree/yajs.vim'
 Plug 'mattn/emmet-vim'
 " Go
 "Plug 'fatih/vim-go'
+" Dart
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
 " PHP
 Plug 'stephpy/vim-php-cs-fixer'
 " Utility
@@ -850,6 +853,13 @@ autocmd FileType cpp setlocal errorformat+=make:\ 'all'\ is\ up\ to\ date.
 " Dart
 autocmd FileType dart nmap <F1> :LspHover<CR>
 autocmd FileType dart nmap <F2> :LspRename<CR>
+autocmd FileType dart nmap <F7> :call <SID>lspDocumentDiagnostics()<CR>
+function! s:lspDocumentDiagnostics()
+  :LspDocumentDiagnostics
+  " 不要なら閉じる
+  " NOTE: call setloclist(0, l:result) でセットされている
+  if len(getloclist(0)) == 0 | :lclose | endif
+endfunction
 
 " rust
 "autocmd FileType rust nmap <F1> :LspHover<CR>
@@ -1072,6 +1082,11 @@ function! s:keepPosExec(cmd)
   silent! execute "normal! a \<bs>\<esc>" | undojoin | execute a:cmd
   silent call winrestview(view)
 endfunction
+" }}}
+
+" ------------------------
+" thosakwe/vim-flutter {{{
+let g:flutter_command = 'flutter.bat'
 " }}}
 
 " -----------
