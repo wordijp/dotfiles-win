@@ -1127,32 +1127,16 @@ let g:LanguageClient_serverCommands = {
 
 let g:LanguageClient_diagnosticsDisplay = {
   \ 1: {
-  \   "name": "Error",
-  \   "texthl": "Error",
-  \   "signText": "E",
   \   "signTexthl": "Error",
-  \   "virtualTexthl": "Error",
   \ },
   \ 2: {
-  \   "name": "Warning",
-  \   "texthl": "Todo",
-  \   "signText": "W",
   \   "signTexthl": "Todo",
-  \   "virtualTexthl": "Todo",
   \ },
   \ 3: {
-  \   "name": "Information",
-  \   "texthl": "Normal",
-  \   "signText": "I",
   \   "signTexthl": "Normal",
-  \   "virtualTexthl": "Normal",
   \ },
   \ 4: {
-  \   "name": "Hint",
-  \   "texthl": "Normal",
-  \   "signText": "H",
   \   "signTexthl": "Normal",
-  \   "virtualTexthl": "Normal",
   \ },
   \ }
 "    }}}
