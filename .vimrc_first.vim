@@ -72,6 +72,11 @@ Plug 'sheerun/vim-polyglot'
 Plug 'osyo-manga/vim-precious'
 Plug 'Shougo/context_filetype.vim'
 " 言語サーバープロトコル
+Plug 'autozimu/LanguageClient-neovim', {
+  \ 'branch': 'next',
+  \ 'do': 'make',
+  \ 'for': ['dart'],
+  \ }
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
@@ -710,13 +715,15 @@ set tags+=.git/tags
 
 " ----------------------
 " タグ、実装ジャンプ {{{
-let g:go_def_mapping_enabled = 0 "自前でマッピング
+"let g:go_def_mapping_enabled = 0 "自前でマッピング
 nnoremap <F12> :call <SID>defJump()<CR>
 nnoremap <C-]> :call <SID>defJump()<CR>
 nnoremap <C-h> :vsp<CR>:call <SID>defJump()<CR>
 nnoremap <C-k> :split<CR>:call <SID>defJump()<CR>
 function s:defJump()
-  if execute(':LspStatus') =~ 'running'
+  if &ft == 'dart'
+    :call LanguageClient#textDocument_definition()
+  elseif execute(':LspStatus') =~ 'running'
     :LspDefinition
   else
     :exe("tjump ".expand('<cword>'))
@@ -851,14 +858,19 @@ autocmd FileType cpp nmap <F8> :QuickRun make-clean<CR>
 autocmd FileType cpp setlocal errorformat+=make:\ 'all'\ is\ up\ to\ date.
 
 " Dart
-autocmd FileType dart nmap <F1> :LspHover<CR>
-autocmd FileType dart nmap <F2> :LspRename<CR>
+autocmd FileType dart nmap <F1> :call LanguageClient#textDocument_hover()<CR>
+autocmd FileType dart nmap <F2> :call LanguageClient#textDocument_rename({'newName': input('Rename to: ', expand('<cword>'))})<CR>
 autocmd FileType dart nmap <F7> :call <SID>lspDocumentDiagnostics()<CR>
 function! s:lspDocumentDiagnostics()
-  :LspDocumentDiagnostics
-  " 不要なら閉じる
-  " NOTE: call setloclist(0, l:result) でセットされている
-  if len(getloclist(0)) == 0 | :lclose | endif
+  ":LspDocumentDiagnostics
+  "" 不要なら閉じる
+  "" NOTE: call setloclist(0, l:result) でセットされている
+  "if len(getloclist(0)) == 0 | :lclose | endif
+  if len(getloclist(0)) > 0
+    :lopen
+  else
+    :lclose
+  endif
 endfunction
 
 " rust
@@ -1089,19 +1101,74 @@ endfunction
 let g:flutter_command = 'flutter.bat'
 " }}}
 
-" -----------
+" -------------------
+" Language Server {{{
+let s:dart_dir = fnamemodify(resolve(exepath('dart')), ':h')
 " vim-lsp {{{
 " 既存のコマンドを使う場合
+let g:lsp_auto_enable = 0
 let g:lsp_settings_servers_dir = expand('~/.vim/vim-lsp-settings-servers')
-let s:dart_dir = fnamemodify(resolve(exepath('dart')), ':h')
-
 let g:lsp_settings = {
   \ 'clangd': {'cmd': ['clangd']},
   \ 'pyls': {'cmd': ['pyls']},
   \ 'rls': {'cmd': ['rustup', 'run', 'nightly', 'rls']},
-  \ 'analysis-server-dart-snapshot': {'cmd': ['dart', s:dart_dir.'/snapshots/analysis_server.dart.snapshot', '--lsp']}
   \}
-" 'vue': ['vls'],
+  "\ 'analysis-server-dart-snapshot': {'cmd': ['dart', s:dart_dir.'/snapshots/analysis_server.dart.snapshot', '--lsp']}
+"    }}}
+
+" LanguageClient-neovim {{{
+" 現在はDart専用
+" NOTE: LanguageClient-neovim & dartだとdiagnosticsがプロジェクトLinterとして使える
+let g:LanguageClient_autoStart = 0
+let g:LanguageClient_diagnosticsList = 'Location'
+let g:LanguageClient_serverCommands = {
+  \ 'dart': ['dart', s:dart_dir.'/snapshots/analysis_server.dart.snapshot', '--lsp'],
+  \ }
+
+let g:LanguageClient_diagnosticsDisplay = {
+  \ 1: {
+  \   "name": "Error",
+  \   "texthl": "Error",
+  \   "signText": "E",
+  \   "signTexthl": "Error",
+  \   "virtualTexthl": "Error",
+  \ },
+  \ 2: {
+  \   "name": "Warning",
+  \   "texthl": "Todo",
+  \   "signText": "W",
+  \   "signTexthl": "Todo",
+  \   "virtualTexthl": "Todo",
+  \ },
+  \ 3: {
+  \   "name": "Information",
+  \   "texthl": "Normal",
+  \   "signText": "I",
+  \   "signTexthl": "Normal",
+  \   "virtualTexthl": "Normal",
+  \ },
+  \ 4: {
+  \   "name": "Hint",
+  \   "texthl": "Normal",
+  \   "signText": "H",
+  \   "signTexthl": "Normal",
+  \   "virtualTexthl": "Normal",
+  \ },
+  \ }
+"    }}}
+augroup enable_lsp
+  autocmd!
+  autocmd VimEnter * call <SID>enableLsp()
+augroup END
+function! s:enableLsp()
+  if &ft == 'dart'
+    :LanguageClientStart
+  else
+    :call lsp#enable()
+  end
+
+  autocmd! enable_lsp
+endfunction
 " }}}
 
 " --------
