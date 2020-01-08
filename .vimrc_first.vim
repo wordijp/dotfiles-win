@@ -675,6 +675,9 @@ let g:ycm_confirm_extra_conf = 0
 " LSPサーバ再起動(補完候補の更新)
 nnoremap <C-Space> :call <SID>lspRestartServer()<CR>
 function s:lspRestartServer()
+  " NOTE: dartは再起動しなくても更新してくれてる
+  if &ft == 'dart' | return | endif
+
   :YcmRestartServer
   :LspStopServer
 
