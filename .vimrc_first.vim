@@ -1108,7 +1108,6 @@ let g:flutter_command = 'flutter.bat'
 " Language Server {{{
 let s:dart_dir = fnamemodify(resolve(exepath('dart')), ':h')
 " vim-lsp {{{
-" 既存のコマンドを使う場合
 let g:lsp_auto_enable = 0
 let g:lsp_settings_servers_dir = expand('~/.vim/vim-lsp-settings-servers')
 let g:lsp_settings = {
@@ -1130,15 +1129,19 @@ let g:LanguageClient_serverCommands = {
 
 let g:LanguageClient_diagnosticsDisplay = {
   \ 1: {
+  \   "signText": "E",
   \   "signTexthl": "Error",
   \ },
   \ 2: {
+  \   "signText": "W",
   \   "signTexthl": "Todo",
   \ },
   \ 3: {
+  \   "signText": "I",
   \   "signTexthl": "Normal",
   \ },
   \ 4: {
+  \   "signText": "H",
   \   "signTexthl": "Normal",
   \ },
   \ }
