@@ -857,6 +857,7 @@ let g:quickrun_config = {
 " --------------
 " 言語別設定 {{{
 " C++
+autocmd FileType cpp nmap <F1> :LspHover<CR>
 autocmd FileType cpp nmap <F2> :LspRename<CR>
 autocmd FileType cpp nmap <F5> :QuickRun make-run<CR>
 autocmd FileType cpp nmap <C-F5> :QuickRun make-run-shell<CR>
@@ -882,47 +883,7 @@ function! s:lspDocumentDiagnostics()
 endfunction
 
 " rust
-"autocmd FileType rust nmap <F1> :LspHover<CR>
-autocmd FileType rust nmap <F1> :call <SID>getDocRust()<CR>
-function! s:getDocRust()
-  let l:prev_winids = s:getWinDict()
-  :YcmCompleter GetDoc
-  let l:after_winids = s:getWinDict()
-
-  " NOTE: hoverは非同期・同期が混ざっているので、ポーリングで待つ
-  let l:i = 0
-  while len(l:prev_winids) == len(l:after_winids) && l:i < 3 " 3で十分
-    redraw
-    sleep 100m
-    let l:after_winids = s:getWinDict()
-    let l:i += 1
-  endwhile
-
-  " XXX: 既に開いている時はフォーカスしない
-  if len(l:prev_winids) != len(l:after_winids)
-    " success
-    for l:key in keys(l:after_winids)
-      if !has_key(l:prev_winids, l:key)
-        :call win_gotoid(l:after_winids[l:key])
-        ":set filetype=rustdoc
-        break
-      endif
-    endfor
-  endif
-endfunction
-function! s:getWinDict()
-  let l:dic = {}
-
-  for l:i in range(1, bufnr('$'))
-    let l:winid = bufwinid(l:i)
-    if l:winid > 0
-      let l:dic[l:i] = l:winid
-    endif
-  endfor
-
-  return l:dic
-endfunction
-
+autocmd FileType rust nmap <F1> :LspHover<CR>
 autocmd FileType rust nmap <F2> :LspRename<CR>
 autocmd FileType rust nmap <F5> :QuickRun cargo-run<CR>
 autocmd FileType rust nmap <C-F5> :QuickRun cargo-run-shell<CR>
@@ -964,25 +925,7 @@ autocmd FileType javascript,typescript nmap <F2> :LspRename<CR>
 autocmd FileType javascript nmap <F7> :QuickRun eslint-all<CR>
 
 " Python
-autocmd FileType python nmap <F1> :call <SID>getDocPython()<CR>
-function! s:getDocPython()
-  " try YouCompleteMe
-  let l:prev_winids = s:getWinDict()
-  :YcmCompleter GetDoc
-  let l:after_winids = s:getWinDict()
-
-  if len(l:prev_winids) != len(l:after_winids)
-    " success
-    for l:key in keys(l:after_winids)
-      if !has_key(l:prev_winids, l:key)
-        :call win_gotoid(l:after_winids[l:key])
-        ":set filetype=rustdoc
-        break
-      endif
-    endfor
-  endif
-endfunction
-
+autocmd FileType python nmap <F1> :LspHover<CR>
 autocmd FileType python nmap <F2> :LspRename<CR>
 
 " Ruby
