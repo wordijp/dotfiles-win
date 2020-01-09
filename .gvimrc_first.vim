@@ -38,14 +38,14 @@ let g:gvimrc_first_finish = 1
 " 共通
 
 " カラースキーム {{{
-au FileType * call <SID>changeColorscheme()
+au VimEnter * call <SID>changeColorscheme()
 function! s:changeColorscheme()
   if &ft == 'python'
     call s:ifNeedColorScheme('darkblue')
   elseif &ft == 'cs'
     call s:ifNeedColorScheme('slate')
   elseif &ft == 'markdown'
-    "call s:ifNeedColorScheme('peachpuff')
+    call s:ifNeedColorScheme('peachpuff')
   else
     call s:ifNeedColorScheme('desert')
   end
