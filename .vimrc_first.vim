@@ -77,7 +77,7 @@ Plug 'autozimu/LanguageClient-neovim', {
   \ 'do': 'make',
   \ 'for': ['dart'],
   \ }
-Plug 'ifepillar/vim-mucomplete' " autocomplete用
+Plug 'lifepillar/vim-mucomplete' " autocomplete用
 "
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/asyncomplete.vim'
