@@ -910,7 +910,8 @@ autocmd FileType php nmap <F1> :LspHover<CR>
 "autocmd FileType php nmap <F7> :QuickRun php-linter<CR>
 "autocmd FileType php nmap <F7> :QuickRun php-linter-phpmd<CR>
 "autocmd FileType php nmap <F7> :QuickRun php-linter-phan<CR>
-autocmd FileType php nmap <F7> :QuickRun php-linter-multi<CR>
+"autocmd FileType php nmap <F7> :QuickRun php-linter-multi<CR>
+autocmd FileType php nmap <F7> :QuickRun php-linter-laravel<CR>
 " Linter用 errorformat
 " php -l
 autocmd FileType php setlocal errorformat+=PHP\ Parse\ error:\ %m\ in\ %f\ on\ line\ %l
