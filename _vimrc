@@ -3,9 +3,9 @@
 " 編集に関する設定: {{{
 set encoding=utf-8
 set fileencodings=utf-8,sjis,euc-jp,utf-16le
-au FileType * set fileformats=unix,dos,mac
+set fileformats=unix,dos,mac
 au FileType dosbatch set fenc=cp932
-au FileType dosbatch set fileformats=dos
+au FileType dosbatch set fileformat=dos
 " ヤンクしたテキストをそのままクリップボードへ
 set clipboard+=unnamed
 
