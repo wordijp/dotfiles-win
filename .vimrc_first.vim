@@ -33,8 +33,6 @@ scriptencoding utf-8
 " このvimrcだけ使用する
 let g:vimrc_first_finish = 1
 
-let g:python3_host_prog = 'python.exe'
-
 " Windows用設定
 " afterを追加する
 if has('win32')
