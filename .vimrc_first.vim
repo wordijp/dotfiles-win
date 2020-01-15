@@ -76,6 +76,7 @@ Plug 'autozimu/LanguageClient-neovim', {
   \ 'for': ['dart'],
   \ }
 Plug 'lifepillar/vim-mucomplete' " autocomplete用
+Plug 'wordijp/vim-quickfixsync' " quickfixをsignsなどへ反映
 "
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/asyncomplete.vim'
@@ -851,6 +852,18 @@ let g:quickrun_config = {
 \      "exec": "%c %o",
 \  },
 \}
+
+let s:hook = {
+\ "name": 'quickfixsync',
+\ 'kind': 'hook',
+\ }
+
+function! s:hook.on_exit(...)
+  call quickfixsync#update()
+endfunction
+
+call quickrun#module#register(s:hook, 1)
+unlet s:hook
 " }}}
 
 " --------------
@@ -1109,6 +1122,16 @@ let g:mucomplete#chains = {
   \ }
 let g:mucomplete#minimum_prefix_length = 1
 "       }}}
+" vim-quickfixsync {{{
+let g:quickfixsync_auto_enable = 0
+"let g:quickfixsync_qftype = 'Location'
+"let g:quickfixsync_signname_map = {
+"  \ 1: 'LanguageClientError',
+"  \ 2: 'LanguageClientWarning',
+"  \ 3: 'LanguageClientInformation',
+"  \ 4: 'LanguageClientHint',
+"  \ }
+"       }}}
 "    }}}
 augroup enable_lsp
   autocmd!
@@ -1124,6 +1147,7 @@ function! s:enableLsp()
 
     :LanguageClientStart
     :call mucomplete#auto#enable()
+    :call quickfixsync#enable()
   else
     :call lsp#enable()
   end
