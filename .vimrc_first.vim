@@ -1127,8 +1127,6 @@ function! s:enableLsp()
   else
     :call lsp#enable()
   end
-
-  autocmd! enable_lsp
 endfunction
 
 " original) .vim\plugged\LanguageClient-neovim\autoload\LanguageClient.vim
