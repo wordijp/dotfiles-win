@@ -758,7 +758,7 @@ let g:quickrun_config = {
 \      "outputter/buffer/split" : ":botright 10sp",
 \      "outputter/error/split" : ":botright 10sp",
 \      "runner" : "vimproc",
-\      "outputter": "loclist",
+\      "outputter": "quickfix",
 \  },
 \  "make" : {
 \      "command"   : "make",
@@ -1080,7 +1080,7 @@ let g:lsp_settings = {
 " 現在はDart専用
 " NOTE: LanguageClient-neovim & dartだとdiagnosticsがプロジェクトLinterとして使える
 let g:LanguageClient_autoStart = 0
-let g:LanguageClient_diagnosticsList = 'Location'
+"let g:LanguageClient_diagnosticsList = 'Location'
 let g:LanguageClient_serverCommands = {
   \ 'dart': ['dart', s:dart_dir.'/snapshots/analysis_server.dart.snapshot', '--lsp'],
   \ }
