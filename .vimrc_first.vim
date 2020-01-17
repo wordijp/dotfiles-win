@@ -936,45 +936,45 @@ autocmd FileType ruby nmap <F2> :LspRename<CR>
 " ----------------
 " QuickFix移動 {{{
 " 次へ
-nnoremap <F4> :call <SID>lNext()<CR>
-nnoremap ]q :call <SID>lNext()<CR>
-function s:lNext()
+nnoremap <F4> :call <SID>cNext()<CR>
+nnoremap ]q :call <SID>cNext()<CR>
+function s:cNext()
   try
-    :ll
-    :lne
+    :cc
+    :cne
   catch
   endtry
 endfunction
 " 前へ
-nnoremap <S-F4> :call <SID>lPrev()<CR>
-nnoremap [q :call <SID>lPrev()<CR>
-function s:lPrev()
+nnoremap <S-F4> :call <SID>cPrev()<CR>
+nnoremap [q :call <SID>cPrev()<CR>
+function s:cPrev()
   try
-    :ll
-    :lp
+    :cc
+    :cp
   catch
   endtry
 endfunction
 
 " 最初へ
-nnoremap [Q :call <SID>lFirst()<CR>
-function s:lFirst()
-  :ll
+nnoremap [Q :call <SID>cFirst()<CR>
+function s:cFirst()
+  :cc
   while 1
     try
-      :lp 999
+      :cp 999
     catch
       break
     endtry
   endwhile
 endfunction
 " 最後へ
-nnoremap ]Q :call <SID>lLast()<CR>
-function s:lLast()
-  :ll
+nnoremap ]Q :call <SID>cLast()<CR>
+function s:cLast()
+  :cc
   while 1
     try
-      :lne 999
+      :cne 999
     catch
       break
     endtry
