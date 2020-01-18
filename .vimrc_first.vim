@@ -887,10 +887,10 @@ function! s:lspDocumentDiagnostics()
   "" 不要なら閉じる
   "" NOTE: call setloclist(0, l:result) でセットされている
   "if len(getloclist(0)) == 0 | :lclose | endif
-  if len(getloclist(0)) > 0
-    :lopen
+  if len(getqflist()) > 0
+    :copen
   else
-    :lclose
+    :cclose
   endif
 endfunction
 
