@@ -46,5 +46,8 @@ set guioptions+=M
 set guioptions-=m
 
 set conceallevel=2 concealcursor=i
+
+" 目印をnumberカラムに表示する
+set signcolumn=number
 " }}}
 
