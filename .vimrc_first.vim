@@ -625,6 +625,8 @@ autocmd FileType vue syntax sync fromstart
 autocmd FileType sh setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
 " AutoHotkey
 autocmd FileType autohotkey setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
+" Dart
+autocmd FileTYpe dart setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
 " }}}
 
 " ------------
