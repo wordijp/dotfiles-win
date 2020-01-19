@@ -39,7 +39,8 @@ set noundofile
 set noswapfile
 " 不要と感じたエラー音をOFF
 set belloff+=ctrlg
-set shortmess+=c
+" 検索時の現在番号を表示
+set shortmess-=S
 " }}}
 
 "-----------------------------------
