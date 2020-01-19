@@ -37,6 +37,9 @@ set nowrap
 set noundofile
 " swpを作らない
 set noswapfile
+" 不要と感じたエラー音をOFF
+set belloff+=ctrlg
+set shortmess+=c
 " }}}
 
 "-----------------------------------
