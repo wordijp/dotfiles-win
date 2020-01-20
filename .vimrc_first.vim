@@ -1142,52 +1142,28 @@ augroup END
 function! s:enableLsp()
   if &ft == 'dart'
     set completeopt+=noselect
-    set completefunc=LanguageClient_completeFuzzy
+    set completefunc=LanguageClient#complete
 
     " NOTE: Cのオムニ補完判定を流用出来る、遅延実行が必須
     let g:mucomplete#can_complete.dart = { 'user': g:mucomplete#can_complete.c.omni }
 
     :LanguageClientStart
-    :call mucomplete#auto#enable()
-    :call quickfixsync#enable()
+    call s:languageClientHook()
+    call mucomplete#auto#enable()
+    call quickfixsync#enable()
   else
     :call lsp#enable()
   end
 endfunction
 
-" original) .vim\plugged\LanguageClient-neovim\autoload\LanguageClient.vim
-" fuzzyマッチに改造したLanguageClient-neovimのcomplete func
-" TODO:　遅いと感じたらPythonへ( asyncomplete-ezfilter.vimのosa_filterを移植 )
-function! LanguageClient_filterCompletionItemsFuzzy(item, base) abort
-  return a:item.word =~? join(map(split(a:base, '\zs'), "printf('[\\x%02x].*', char2nr(v:val))"), '')
-  "return a:item.word =~# '^' . a:base
-endfunction
-
-function! LanguageClient_completeFuzzy(findstart, base) abort
-  if a:findstart
-      " Before requesting completion, content between l:start and current cursor is removed.
-      let s:completeText = LSP#text()
-
-      let l:input = getline('.')[:LSP#character() - 1]
-      let l:start = LanguageClient#get_complete_start(l:input)
-      return l:start
-  else
-      " Magic happens that cursor jumps to the previously found l:start.
-      let l:result = LanguageClient_runSync(
-                  \ 'LanguageClient#omniComplete', {
-                  \ 'character': LSP#character() + len(a:base),
-                  \ 'complete_position': LSP#character(),
-                  \ 'text': s:completeText,
-                  \ })
-      let l:result = l:result is v:null ? [] : l:result
-      let l:filtered_items = []
-      for l:item in l:result
-          if LanguageClient_filterCompletionItemsFuzzy(l:item, a:base)
-              call add(l:filtered_items, l:item)
-          endif
-      endfor
-      return filtered_items
-  endif
+function! s:languageClientHook()
+  " original) .vim\plugged\LanguageClient-neovim\autoload\LanguageClient.vim
+  " fuzzyマッチに改造したLanguageClient-neovimのcomplete func
+  " TODO:　遅いと感じたらPythonへ( asyncomplete-ezfilter.vimのosa_filterを移植 )
+  function! LanguageClient_filterCompletionItems(item, base) abort
+    return a:item.word =~? join(map(split(a:base, '\zs'), "printf('[\\x%02x].*', char2nr(v:val))"), '')
+    "return a:item.word =~# '^' . a:base
+  endfunction
 endfunction
 " }}}
 
