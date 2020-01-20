@@ -1119,9 +1119,6 @@ let g:LanguageClient_diagnosticsDisplay = {
   \ },
   \ }
 " vim-mucomplete {{{
-let g:mucomplete#chains = {
-  \ 'dart': ['user'],
-  \ }
 let g:mucomplete#minimum_prefix_length = 1
 "       }}}
 " vim-quickfixsync {{{
@@ -1142,10 +1139,9 @@ augroup END
 function! s:enableLsp()
   if &ft == 'dart'
     set completeopt+=noselect
-    set completefunc=LanguageClient#complete
 
     " NOTE: Cのオムニ補完判定を流用出来る、遅延実行が必須
-    let g:mucomplete#can_complete.dart = { 'user': g:mucomplete#can_complete.c.omni }
+    let g:mucomplete#can_complete.dart = { 'omni': g:mucomplete#can_complete.c.omni }
 
     :LanguageClientStart
     call s:languageClientHook()
