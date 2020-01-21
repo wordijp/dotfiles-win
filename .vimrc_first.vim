@@ -1086,8 +1086,9 @@ let g:lsp_settings_servers_dir = expand('~/.vim/vim-lsp-settings-servers')
 let g:lsp_settings = {
   \ 'clangd': {'cmd': ['clangd']},
   \ 'pyls': {'cmd': ['pyls']},
-  \ 'rls': {'cmd': ['rustup', 'run', 'nightly', 'rls']},
+  \ 'rls': {'cmd': ['ra_lsp_server']},
   \}
+  "\ 'rls': {'cmd': ['rustup', 'run', 'nightly', 'rls']},
   "\ 'analysis-server-dart-snapshot': {'cmd': ['dart', s:dart_dir.'/snapshots/analysis_server.dart.snapshot', '--lsp']}
 "    }}}
 
