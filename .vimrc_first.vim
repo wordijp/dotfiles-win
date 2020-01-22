@@ -1062,11 +1062,6 @@ function! s:keepPosExec(cmd)
 endfunction
 " }}}
 
-" ------------------------
-" thosakwe/vim-flutter {{{
-let g:flutter_command = 'flutter.bat'
-" }}}
-
 " ------------------------------
 " asynccomplete-ezfilter.vim {{{
 " 候補のfuzzyマッチ
