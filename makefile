@@ -13,6 +13,7 @@ FILES	= \
 	.pycodestyle \
 	.ycm_extra_conf.py \
 	tslint.json \
+	.gqlconfig
 
 DIRS	= \
 	.phan \
