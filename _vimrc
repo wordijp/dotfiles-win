@@ -4,13 +4,19 @@
 set encoding=utf-8
 set fileencodings=utf-8,sjis,euc-jp,utf-16le
 set fileformats=unix,dos,mac
-au FileType dosbatch set fenc=cp932
-au FileType dosbatch set fileformat=dos
+augroup dosbatch_settings
+  au!
+  au FileType dosbatch set fenc=cp932
+  au FileType dosbatch set fileformat=dos
+augroup END
 " ヤンクしたテキストをそのままクリップボードへ
 set clipboard+=unnamed
 
-au FileType * set foldmethod=indent
-au FileType vim set foldmethod=marker
+augroup fold_settings
+  au!
+  au FileType * set foldmethod=indent
+  au FileType vim set foldmethod=marker
+augroup END
 set foldlevel=100 "Don't autofold anything
 
 " 貼り付け自にyankされるのを防ぐ

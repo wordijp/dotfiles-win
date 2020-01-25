@@ -185,7 +185,10 @@ call defx#custom#column('filename', {
 call defx#custom#option('_', {
   \ 'columns': 'mark:indent:icon:filename:type:size:time',
   \ })
-autocmd FileType defx call s:defx_my_settings()
+augroup defx_settings
+  autocmd!
+  autocmd FileType defx call s:defx_my_settings()
+augroup END
 function! s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> <CR>
     \ defx#do_action('drop')
@@ -409,8 +412,11 @@ let g:neodbg_openwatchs_default    = 1 " watchpoints: expressionsと共用窓な
 " ------------
 " QuickFix {{{
 " Enterでジャンプ
-autocmd FileType * noremap <Enter> <Enter>
-autocmd FileType qf noremap <Enter> :call <SID>quickFixJump()<CR>
+augroup qf_jump
+  autocmd!
+  autocmd FileType * noremap <Enter> <Enter>
+  autocmd FileType qf noremap <Enter> :call <SID>quickFixJump()<CR>
+augroup END
 function! s:quickFixJump()
   let wi = getwininfo(win_getid())[0]
   if wi.loclist
@@ -430,7 +436,11 @@ vmap * "zy:let @/ = @z<CR><Right><S-N>
 
 " denite {{{
 " denite実行窓
-autocmd FileType denite call s:denite_my_settings()
+augroup denite_settings
+  autocmd!
+  autocmd FileType denite call s:denite_my_settings()
+  autocmd FileType denite-filter call s:denite_filter_my_settings()
+augroup END
 function! s:denite_my_settings() abort
   nnoremap <silent><buffer><expr> <CR>
   \ denite#do_map('do_action')
@@ -442,7 +452,6 @@ function! s:denite_my_settings() abort
   \ denite#do_map('open_filter_buffer')
 endfunction
 " 絞り込み窓
-autocmd FileType denite-filter call s:denite_filter_my_settings()
 function! s:denite_filter_my_settings() abort
   imap <silent><buffer><expr> <C-[>
   \ denite#do_map('quit')
@@ -583,50 +592,59 @@ function! s:CollectSpace() range
 endfunction
 " }}}
 
-autocmd FileType markdown noremap <Space><Tab> "\<Tab>"
-" HTML内の/開始パスも開けるように
-autocmd FileType html setlocal includeexpr=substitute(v:fname,'^\\/','','') | setlocal path+=;/
+augroup filetype_edit
+  autocmd!
+  autocmd FileType markdown noremap <Space><Tab> "\<Tab>"
+  " HTML内の/開始パスも開けるように
+  autocmd FileType html setlocal includeexpr=substitute(v:fname,'^\\/','','') | setlocal path+=;/
+augroup END
 
 " ------------
 " filetype {{{
-autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
-" VB
-autocmd BufRead,BufNewFile *.{cls,dcm,frm} set filetype=vb
-" ruby
-autocmd BufNewFile,BufRead Guardfile  set filetype=ruby
-" typescript.tsx
-autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
+augroup set_filetype
+  autocmd!
+  autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+  " VB
+  autocmd BufRead,BufNewFile *.{cls,dcm,frm} set filetype=vb
+  " ruby
+  autocmd BufNewFile,BufRead Guardfile  set filetype=ruby
+  " typescript.tsx
+  autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
+augroup END
 " }}}
 
 " --------------
 " インデント {{{
-autocmd! FileType coffee setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
-" Haskell
-autocmd! FileType haskell setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
-" Ruby
-autocmd! FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
-autocmd BufNewFile,BufRead *.{erb} setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
-" Vim Script
-autocmd FileType vim setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
-" HTML & CSS
-" template files(PHP blade)
-autocmd FileType html,css,blade setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
-" VB
-autocmd FileType vb setlocal shiftwidth=4 tabstop=4 softtabstop=4 | set expandtab
-"autocmd BufNewFile,BufRead *.{cls,dcm,frm} setlocal shiftwidth=4 tabstop=4 softtabstop=4 | set expandtab
-" JavaScript
-"autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
-autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
-autocmd FileType typescript setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
-" Vue
-autocmd FileType vue setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
-autocmd FileType vue syntax sync fromstart
-" sh
-autocmd FileType sh setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
-" AutoHotkey
-autocmd FileType autohotkey setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
-" Dart
-autocmd FileTYpe dart setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
+augroup set_indent
+  autocmd!
+  autocmd! FileType coffee setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
+  " Haskell
+  autocmd! FileType haskell setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
+  " Ruby
+  autocmd! FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
+  autocmd BufNewFile,BufRead *.{erb} setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
+  " Vim Script
+  autocmd FileType vim setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
+  " HTML & CSS
+  " template files(PHP blade)
+  autocmd FileType html,css,blade setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
+  " VB
+  autocmd FileType vb setlocal shiftwidth=4 tabstop=4 softtabstop=4 | set expandtab
+  "autocmd BufNewFile,BufRead *.{cls,dcm,frm} setlocal shiftwidth=4 tabstop=4 softtabstop=4 | set expandtab
+  " JavaScript
+  "autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
+  autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
+  autocmd FileType typescript setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
+  " Vue
+  autocmd FileType vue setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
+  autocmd FileType vue syntax sync fromstart
+  " sh
+  autocmd FileType sh setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
+  " AutoHotkey
+  autocmd FileType autohotkey setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
+  " Dart
+  autocmd FileTYpe dart setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
+augroup END
 " }}}
 
 " ------------
@@ -709,7 +727,10 @@ let g:auto_ctags_filetype_mode = 1
 let g:auto_ctags_tags_name_fixed = 'tags' " 全filetype共通名
 
 " tagsファイル作成
-"au FileType * call s:tagBuildCmd()
+"augroup tag_make
+"  au!
+"  au FileType * call s:tagBuildCmd()
+"augroup END
 "function s:tagBuildCmd()
 "  if &filetype == 'go'
 "    nnoremap :tags :GoBuildTags mycustomtag
@@ -871,19 +892,25 @@ unlet s:hook
 " --------------
 " 言語別設定 {{{
 " C++
-autocmd FileType cpp nmap <F1> :LspHover<CR>
-autocmd FileType cpp nmap <F2> :LspRename<CR>
-autocmd FileType cpp nmap <F5> :QuickRun make-run<CR>
-autocmd FileType cpp nmap <C-F5> :QuickRun make-run-shell<CR>
-autocmd FileType cpp nmap <F7> :QuickRun make<CR>
-autocmd FileType cpp nmap <F8> :QuickRun make-clean<CR>
-" make
-autocmd FileType cpp setlocal errorformat+=make:\ 'all'\ is\ up\ to\ date.
+augroup cpp_settings
+  autocmd!
+  autocmd FileType cpp nmap <F1> :LspHover<CR>
+  autocmd FileType cpp nmap <F2> :LspRename<CR>
+  autocmd FileType cpp nmap <F5> :QuickRun make-run<CR>
+  autocmd FileType cpp nmap <C-F5> :QuickRun make-run-shell<CR>
+  autocmd FileType cpp nmap <F7> :QuickRun make<CR>
+  autocmd FileType cpp nmap <F8> :QuickRun make-clean<CR>
+  " make
+  autocmd FileType cpp setlocal errorformat+=make:\ 'all'\ is\ up\ to\ date.
+augroup END
 
 " Dart
-autocmd FileType dart nmap <F1> :call LanguageClient#textDocument_hover()<CR>
-autocmd FileType dart nmap <F2> :call LanguageClient#textDocument_rename({'newName': input('Rename to: ', expand('<cword>'))})<CR>
-autocmd FileType dart nmap <F7> :call <SID>lspDocumentDiagnostics()<CR>
+augroup dart_settings
+  autocmd!
+  autocmd FileType dart nmap <F1> :call LanguageClient#textDocument_hover()<CR>
+  autocmd FileType dart nmap <F2> :call LanguageClient#textDocument_rename({'newName': input('Rename to: ', expand('<cword>'))})<CR>
+  autocmd FileType dart nmap <F7> :call <SID>lspDocumentDiagnostics()<CR>
+augroup END
 function! s:lspDocumentDiagnostics()
   ":LspDocumentDiagnostics
   "" 不要なら閉じる
@@ -897,13 +924,16 @@ function! s:lspDocumentDiagnostics()
 endfunction
 
 " rust
-autocmd FileType rust nmap <F1> :LspHover<CR>
-autocmd FileType rust nmap <F2> :LspRename<CR>
-autocmd FileType rust nmap <F5> :QuickRun cargo-run<CR>
-autocmd FileType rust nmap <C-F5> :QuickRun cargo-run-shell<CR>
-autocmd FileType rust nmap <F7> :QuickRun cargo-build<CR>
-"autocmd FileType rust nmap <F8> :QuickRun cargo-build-lib<CR>
-autocmd FileType rust nmap <F8> :call <SID>cargo_build_lib()<CR>
+augroup rust_settings
+  autocmd!
+  autocmd FileType rust nmap <F1> :LspHover<CR>
+  autocmd FileType rust nmap <F2> :LspRename<CR>
+  autocmd FileType rust nmap <F5> :QuickRun cargo-run<CR>
+  autocmd FileType rust nmap <C-F5> :QuickRun cargo-run-shell<CR>
+  autocmd FileType rust nmap <F7> :QuickRun cargo-build<CR>
+  "autocmd FileType rust nmap <F8> :QuickRun cargo-build-lib<CR>
+  autocmd FileType rust nmap <F8> :call <SID>cargo_build_lib()<CR>
+augroup END
 function! s:cargo_build_lib()
   silent write
   silent execute "normal! :QuickRun cargo-build-lib\<CR>"
@@ -911,41 +941,56 @@ function! s:cargo_build_lib()
 endfunction
 
 " Go
-autocmd FileType go nmap <F1> :LspHover<CR>
-autocmd FileType go nmap <F2> :LspRename<CR>
-autocmd FileType go nmap <F5> :QuickRun go-run<CR>
-autocmd FileType go nmap <C-F5> :QuickRun go-run-shell<CR>
-autocmd FileType go nmap <F7> :QuickRun go-build<CR>
-"autocmd FileType go nmap <F7> :QuickRun make<CR>
+augroup go_settings
+  autocmd!
+  autocmd FileType go nmap <F1> :LspHover<CR>
+  autocmd FileType go nmap <F2> :LspRename<CR>
+  autocmd FileType go nmap <F5> :QuickRun go-run<CR>
+  autocmd FileType go nmap <C-F5> :QuickRun go-run-shell<CR>
+  autocmd FileType go nmap <F7> :QuickRun go-build<CR>
+  "autocmd FileType go nmap <F7> :QuickRun make<CR>
+augroup END
 
 " PHP
-autocmd FileType php nmap <F1> :LspHover<CR>
-"autocmd FileType php nmap <F7> :QuickRun php-linter<CR>
-"autocmd FileType php nmap <F7> :QuickRun php-linter-phpmd<CR>
-"autocmd FileType php nmap <F7> :QuickRun php-linter-phan<CR>
-"autocmd FileType php nmap <F7> :QuickRun php-linter-multi<CR>
-autocmd FileType php nmap <F7> :QuickRun php-linter-laravel<CR>
-" Linter用 errorformat
-" php -l
-autocmd FileType php setlocal errorformat+=PHP\ Parse\ error:\ %m\ in\ %f\ on\ line\ %l
-" phpmd
-autocmd FileType php setlocal errorformat+=%f\	-\	%m\\,\ line:\ %l\\,\ col:\ %c\\,\ file:\ %.%#.
-autocmd FileType php setlocal errorformat+=%f:%l\	%m
-" phan
-autocmd FileType php setlocal errorformat+=%f:%l\ %m
+augroup php_settings
+  autocmd!
+  autocmd FileType php nmap <F1> :LspHover<CR>
+  "autocmd FileType php nmap <F7> :QuickRun php-linter<CR>
+  "autocmd FileType php nmap <F7> :QuickRun php-linter-phpmd<CR>
+  "autocmd FileType php nmap <F7> :QuickRun php-linter-phan<CR>
+  "autocmd FileType php nmap <F7> :QuickRun php-linter-multi<CR>
+  autocmd FileType php nmap <F7> :QuickRun php-linter-laravel<CR>
+  " Linter用 errorformat
+  " php -l
+  autocmd FileType php setlocal errorformat+=PHP\ Parse\ error:\ %m\ in\ %f\ on\ line\ %l
+  " phpmd
+  autocmd FileType php setlocal errorformat+=%f\	-\	%m\\,\ line:\ %l\\,\ col:\ %c\\,\ file:\ %.%#.
+  autocmd FileType php setlocal errorformat+=%f:%l\	%m
+  " phan
+  autocmd FileType php setlocal errorformat+=%f:%l\ %m
+augroup END
 
 " JavaScript
-autocmd FileType javascript,typescript nmap <F1> :LspHover<CR>
-autocmd FileType javascript,typescript nmap <F2> :LspRename<CR>
-autocmd FileType javascript nmap <F7> :QuickRun eslint-all<CR>
+augroup javascript_settings
+  autocmd!
+  autocmd FileType javascript,typescript nmap <F1> :LspHover<CR>
+  autocmd FileType javascript,typescript nmap <F2> :LspRename<CR>
+  autocmd FileType javascript nmap <F7> :QuickRun eslint-all<CR>
+augroup END
 
 " Python
-autocmd FileType python nmap <F1> :LspHover<CR>
-autocmd FileType python nmap <F2> :LspRename<CR>
+augroup python_settings
+  autocmd!
+  autocmd FileType python nmap <F1> :LspHover<CR>
+  autocmd FileType python nmap <F2> :LspRename<CR>
+augroup END
 
 " Ruby
-autocmd FileType ruby nmap <F1> :LspHover<CR>
-autocmd FileType ruby nmap <F2> :LspRename<CR>
+augroup ruby_settings
+  autocmd!
+  autocmd FileType ruby nmap <F1> :LspHover<CR>
+  autocmd FileType ruby nmap <F2> :LspRename<CR>
+augroup END
 " }}}
 
 " ----------------
@@ -1081,8 +1126,9 @@ let g:lsp_settings_servers_dir = expand('~/.vim/vim-lsp-settings-servers')
 let g:lsp_settings = {
   \ 'clangd': {'cmd': ['clangd']},
   \ 'pyls': {'cmd': ['pyls']},
-  \ 'rls': {'cmd': ['rustup', 'run', 'nightly', 'rls']},
+  \ 'rls': {'cmd': ['ra_lsp_server']},
   \}
+  "\ 'rls': {'cmd': ['rustup', 'run', 'nightly', 'rls']},
   "\ 'rls': {'cmd': ['ra_lsp_server']},
   "\ 'analysis-server-dart-snapshot': {'cmd': ['dart', s:dart_dir.'/snapshots/analysis_server.dart.snapshot', '--lsp']}
 "    }}}
@@ -1178,7 +1224,10 @@ let g:cssColorVimDoNotMessMyUpdatetime = 1
 " PHP-CS-Fixer(コード整形) {{{
 let g:php_cs_fixer_cache = expand('~/.cache/php_cs.cache')
 
-autocmd FileType php nnoremap <silent><Space>pcd :call PhpCsFixerFixDirectory()<CR>
+augroup php_format
+  autocmd!
+  autocmd FileType php nnoremap <silent><Space>pcd :call PhpCsFixerFixDirectory()<CR>
+augroup END
 "autocmd FileType php nnoremap <silent><Space>pcf :call PhpCsFixerFixFile()<CR>
 "    }}}
 
