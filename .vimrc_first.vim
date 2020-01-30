@@ -66,6 +66,7 @@ Plug 'junegunn/vim-plug', {
 Plug 'w0rp/ale'
 " 色んな言語のsyntax
 Plug 'sheerun/vim-polyglot'
+Plug 'wordijp/vim-vimscript-scope-syntax'
 " filetype切り替え
 Plug 'osyo-manga/vim-precious'
 Plug 'Shougo/context_filetype.vim'
@@ -1125,10 +1126,8 @@ let g:lsp_auto_enable = 0
 let g:lsp_settings_servers_dir = expand('~/.vim/vim-lsp-settings-servers')
 let g:lsp_settings = {
   \ 'clangd': {'cmd': ['clangd']},
-  \ 'pyls': {'cmd': ['pyls']},
-  \ 'rls': {'cmd': ['ra_lsp_server']},
   \}
-  "\ 'rls': {'cmd': ['rustup', 'run', 'nightly', 'rls']},
+  "\ 'rls': {'cmd': ['rls']},
   "\ 'rls': {'cmd': ['ra_lsp_server']},
   "\ 'analysis-server-dart-snapshot': {'cmd': ['dart', s:dart_dir.'/snapshots/analysis_server.dart.snapshot', '--lsp']}
 "    }}}
