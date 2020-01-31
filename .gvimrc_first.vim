@@ -38,8 +38,8 @@ let g:gvimrc_first_finish = 1
 " 共通
 
 " カラースキーム {{{
-au VimEnter * call <SID>changeColorscheme()
-function! s:changeColorscheme()
+au VimEnter * call timer_start(0, function('s:changeColorschemeLazy'))
+function! s:changeColorschemeLazy(_)
   if &ft == 'python'
     call s:ifNeedColorScheme('darkblue')
   elseif &ft == 'cs'

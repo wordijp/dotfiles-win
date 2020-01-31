@@ -108,6 +108,7 @@ Plug 'thosakwe/vim-flutter'
 " PHP
 Plug 'stephpy/vim-php-cs-fixer'
 " Utility
+Plug 'itchyny/lightline.vim'
 "Plug 'cpiger/NeoDebug'
 Plug 'wordijp/NeoDebug' " バグ修正 & cgdbライクに使えるようにした版
 Plug 'airblade/vim-rooter' " .gitプロジェクトでは常にルートをカレントディレクトリへ
@@ -225,6 +226,11 @@ command! DefxTree :Defx -split=vertical -winwidth=50 -direction=topleft
 "------------------
 " vim-bookmarks {{{
 let g:bookmark_auto_save_file = expand('~/.vim/tmp/.vim-bookmarks')
+" }}}
+
+" -----------------
+" lightline.vim {{{
+let g:lightline = {'colorscheme': 'wombat'}
 " }}}
 
 " ---------------------
