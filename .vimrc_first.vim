@@ -249,7 +249,7 @@ let g:ale_linters = {
   \ 'php': [],
   \ 'rust': ['cargo'],
   \ 'go': ['golint', 'gobuild'],
-  \ 'javascript': ['eslint'],
+  \ 'javascript': ['eslint', 'flow'],
   \ 'typescript': ['tsserver'],
   \ 'ruby': ['ruby'],
   \}
