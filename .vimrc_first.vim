@@ -60,6 +60,7 @@ Plug 'junegunn/vim-plug', {
   \ 'dir': expand('~/.vim/plugged/vim-plug/autoload')
   \ }
 
+Plug 'vim-jp/vimdoc-ja'
 " コード補完
 "Plug 'Valloric/YouCompleteMe', { 'for': ['cpp'] }
 " Linter
