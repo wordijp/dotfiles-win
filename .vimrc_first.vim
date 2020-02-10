@@ -688,6 +688,20 @@ endfunction
 nnoremap :ppx :call Open_ppx()
 command! -bar PPx call Open_ppx()
 "    }}}
+
+" vim-flutter
+augroup flutter_shortcut
+  autocmd!
+  autocmd FileType dart call s:flutter_my_settings()
+augroup END
+function! s:flutter_my_settings() abort
+  nnoremap :fls :FlutterRun
+  nnoremap :flq :FlutterQuit
+  "
+  nnoremap :flh :FlutterHotReload
+  nnoremap :flr :FlutterHotRestart
+  nnoremap :fld :FlutterVisualDebug
+endfunction
 " }}}
 
 " vim-operator-flashy(コピーしたら光るやつ)
