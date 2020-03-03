@@ -94,6 +94,8 @@ Plug 'prettier/vim-prettier', {
   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html', 'blade'] }
 " 辞書
 Plug 'thinca/vim-ref'
+" Sourcetrail(コード分析ツール)
+Plug 'CoatiSoftware/vim-sourcetrail'
 " React(TypeScript)
 "Plug 'leafgarland/typescript-vim'
 "Plug 'peitalin/vim-jsx-typescript'
@@ -661,6 +663,9 @@ augroup END
 nnoremap :df :Defx
 nnoremap :dfc :DefxCurrent
 nnoremap :dft :DefxTree
+
+" Sourcetrail
+nnoremap :sa :SourcetrailActivateToken
 
 " QuickRun
 nnoremap :qr :QuickRun
