@@ -141,6 +141,7 @@ Plug 'mattesgroeger/vim-bookmarks'
 "Plug 'soramugi/auto-ctags.vim'
 Plug 'wordijp/auto-ctags.vim' " tagsファイル名固定版
 Plug 'jlanzarotta/bufexplorer'
+Plug 'previm/previm'
 "Plug 'thinca/vim-poslist'
 Plug 'tyru/open-browser.vim'
 " Other
