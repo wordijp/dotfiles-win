@@ -69,6 +69,11 @@ function! ColorScheme(scheme)
 endfunction
 " }}}
 
+" 非アクティブの色を暗めにする
+autocmd ColorScheme * highlight NormalNC guifg=#a0a0a0 guibg=#121212
+autocmd WinEnter,BufWinEnter * setlocal wincolor=
+autocmd WinLeave * setlocal wincolor=NormalNC
+
 " カーソル位置の表示 {{{
 augroup vimrc-auto-cursorline
     autocmd!
