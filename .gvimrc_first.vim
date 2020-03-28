@@ -73,6 +73,9 @@ endfunction
 autocmd ColorScheme * highlight NormalNC guifg=#a0a0a0 guibg=#121212
 autocmd WinEnter,BufWinEnter * setlocal wincolor=
 autocmd WinLeave * setlocal wincolor=NormalNC
+" エディタがフォーカス失った時も暗めにする
+autocmd FocusGained * setlocal wincolor=
+autocmd FocusLost * setlocal wincolor=NormalNC
 
 " カーソル位置の表示 {{{
 augroup vimrc-auto-cursorline
