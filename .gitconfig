@@ -6,6 +6,8 @@
 	st = status
 	co = checkout
 	cod = checkout --detach
+	checkout-branch = !git checkout $(git branch | fzf)
+	cb = !git checkout $(git branch | fzf)
 	br = branch
 	; PPxで使用
 	; ブランチ一覧を最新更新順で
@@ -101,4 +103,5 @@
 	excludesfile = ~/.gitignore
 	quotepath = false
 [credential]
+	helper = manager
 	;helper = !\"E:/tool/Developer/GitExtensions/GitCredentialWinStore/git-credential-winstore.exe\"
