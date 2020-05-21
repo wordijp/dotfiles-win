@@ -1189,7 +1189,7 @@ let g:LanguageClient_diagnosticsDisplay = {
   \ },
   \ }
 " vim-mucomplete {{{
-let g:mucomplete#minimum_prefix_length = 1
+let g:mucomplete#minimum_prefix_length = 2
 "       }}}
 " vim-quickfixsync {{{
 let g:quickfixsync_auto_enable = 0
@@ -1209,6 +1209,7 @@ augroup END
 function! s:enableLsp()
   if &ft == 'dart'
     set completeopt+=noselect
+    set pumheight=15
 
     " NOTE: Cのオムニ補完判定を流用出来る、遅延実行が必須
     let g:mucomplete#can_complete.dart = { 'omni': g:mucomplete#can_complete.c.omni }
