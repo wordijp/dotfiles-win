@@ -1217,7 +1217,7 @@ function! s:enableLsp()
     let g:mucomplete#can_complete.dart = {
       \ 'omni': {t -> strlen(&l:omnifunc) > 0 &&
       \   (t =~# '\m\%(\S\.\)$'
-      \   || (g:mucomplete_with_key && (s:complete_empty_text || t =~# '\m\%(\S\.\)$'))
+      \   || (g:mucomplete_with_key && (t =~# '\m\%(\S\.\)$'))
       \   )}
       \ }
 
