@@ -1189,7 +1189,7 @@ let g:LanguageClient_diagnosticsDisplay = {
   \ },
   \ }
 " vim-mucomplete {{{
-let g:mucomplete#minimum_prefix_length = 2
+let g:mucomplete#minimum_prefix_length = 1
 "       }}}
 " vim-quickfixsync {{{
 let g:quickfixsync_auto_enable = 0
@@ -1211,8 +1211,14 @@ function! s:enableLsp()
     set completeopt+=noselect
     set pumheight=15
 
-    " NOTE: Cのオムニ補完判定を流用出来る、遅延実行が必須
-    let g:mucomplete#can_complete.dart = { 'omni': g:mucomplete#can_complete.c.omni }
+    let l:_ = g:mucomplete#can_complete
+    " NOTE: Flutterでオムニ補完を使うと遅いので、.等の要所のみ
+    "let g:mucomplete#can_complete.dart = {'omni': g:mucomplete#can_complete.c.omni }
+    let g:mucomplete#can_complete.dart = {
+      \ 'omni': {t -> strlen(&l:omnifunc) > 0 &&
+      \   (g:mucomplete_with_key && (t =~# '\m\%(\S\.\)$'))
+      \   }
+      \ }
 
     :LanguageClientStart
     call s:languageClientHook()
