@@ -552,9 +552,7 @@ nmap <Space>j <Plug>(quickhl-cword-toggle)
 " {{{
 noremap <Space><Tab> :call <SID>format()<CR>
 function! s:format()
-  if &ft == 'javascript' || &ft == 'typescript' ||
-    \ &ft == 'css' || &ft == 'less' || &ft == 'scss' ||
-    \ &ft == 'json' || &ft == 'graphql' || &ft == 'markdown' || &ft == 'yaml' || &ft == 'html'
+  if index(['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'yaml', 'html'], &ft) > 0
     :PrettierAsync
   elseif &ft == 'blade'
     :Prettier
@@ -562,6 +560,8 @@ function! s:format()
   elseif &ft == 'php'
     silent call PhpCsFixerFixFile()
     silent call <SID>basicFormat()
+  elseif &ft == 'dart'
+    :call LanguageClient_textDocument_formatting()
   else
     :call <SID>basicFormat()
   end
