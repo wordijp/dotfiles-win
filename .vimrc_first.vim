@@ -1167,8 +1167,9 @@ let g:lsp_settings = {
 let g:LanguageClient_autoStart = 0
 "let g:LanguageClient_diagnosticsList = 'Location'
 let g:LanguageClient_serverCommands = {
-  \ 'dart': ['dart', s:dart_dir.'/snapshots/analysis_server.dart.snapshot', '--lsp'],
+  \ 'dart': ['dart', s:dart_dir.'/snapshots/analysis_server.dart.snapshot', '--lsp', '--cache', expand('$TEMP'), '--use-new-relevance', '--useAnalysisHighlight2'],
   \ }
+  "\ 'dart': ['dart', s:dart_dir.'/snapshots/analysis_server.dart.snapshot', '--lsp', '--cache', expand('$TEMP')],
 
 let g:LanguageClient_diagnosticsDisplay = {
   \ 1: {
@@ -1189,7 +1190,7 @@ let g:LanguageClient_diagnosticsDisplay = {
   \ },
   \ }
 " vim-mucomplete {{{
-let g:mucomplete#minimum_prefix_length = 1
+let g:mucomplete#minimum_prefix_length = 2
 "       }}}
 " vim-quickfixsync {{{
 let g:quickfixsync_auto_enable = 0
@@ -1213,13 +1214,13 @@ function! s:enableLsp()
 
     let l:_ = g:mucomplete#can_complete
     " NOTE: Flutterでオムニ補完を使うと遅いので、.等の要所のみ
-    "let g:mucomplete#can_complete.dart = {'omni': g:mucomplete#can_complete.c.omni }
-    let g:mucomplete#can_complete.dart = {
-      \ 'omni': {t -> strlen(&l:omnifunc) > 0 &&
-      \   (t =~# '\m\%(\.\)$'
-      \   || (g:mucomplete_with_key && (t =~# '\m\%(\.\)$'))
-      \   )}
-      \ }
+    let g:mucomplete#can_complete.dart = {'omni': g:mucomplete#can_complete.c.omni }
+    "let g:mucomplete#can_complete.dart = {
+    "  \ 'omni': {t -> strlen(&l:omnifunc) > 0 &&
+    "  \   (t =~# '\m\%(\.\)$'
+    "  \   || (g:mucomplete_with_key && (t =~# '\m\%(\.\)$'))
+    "  \   )}
+    "  \ }
 
     :LanguageClientStart
     call s:languageClientHook()
@@ -1231,13 +1232,56 @@ function! s:enableLsp()
 endfunction
 
 function! s:languageClientHook()
+  function! s:strlenComp(s1, s2)
+    let l:len_1 = len(a:s1.word)
+    let l:len_2 = len(a:s2.word)
+    return l:len_1 == l:len_2
+      \ ? a:s1.word == a:s2.word ? 0 : a:s1.word > a:s2.word ? 1 : -1
+      \ : l:len_1 > l:len_2 ? 1 : -1
+  endfunction
+
+  let g:LanguageClient_completeResults = []
+  function! LanguageClient#complete(findstart, base) abort
+      if a:findstart
+          " Before requesting completion, content between l:start and current cursor is removed.
+          let s:completeText = LSP#text()
+
+          let l:input = getline('.')[:LSP#character() - 1]
+          let l:start = LanguageClient#get_complete_start(l:input)
+          return l:start
+      else
+          " Magic happens that cursor jumps to the previously found l:start.
+          let l:result = LanguageClient_runSync(
+                      \ 'LanguageClient#omniComplete', {
+                      \ 'character': LSP#character() + len(a:base),
+                      \ 'complete_position': LSP#character(),
+                      \ 'text': s:completeText,
+                      \ })
+          let l:result = l:result is v:null ? [] : l:result
+          let l:filtered_items = []
+
+          for l:item in l:result
+              if LanguageClient_filterCompletionItems(l:item, a:base)
+                  call add(l:filtered_items, l:item)
+              endif
+          endfor
+
+          " NOTE: 短い順にソート
+          call sort(l:filtered_items, 's:strlenComp')
+
+          return filtered_items
+      endif
+  endfunction
+
+
   " original) .vim\plugged\LanguageClient-neovim\autoload\LanguageClient.vim
   " fuzzyマッチに改造したLanguageClient-neovimのcomplete func
   " TODO:　遅いと感じたらPythonへ( asyncomplete-ezfilter.vimのosa_filterを移植 )
-  function! LanguageClient_filterCompletionItems(item, base) abort
-    return a:item.word =~? join(map(split(a:base, '\zs'), "printf('[\\x%02x].*', char2nr(v:val))"), '')
-    "return a:item.word =~# '^' . a:base
-  endfunction
+  " XXX: fuzzyマッチ時に再リクエストが走るが、Flutter開発環境だと候補が多すぎるためなのか遅い、なので使わない
+  "function! LanguageClient_filterCompletionItems(item, base) abort
+  "  return a:item.word =~? join(map(split(a:base, '\zs'), "printf('[\\x%02x].*', char2nr(v:val))"), '')
+  "  "return a:item.word =~# '^' . a:base
+  "endfunction
 endfunction
 " }}}
 
