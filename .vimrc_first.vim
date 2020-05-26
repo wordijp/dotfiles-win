@@ -1167,7 +1167,7 @@ let g:lsp_settings = {
 let g:LanguageClient_autoStart = 0
 "let g:LanguageClient_diagnosticsList = 'Location'
 let g:LanguageClient_serverCommands = {
-  \ 'dart': ['dart', s:dart_dir.'/snapshots/analysis_server.dart.snapshot', '--lsp', '--cache', expand('$TEMP'), '--use-new-relevance', '--useAnalysisHighlight2'],
+  \ 'dart': ['dart', s:dart_dir.'/snapshots/analysis_server.dart.snapshot', '--lsp', '--cache', expand('$TEMP')],
   \ }
   "\ 'dart': ['dart', s:dart_dir.'/snapshots/analysis_server.dart.snapshot', '--lsp', '--cache', expand('$TEMP')],
 
@@ -1213,8 +1213,8 @@ function! s:enableLsp()
     set pumheight=15
 
     let l:_ = g:mucomplete#can_complete
-    " NOTE: Flutterでオムニ補完を使うと遅いので、.等の要所のみ
     let g:mucomplete#can_complete.dart = {'omni': g:mucomplete#can_complete.c.omni }
+    " NOTE: Flutterでオムニ補完を使うと遅いので、.等の要所のみ
     "let g:mucomplete#can_complete.dart = {
     "  \ 'omni': {t -> strlen(&l:omnifunc) > 0 &&
     "  \   (t =~# '\m\%(\.\)$'
