@@ -552,7 +552,7 @@ nmap <Space>j <Plug>(quickhl-cword-toggle)
 " {{{
 noremap <Space><Tab> :call <SID>format()<CR>
 function! s:format()
-  if index(['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'yaml', 'html'], &ft) > 0
+  if index(['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'yaml', 'html'], &ft) >= 0
     :PrettierAsync
   elseif &ft == 'blade'
     :Prettier
