@@ -77,50 +77,6 @@ autocmd WinLeave * setlocal wincolor=NormalNC
 autocmd FocusGained * setlocal wincolor=
 autocmd FocusLost * setlocal wincolor=NormalNC
 
-" カーソル位置の表示 {{{
-augroup vimrc-auto-cursorline
-    autocmd!
-    autocmd CursorMoved,CursorMovedI * call Auto_cursorline('CursorMoved')
-    "autocmd CursorHold,CursorHoldI * call Auto_cursorline('CursorHold')
-    autocmd WinEnter * call Auto_cursorline('WinEnter')
-    autocmd WinLeave * call Auto_cursorline('WinLeave')
-    
-    " 強制で表示
-    nnoremap <silent><Space>c :call Force_cursormoved()<CR>
-    function! Force_cursormoved()
-	setlocal cursorline
-	setlocal cursorcolumn
-	let g:cursorline_lock = 1
-    endfunction
-
-    let g:cursorline_lock = 0
-    function! Auto_cursorline(event)
-        if a:event ==# 'WinEnter'
-            setlocal cursorline
-            setlocal cursorcolumn
-            let g:cursorline_lock = 2
-        elseif a:event ==# 'WinLeave'
-            setlocal nocursorline
-            setlocal nocursorcolumn
-        elseif a:event ==# 'CursorMoved'
-            if g:cursorline_lock
-                if 1 < g:cursorline_lock
-                    let g:cursorline_lock = 1
-                else
-                    setlocal nocursorline
-                    setlocal nocursorcolumn
-                    let g:cursorline_lock = 0
-                endif
-            endif
-        elseif a:event ==# 'CursorHold'
-            setlocal cursorline
-            setlocal cursorcolumn
-            let g:cursorline_lock = 1
-        endif
-    endfunction
-augroup END
-" }}}
-
 " mswin.vim {{{
 " CTRL-X and SHIFT-Del are Cut
 vnoremap <C-X> "+x
