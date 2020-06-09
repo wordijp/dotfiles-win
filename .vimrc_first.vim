@@ -550,7 +550,7 @@ nmap <Space>j <Plug>(quickhl-cword-toggle)
 " --------------------------------------------------
 " コード整形 
 " {{{
-nnoremap <Space><Tab> :call <SID>format()<CR>
+nnoremap <C-S-F> :call <SID>format()<CR>
 function! s:format()
   if index(['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'yaml', 'html'], &ft) >= 0
     :PrettierAsync
