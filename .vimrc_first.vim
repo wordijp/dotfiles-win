@@ -73,7 +73,7 @@ Plug 'wordijp/vim-highlight-references'
 Plug 'osyo-manga/vim-precious'
 Plug 'Shougo/context_filetype.vim'
 " 言語サーバープロトコル
-Plug 'autozimu/LanguageClient-neovim', {
+Plug 'wordijp/LanguageClient-neovim', {
   \ 'branch': 'next',
   \ 'do': 'make',
   \ 'for': ['dart'],
@@ -81,7 +81,6 @@ Plug 'autozimu/LanguageClient-neovim', {
 Plug 'lifepillar/vim-mucomplete' " autocomplete用
 Plug 'wordijp/vim-quickfixsync' " quickfixをsignsなどへ反映
 "
-Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'machakann/asyncomplete-ezfilter.vim' " fuzzyマッチ用
@@ -1209,90 +1208,19 @@ augroup enable_lsp
 augroup END
 function! s:enableLsp()
   if &ft == 'dart'
-    set completeopt+=noselect
-    set pumheight=15
-    set completefunc=LanguageClient_completeFunc
-
     let l:_ = g:mucomplete#can_complete
     let g:mucomplete#can_complete.dart = {'omni': g:mucomplete#can_complete.c.omni }
 
     :LanguageClientStart
-    call s:languageClientHook()
-    call mucomplete#auto#enable()
     call quickfixsync#enable()
   else
-    :call lsp#enable()
+    call lsp#enable()
+    set omnifunc=lsp#complete
   end
-endfunction
 
-"let s:start_time = 0
-"function! TimerStart()
-"  let s:start_time = reltime()
-"endfunction
-
-"function! TimerEnd(s)
-"  echomsg a:s . ':' . reltimestr(reltime(s:start_time))
-"endfunction
-
-function! s:languageClientHook()
-  function! s:strlenComp(s1, s2)
-    let l:len_1 = len(a:s1.word)
-    let l:len_2 = len(a:s2.word)
-    return l:len_1 == l:len_2
-      \ ? a:s1.word == a:s2.word ? 0 : a:s1.word > a:s2.word ? 1 : -1
-      \ : l:len_1 > l:len_2 ? 1 : -1
-  endfunction
-
-  let g:LanguageClient_completeResults = []
-  function! LanguageClient#complete(findstart, base) abort
-      if a:findstart
-          " Before requesting completion, content between l:start and current cursor is removed.
-          let l:input = getline('.')[:LSP#character() - 1]
-          let l:start = LanguageClient#get_complete_start(l:input)
-          return l:start
-      else
-          " Magic happens that cursor jumps to the previously found l:start.
-"call TimerStart()
-          " NOTE: inputは改造して入れている、fuzzyも同様
-          let l:result = LanguageClient_runSync(
-                      \ 'LanguageClient#omniComplete', {
-                      \ 'character': LSP#character() + len(a:base),
-                      \ 'complete_position': LSP#character(),
-                      \ 'input': a:base,
-                      \ })
-"call TimerEnd('LanguageClient#omnicomplete input:ON result.len:'.len(l:result))
-          let l:filtered_items = l:result is v:null ? [] : l:result
-
-          call sort(l:filtered_items, 's:strlenComp')
-
-          return filtered_items
-      endif
-  endfunction
-
-  function! LanguageClient_completeFunc(findstart, base) abort
-      if a:findstart
-          " Before requesting completion, content between l:start and current cursor is removed.
-          let l:input = getline('.')[:LSP#character() - 1]
-          let l:start = LanguageClient#get_complete_start(l:input)
-          return l:start
-      else
-          " Magic happens that cursor jumps to the previously found l:start.
-"call TimerStart()
-          let l:result = LanguageClient_runSync(
-                      \ 'LanguageClient#omniComplete', {
-                      \ 'character': LSP#character() + len(a:base),
-                      \ 'complete_position': LSP#character(),
-                      \ 'fuzzy': a:base,
-                      \ })
-"call TimerEnd('LanguageClient#omnicomplete result.len:'.len(l:result))
-
-          let l:filtered_items = l:result is v:null ? [] : l:result
-
-          call sort(l:filtered_items, 's:strlenComp')
-
-          return filtered_items
-      endif
-  endfunction
+  set completeopt+=noselect
+  set pumheight=15
+  call mucomplete#auto#enable()
 endfunction
 " }}}
 
