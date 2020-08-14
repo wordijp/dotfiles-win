@@ -111,6 +111,7 @@ Plug 'thosakwe/vim-flutter'
 " PHP
 Plug 'stephpy/vim-php-cs-fixer'
 " Utility
+Plug 'nathanaelkane/vim-indent-guides'
 Plug 'itchyny/lightline.vim'
 "Plug 'cpiger/NeoDebug'
 Plug 'wordijp/NeoDebug' " バグ修正 & cgdbライクに使えるようにした版
@@ -230,6 +231,12 @@ command! DefxTree :Defx -split=vertical -winwidth=50 -direction=topleft
 "------------------
 " vim-bookmarks {{{
 let g:bookmark_auto_save_file = expand('~/.vim/tmp/.vim-bookmarks')
+" }}}
+
+" vim-indent-guides.vim {{{
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
 " }}}
 
 " -----------------
