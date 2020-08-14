@@ -661,7 +661,7 @@ augroup set_indent
   " AutoHotkey
   autocmd FileType autohotkey setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
   " Dart
-  autocmd FileType dart setlocal shiftwidth=1 tabstop=2 softtabstop=2 | set expandtab
+  autocmd FileType dart setlocal shiftwidth=2 tabstop=2 softtabstop=2 | set expandtab
 augroup END
 " }}}
 
