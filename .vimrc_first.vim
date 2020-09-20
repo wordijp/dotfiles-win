@@ -80,6 +80,8 @@ Plug 'wordijp/LanguageClient-neovim', {
   \ }
 Plug 'lifepillar/vim-mucomplete' " autocomplete用
 Plug 'wordijp/vim-quickfixsync' " quickfixをsignsなどへ反映
+Plug 'hrsh7th/vim-vsnip' " スニペット機能
+Plug 'hrsh7th/vim-vsnip-integ'
 "
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
