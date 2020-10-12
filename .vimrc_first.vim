@@ -1222,6 +1222,7 @@ function! s:enableLsp()
 
     :LanguageClientStart
     call quickfixsync#enable()
+    call mucomplete#auto#enable()
   else
     call lsp#enable()
     set omnifunc=lsp#complete
@@ -1229,7 +1230,6 @@ function! s:enableLsp()
 
   set completeopt+=noselect
   set pumheight=15
-  call mucomplete#auto#enable()
 endfunction
 " }}}
 
