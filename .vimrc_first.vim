@@ -862,13 +862,15 @@ let g:quickrun_config = {
 \  "cargo-run" : {
 \      "command" : "cargo",
 \      "cmdopt": "run",
-\      "exec" : "%c %o",
+\      "args": "--quiet",
+\      "exec" : "%c %o %a",
 \      "outputter": "buffer",
 \  },
 \  "cargo-run-shell" : {
 \      "command" : "cargo",
 \      "cmdopt": "run",
-\      "exec" : "%c %o",
+\      "args": "--quiet",
+\      "exec" : "%c %o %a \\&\\& pause || pause",
 \      "runner": "shell",
 \  },
 \
