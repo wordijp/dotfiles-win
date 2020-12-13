@@ -823,7 +823,12 @@ let g:quickrun_config = {
 \  },
 \  "make" : {
 \      "command"   : "make",
-\      "exec" : "%c %o 1>nul",
+\      "exec" : "%c 1>nul",
+\  },
+\  "make-debug" : {
+\      "command"   : "make",
+\      "args": "DEBUG=1",
+\      "exec" : "%c %a 1>nul",
 \  },
 \  "make-run" : {
 \      "command"   : "make",
@@ -968,7 +973,8 @@ augroup rust_settings
   autocmd FileType rust nmap <F5> :QuickRun cargo-run<CR>
   autocmd FileType rust nmap <C-F5> :QuickRun cargo-run-shell<CR>
   "autocmd FileType rust nmap <F7> :QuickRun cargo-build<CR>
-  autocmd FileType rust nmap <F7> :QuickRun make<CR>
+  autocmd FileType rust nmap <S-F7> :QuickRun make<CR>
+  autocmd FileType rust nmap <F7> :QuickRun make-debug<CR>
   "autocmd FileType rust nmap <F8> :QuickRun cargo-build-lib<CR>
   autocmd FileType rust nmap <F8> :call <SID>cargo_build_lib()<CR>
 augroup END
