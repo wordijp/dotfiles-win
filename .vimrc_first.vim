@@ -113,6 +113,7 @@ Plug 'thosakwe/vim-flutter'
 " PHP
 Plug 'stephpy/vim-php-cs-fixer'
 " Utility
+Plug 'cohama/lexima.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'itchyny/lightline.vim'
 "Plug 'cpiger/NeoDebug'
@@ -246,6 +247,16 @@ let g:indent_guides_guide_size = 1
 let g:lightline = {'colorscheme': 'wombat'}
 " }}}
 
+" -----------------
+" lexima.vim {{{
+call lexima#add_rule({'char': '<', 'input_after': '>', 'filetype': 'rust'})
+call lexima#add_rule({'char': '<', 'at': '\\\%#', 'filetype': 'rust'})
+call lexima#add_rule({'char': '>', 'at': '\%#>', 'leave': 1, 'filetype': 'rust'})
+call lexima#add_rule({'char': '<BS>', 'at': '<\%#>', 'delete': 1, 'filetype': 'rust'})
+
+"call lexima#add_rule({'char': '<CR>', 'at': '<\%#>', 'input_after': '<CR>'})
+"call lexima#add_rule({'char': '<CR>', 'at': '<\%#$', 'input_after': '<CR>)', 'except': '\C\v^(\s*)\S.*%#\n%(%(\s*|\1\s.+)\n)*\1\>'})
+" }}}
 " ---------------------
 " ale(非同期Linter) {{{
 " エラー一覧はquickfixを使う
