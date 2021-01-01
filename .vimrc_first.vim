@@ -153,6 +153,8 @@ Plug 'mattn/vim-pixela' " Vim利用履歴
 call plug#end()
 " }}}
 
+source $HOME/.vimrc_lib.vim
+
 "--------------
 " emmet-vim {{{
 let g:user_emmet_removetag_key='<c-t>'
@@ -439,6 +441,9 @@ let g:neodbg_openwatchs_default    = 1 " watchpoints: expressionsと共用窓な
 
 " termdebug.vim
 "packadd termdebug
+
+" NOTE: ESCを2回呼ばないと空にならない(入力が速すぎるのが2回で偶然上手くいった？)
+tnoremap <C-q> <ESC><ESC>exit<CR>
 
 " ------------
 " QuickFix {{{

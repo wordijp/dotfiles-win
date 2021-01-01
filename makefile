@@ -7,6 +7,7 @@ FILES	= \
 	.gitignore \
 	_vimrc \
 	.vimrc_first.vim \
+	.vimrc_lib.vim \
 	_gvimrc \
 	.gvimrc_first.vim \
 	.pylintrc \
