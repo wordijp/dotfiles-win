@@ -25,7 +25,14 @@ function! s:_json_encode_irreversible(depth, val) abort
   if type(a:val) == 0
     return a:val
   elseif type(a:val) == 1 
-    return json_encode(a:val)
+    let json = '"' . escape(a:val, '\"') . '"'
+    let json = substitute(json, "\r", '\\r', 'g')
+    let json = substitute(json, "\n", '\\n', 'g')
+    let json = substitute(json, "\t", '\\t', 'g')
+    "let json = substitute(json, '\([[:cntrl:]]\)', '\=printf("\x%02d", char2nr(submatch(1)))', 'g')
+    return iconv(json, &encoding, "utf-8")
+
+    "return json_encode(a:val)
   elseif type(a:val) == 2
     return '"' . s:string_fn(a:val) . '"'
   elseif type(a:val) == 3
