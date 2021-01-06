@@ -552,7 +552,7 @@ call denite#custom#option('_', 'prompt', '>')
 "    }}}
 
 " 検索・ハイライト取り消し
-nmap <Esc> :nohlsearch<CR>:call <SID>trySearchReset()<CR>
+nmap <silent><Esc> :nohlsearch<CR>:call <SID>trySearchReset()<CR>
 function! s:trySearchReset()
   try
     " t9md/vim-quickhl用
