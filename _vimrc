@@ -25,20 +25,13 @@ vnoremap <silent> <C-p> "0p
 " ヤンク方法に影響されない、インデントの深さに合わせた貼り付け
 inoremap <silent><C-v> <Space><BS><ESC>:call <SID>trimRegContents()<CR>]p
 function! s:trimRegContents()
-  let l:regname = (&clipboard =~ 'unnamed') ? '*' : ''
-
-  let l:regcontents = getreg(l:regname, 1, 1)
-  let l:regcontents[0] = trim(l:regcontents[0], v:none, 1)
-  if len(l:regcontents) > 1
-    let l:end = len(l:regcontents) - 1
-    if l:regcontents[l:end] == ''
-      unlet l:regcontents[l:end]
-    endif
-  endif
-
-  call setreg(l:regname, l:regcontents, 'v')
+  let v = getreg(0, 1, 1)
+  let v[0] = trim(v[0], 0, 1)
+  let e = len(v) - 1
+  if e > 0 && v[e] == '' | unlet v[e] | endif
+  call setreg(v:register, v, 'v')
 endfunction
- 
+
 " 改行でコメントを入れない
 autocmd FileType * setlocal formatoptions-=ro
 " C++11用
