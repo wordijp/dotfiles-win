@@ -21,7 +21,24 @@ set foldlevel=100 "Don't autofold anything
 
 " 貼り付け自にyankされるのを防ぐ
 vnoremap <silent> <C-p> "0p
-inoremap <silent> <C-v> <ESC>pa
+"inoremap <silent> <C-v> <ESC>pa
+" ヤンク方法に影響されない、インデントの深さに合わせた貼り付け
+inoremap <silent><C-v> <Space><BS><ESC>:call <SID>trimRegContents()<CR>]p
+function! s:trimRegContents()
+  let l:regname = (&clipboard =~ 'unnamed') ? '*' : ''
+
+  let l:regcontents = getreg(l:regname, 1, 1)
+  let l:regcontents[0] = trim(l:regcontents[0], v:none, 1)
+  if len(l:regcontents) > 1
+    let l:end = len(l:regcontents) - 1
+    if l:regcontents[l:end] == ''
+      unlet l:regcontents[l:end]
+    endif
+  endif
+
+  call setreg(l:regname, l:regcontents, 'v')
+endfunction
+ 
 " 改行でコメントを入れない
 autocmd FileType * setlocal formatoptions-=ro
 " C++11用
