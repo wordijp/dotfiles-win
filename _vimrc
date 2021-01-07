@@ -25,7 +25,7 @@ vnoremap <silent> <C-p> "0p
 " ヤンク方法に影響されない、インデントの深さに合わせた貼り付け
 inoremap <silent><C-v> <Space><BS><ESC>:call <SID>trimRegContents()<CR>]p
 function! s:trimRegContents()
-  let v = getreg(0, 1, 1)
+  let v = getreg(v:register, 1, 1)
   let v[0] = trim(v[0], 0, 1)
   let e = len(v) - 1
   if e > 0 && v[e] == '' | unlet v[e] | endif
