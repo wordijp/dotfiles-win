@@ -17,7 +17,7 @@ augroup fold_settings
   au FileType * set foldmethod=indent
   au FileType vim set foldmethod=marker
 augroup END
-set foldlevel=100 "Don't autofold anything
+autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
 
 " 貼り付け自にyankされるのを防ぐ
 vnoremap <silent> <C-p> "0p
