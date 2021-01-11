@@ -71,3 +71,15 @@ set conceallevel=2 concealcursor=i
 set signcolumn=number
 " }}}
 
+vnoremap zm :call <SID>rangeFoldZM()<CR>
+function! s:rangeFoldZM() range
+  let l:start_cursor = [line("'<"), col("'<")]
+  let l:end_cursor = [line("'>"), col("'>")]
+
+  let l:max_foldlevel = max(map(range(a:firstline, a:lastline), '(foldclosedend(v:val) < 0) ? foldlevel(v:val) : -1'))
+  call map(range(a:firstline, a:lastline),'foldclosed(v:val) < 0 && foldlevel(v:val) == l:max_foldlevel ? execute("normal! ".v:val."Gzc") : 0')
+
+  call cursor(l:start_cursor)
+  silent execute "normal! v"
+  call cursor(l:end_cursor)
+endfunction
