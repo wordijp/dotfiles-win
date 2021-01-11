@@ -255,6 +255,8 @@ call lexima#add_rule({'char': '<', 'input_after': '>', 'filetype': 'rust'})
 call lexima#add_rule({'char': '<', 'at': '\\\%#', 'filetype': 'rust'})
 call lexima#add_rule({'char': '>', 'at': '\%#>', 'leave': 1, 'filetype': 'rust'})
 call lexima#add_rule({'char': '<BS>', 'at': '<\%#>', 'delete': 1, 'filetype': 'rust'})
+call lexima#add_rule({'char': "'", 'input_after': "'", 'filetype': 'rust'})
+call lexima#add_rule({'char': '<BS>', 'at': '"\%#"', 'delete': 1, 'filetype': 'rust'})
 
 "call lexima#add_rule({'char': '<CR>', 'at': '<\%#>', 'input_after': '<CR>'})
 "call lexima#add_rule({'char': '<CR>', 'at': '<\%#$', 'input_after': '<CR>)', 'except': '\C\v^(\s*)\S.*%#\n%(%(\s*|\1\s.+)\n)*\1\>'})
