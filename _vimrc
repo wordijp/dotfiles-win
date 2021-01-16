@@ -98,6 +98,7 @@ function! s:rangeFoldZR() range
   call cursor(l:end_cursor)
 endfunction
 
+" v[count]iBの逆版
 vnoremap B :<C-u>call <SID>vNiB(v:count)<CR>
 function! s:vNiB(count) range
   let l:n = max([1, s:blocklevel()-a:count])
