@@ -97,3 +97,51 @@ function! s:rangeFoldZR() range
   silent execute "normal! v"
   call cursor(l:end_cursor)
 endfunction
+
+vnoremap B :<C-u>call <SID>vNiB(v:count)<CR>
+function! s:vNiB(count) range
+  let l:n = max([1, s:blocklevel()-a:count])
+  execute 'normal! v'.l:n.'iB'
+endfunction
+
+function! s:blocklevel() range
+  " NOTE: getposの更新
+  execute "normal! v\<ESC>"
+  let l:start = s:get_position()
+
+  let l:level = 0
+  while 1
+    let l:next = s:get_NiB_position(l:level + 1)
+    if l:next.eq(l:start)
+      break
+    endif
+
+    let l:level += 1
+  endwhile
+
+  return l:level
+endfunction
+
+function! s:get_NiB_position(N)
+  let l:winview = winsaveview()
+  
+  execute 'normal! v'
+  execute 'silent! normal '.a:N.'iB'
+  execute "normal! \<ESC>"
+  let l:ret = s:get_position()
+
+  call winrestview(l:winview)
+  return l:ret
+endfunction
+
+function! s:get_position()
+  let l:pos = {
+    \ 'start': getpos("'<")[1:2],
+    \ 'end': getpos("'>")[1:2],
+    \ }
+  function! l:pos.eq(o)
+    return self['start'] == a:o['start'] && self['end'] == a:o['end']
+  endfunction
+  
+  return l:pos
+endfunction
