@@ -41,7 +41,7 @@ function! s:_json_encode_irreversible(depth, val) abort
   elseif type(a:val) == 4
     " NOTE: 深すぎるとmaxfuncdepthを超えるエラーが出る
     if a:depth > 7 | return '{"%%MAX_DEPTH%%":' . a:depth . '}' | endif
-    return '{' . join(map(keys(a:val), '"\"".v:val."\":".s:_json_encode_irreversible(a:depth+1, a:val[v:val])'), ',') . '}'
+    return '{' . join(map(keys(a:val), 's:_json_encode_irreversible(a:depth+1, v:val).":".s:_json_encode_irreversible(a:depth+1, a:val[v:val])'), ',') . '}'
   elseif type(a:val) == 5
     return a:val
   elseif type(a:val) == 6

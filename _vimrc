@@ -73,8 +73,9 @@ set signcolumn=number
 
 vnoremap zm :call <SID>rangeFoldZM()<CR>
 function! s:rangeFoldZM() range
-  let l:start_cursor = [line("'<"), col("'<")]
-  let l:end_cursor = [line("'>"), col("'>")]
+  " type: [lnum, col]
+  let l:start_cursor = getpos("'<")[1:2]
+  let l:end_cursor = getpos("'>")[1:2]
 
   let l:max_foldlevel = max(map(range(a:firstline, a:lastline), '(foldclosed(v:val) < 0) ? foldlevel(v:val) : -1'))
   call map(range(a:firstline, a:lastline),'foldclosed(v:val) < 0 && foldlevel(v:val) == l:max_foldlevel ? execute("normal! ".v:val."Gzc") : 0')
@@ -86,8 +87,8 @@ endfunction
 
 vnoremap zr :call <SID>rangeFoldZR()<CR>
 function! s:rangeFoldZR() range
-  let l:start_cursor = [line("'<"), col("'<")]
-  let l:end_cursor = [line("'>"), col("'>")]
+  let l:start_cursor = getpos("'<")[1:2]
+  let l:end_cursor = getpos("'>")[1:2]
 
   let l:min_foldlevel = min(map(range(a:firstline, a:lastline), '(foldclosed(v:val) > 0) ? foldlevel(v:val) : 99999'))
   call map(range(a:firstline, a:lastline), 'foldclosed(v:val) > 0 && foldlevel(v:val) == l:min_foldlevel ? execute("normal! ".v:val."Gzo") : 0')
