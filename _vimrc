@@ -19,6 +19,8 @@ augroup fold_settings
 augroup END
 autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
 
+" 書き換え時にyankされるのを防ぐも
+vnoremap <silent> c "_c
 " 貼り付け自にyankされるのを防ぐ
 vnoremap <silent> <C-p> "0p
 "inoremap <silent> <C-v> <ESC>pa
