@@ -307,6 +307,18 @@ augroup rainbow_toggle_on
 augroup END
 " }}}
 
+" vim-mucomplete {{{
+let g:mucomplete#no_mappings = 1
+" }}}
+
+" vim-vsnip.vim {{{
+" Jump forward or backward
+imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+" }}}
+
 " ------------------
 " ショートカット {{{
 " 新規タブ
