@@ -83,9 +83,12 @@ Plug 'wordijp/vim-quickfixsync' " quickfixをsignsなどへ反映
 Plug 'hrsh7th/vim-vsnip' " スニペット機能
 Plug 'hrsh7th/vim-vsnip-integ'
 "
+Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'machakann/asyncomplete-ezfilter.vim' " fuzzyマッチ用
+Plug 'tsufeki/asyncomplete-fuzzy-match', {
+  \ 'do': 'cargo build --release',
+  \ }
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 " ビルド、Linter、etc
@@ -1181,16 +1184,6 @@ function! s:keepPosExec(cmd)
   silent! execute "normal! a \<bs>\<esc>" | undojoin | execute a:cmd
   silent call winrestview(view)
 endfunction
-" }}}
-
-" ------------------------------
-" asynccomplete-ezfilter.vim {{{
-" 候補のfuzzyマッチ
-let g:asyncomplete_preprocessor =
-  \ [function('asyncomplete#preprocessor#ezfilter#filter')]
-let g:asyncomplete#preprocessor#ezfilter#config = {
-  \ '*': {ctx, items -> ctx.osa_filter(items, 1)},
-  \ }
 " }}}
 
 " -------------------
