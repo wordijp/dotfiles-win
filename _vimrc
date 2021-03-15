@@ -20,9 +20,9 @@ augroup END
 autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
 
 " 書き換え時にyankされるのを防ぐも
-vnoremap <silent> c "_c
+xnoremap <silent> c "_c
 " 貼り付け自にyankされるのを防ぐ
-vnoremap <silent> <C-p> "0p
+xnoremap <silent> <C-p> "0p
 "inoremap <silent> <C-v> <ESC>pa
 " ヤンク方法に影響されない、インデントの深さに合わせた貼り付け
 inoremap <silent><C-v> <Space><BS><ESC>:call <SID>trimRegContents()<CR>]p
@@ -73,7 +73,7 @@ set conceallevel=2 concealcursor=i
 set signcolumn=number
 " }}}
 
-vnoremap zm :call <SID>rangeFoldZM()<CR>
+xnoremap zm :call <SID>rangeFoldZM()<CR>
 function! s:rangeFoldZM() range
   " type: [lnum, col]
   let l:start_cursor = getpos("'<")[1:2]
@@ -87,7 +87,7 @@ function! s:rangeFoldZM() range
   call cursor(l:end_cursor)
 endfunction
 
-vnoremap zr :call <SID>rangeFoldZR()<CR>
+xnoremap zr :call <SID>rangeFoldZR()<CR>
 function! s:rangeFoldZR() range
   let l:start_cursor = getpos("'<")[1:2]
   let l:end_cursor = getpos("'>")[1:2]
@@ -101,7 +101,7 @@ function! s:rangeFoldZR() range
 endfunction
 
 " v[count]iBの逆版
-vnoremap B :<C-u>call <SID>vNiB(v:count)<CR>
+xnoremap B :<C-u>call <SID>vNiB(v:count)<CR>
 function! s:vNiB(count) range
   let l:n = max([1, s:blocklevel()-a:count])
   execute 'normal! v'.l:n.'iB'

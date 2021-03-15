@@ -182,7 +182,7 @@ let g:NERDDefaultAlign = 'left'
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
 
-vmap <Leader>/  <Plug>NERDCommenterToggle
+xmap <Leader>/  <Plug>NERDCommenterToggle
 " トグル後次へ(末尾のj)
 nmap <Leader>/  <Plug>NERDCommenterTogglej
 " }}}
@@ -401,7 +401,7 @@ noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 2)<CR>
 " ホームポジションに近いキーを使う
 let g:EasyMotion_keys='hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
 nmap s <Plug>(easymotion-s2)
-vmap s <Plug>(easymotion-s2)
+xmap s <Plug>(easymotion-s2)
 " カラー設定変更
 hi EasyMotionTarget ctermbg=none ctermfg=red
 hi EasyMotionShade  ctermbg=none ctermfg=blue
@@ -482,7 +482,7 @@ endfunction
 " カーソル単語検索
 nmap * "zyiw:let @/ = '\C\<'.@z.'\>'<CR><Right><S-N>
 " 選択文字列検索
-vmap * "zy:let @/ = @z<CR><Right><S-N>
+xmap * "zy:let @/ = @z<CR><Right><S-N>
 
 " denite {{{
 " denite実行窓
@@ -720,9 +720,9 @@ nnoremap <silent>bb :b#<CR>
 nnoremap <silent>be :BufExplorer<CR>
 " easy-align
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-vmap ea <Plug>(EasyAlign)
+xmap ea <Plug>(EasyAlign)
 " 正規表現起動
-vmap ear :EasyAlign *//<Left>
+xmap ear :EasyAlign *//<Left>
 
 " PPx(ファイラ)拡張 {{{
 " PPxで開く
