@@ -80,6 +80,15 @@ Plug 'wordijp/LanguageClient-neovim', {
   \ }
 Plug 'lifepillar/vim-mucomplete' " autocomplete用
 Plug 'wordijp/vim-quickfixsync' " quickfixをsignsなどへ反映
+Plug 'vim-denops/denops.vim'
+Plug 'Shougo/ddu.vim'
+Plug 'Shougo/ddu-ui-ff'
+Plug 'Shougo/ddu-kind-file'
+Plug 'yuki-yano/ddu-filter-fzf'
+"Plug 'Shougo/ddu-source-file'
+Plug 'Shougo/ddu-source-file_rec'
+Plug 'Shougo/ddu-source-line'
+Plug 'wordijp/ddu-source-pt'
 Plug 'hrsh7th/vim-vsnip' " スニペット機能
 Plug 'hrsh7th/vim-vsnip-integ'
 "
@@ -409,23 +418,109 @@ hi EasyMotionTarget ctermbg=none ctermfg=red
 hi EasyMotionShade  ctermbg=none ctermfg=blue
 "    }}}
 
-" denite {{{
-nmap ; [denite]
-" ctrlp like
-nnoremap <silent> <C-p> :<C-u>Denite file/rec<CR>
-" grep(選択単語)
-nnoremap + :<C-u>Denite -buffer-name=search -no-empty grep -input=<C-R><C-W>
+
+" ddu {{{
+nmap ; [ddu]
+vmap ; [ddu]
+nnoremap <silent> <C-p> <Cmd>call ddu#start({})<CR>
 " grep
-nnoremap <silent> [denite]g :<C-u>Denite -buffer-name=search -no-empty grep<CR>
+nnoremap <silent> [ddu]g <Cmd>call <SID>ddu_grep_start('')<CR>
+" grep(選択範囲)
+vnoremap <silent> [ddu]g "zy<Cmd>call <SID>ddu_grep_start(@z)<CR>
+function! s:ddu_grep_start(cword)
+  let word = input('grep > ', a:cword)
+  if word == '' | return | endif
+
+  call ddu#start({
+    \   'name': 'grep',
+    \   'sources': [
+    \     {'name': 'pt', 'params': {'input': word}},
+    \   ]
+    \ })
+endfunction
 " 検索
-nnoremap <silent> [denite]/ :<C-u>Denite -buffer-name=search -auto-resize line<CR>
-" 閉じたバッファをまた開く
-nnoremap <silent> [denite]r :<C-u>Denite -buffer-name=search -resume<CR>
-" 次へ
-nnoremap <silent> [denite]n :<C-u>Denite -buffer-name=search -resume -immediately -cursor-pos=+1<CR>
-" 前へ
-nnoremap <silent> [denite]p :<C-u>Denite -buffer-name=search -resume -immediately -cursor-pos=-1<CR>
-"    }}}
+nnoremap <silent> [ddu]/ <Cmd>call ddu#start({'sources': [{'name': 'line'}]})<CR>
+nnoremap <silent> [ddu]r <Cmd>call ddu#start({'resume': v:true})<CR>
+
+call ddu#custom#patch_global({
+  \ 'ui': 'ff',
+  \ 'sources': [
+  \   {
+  \     'name': 'file_rec',
+  \     'params': {
+  \       'ignoredDirectories': ['.git', 'node_modules', 'vendor'],
+  \     }
+  \   },
+  \ ],
+  \ 'kindOptions': {
+  \   'file': {
+  \     'defaultAction': 'open',
+  \   },
+  \ },
+  \ 'sourceOptions': {
+  \   '_': {
+  \     'matchers': ['matcher_fzf'],
+  \   },
+  \ },
+  \ 'filterParams': {
+  \   'matcher_fzf': {
+  \     'highlightMatched': 'Title',
+  \   }
+  \ },
+  \ 'uiParams': {
+  \   'ff': {
+  \     'prompt': '> ',
+  \     'startFilter': v:false,
+  \   }
+  \ },
+  \ })
+
+call ddu#custom#patch_local('grep', {
+  \ 'sourceParams' : {
+  \   'pt' : {
+  \     'args': ['--nogroup', '--nocolor', '--smart-case', '--column', '--hidden'],
+  \     'ignore': ['.git', '.gitignore'],
+  \   },
+  \ },
+  \ })
+
+augroup ddu_settings
+  autocmd!
+  autocmd FileType ddu-ff call s:ddu_my_settings()
+  autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()
+  " インサートモード中のitemAction時に他のプラグインと干渉する問題の対処
+  autocmd FileType ddu-ff-filter call asyncomplete#disable_for_buffer()
+augroup END
+function! s:ddu_my_settings() abort
+  nnoremap <buffer><silent> <CR>
+    \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+  nnoremap <buffer><silent> q
+    \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+  nnoremap <buffer><silent> <C-[>
+    \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+  nnoremap <buffer><silent> i
+    \ <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
+  nnoremap <buffer><silent> p
+    \ <Cmd>call ddu#ui#ff#do_action('preview')<CR>
+endfunction
+function! s:ddu_filter_my_settings() abort
+  inoremap <buffer><silent> <CR>
+    \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+  inoremap <buffer><silent> <down>
+    \ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')+1, 0)")<CR>
+  inoremap <buffer><silent> <up>
+    \ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')-1, 0)")<CR>
+  inoremap <buffer><silent> <C-j>
+    \ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')+1, 0)")<CR>
+  inoremap <buffer><silent> <C-k>
+    \ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')-1, 0)")<CR>
+  nnoremap <buffer><silent> q
+    \ <Cmd>close<CR>
+  nnoremap <buffer><silent> <C-[>
+    \ <Esc><Cmd>call ddu#ui#ff#do_action('quit')<CR>
+endfunction
+
+"     }}}
 
 " IDE風の画面
 nmap <F3> :call <SID>ideStyle()<CR>
@@ -485,87 +580,6 @@ endfunction
 nmap * "zyiw:let @/ = '\C\<'.@z.'\>'<CR><Right><S-N>
 " 選択文字列検索
 xmap * "zy:let @/ = @z<CR><Right><S-N>
-
-" denite {{{
-" denite実行窓
-augroup denite_settings
-  autocmd!
-  autocmd FileType denite call s:denite_my_settings()
-  autocmd FileType denite-filter call s:denite_filter_my_settings()
-augroup END
-function! s:denite_my_settings() abort
-  nnoremap <silent><buffer><expr> <CR>
-  \ denite#do_map('do_action')
-  nnoremap <silent><buffer><expr> q
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> <C-[>
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> i
-  \ denite#do_map('open_filter_buffer')
-endfunction
-" 絞り込み窓
-function! s:denite_filter_my_settings() abort
-  imap <silent><buffer><expr> <C-[>
-  \ denite#do_map('quit')
-endfunction
-
-" find source
-" NOTE: 除外もこっち
-call denite#custom#var('file/rec', 'command',
-  \ ['fd', '.', '-HI', '--type', 'f',
-  \ '-E', '.git',
-  \ '-E', 'vendor',
-  \ '-E', 'node_modules',
-  \ '-E', 'target',
-  \
-  \ '-E', '*.bak',
-  \ '-E', '*.o',
-  \ '-E', '*.obj',
-  \ '-E', '*.pdb',
-  \ '-E', '*.exe',
-  \ '-E', '*.bin',
-  \ '-E', '*.dll',
-  \ '-E', '*.a',
-  \ '-E', '*.lib',
-  \ '-E', '.gitignore',
-  \ '-E', '.*.*',
-  \ ])
-call denite#custom#source('file/rec', 'matchers', ['matcher/fuzzy'])
-
-" grep source
-" NOTE: ptでutf8、sjis両対応
-call denite#custom#var('grep', 'command',
-  \ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden',
-  \ '--ignore', '.git',
-  \ '--ignore', 'vendor',
-  \ '--ignore', 'node_modules',
-  \ '--ignore', 'target',
-  \
-  \ '--ignore', '*.bak',
-  \ '--ignore', '*.o',
-  \ '--ignore', '*.obj',
-  \ '--ignore', '*.pdb',
-  \ '--ignore', '*.exe',
-  \ '--ignore', '*.bin',
-  \ '--ignore', '*.dll',
-  \ '--ignore', '*.a',
-  \ '--ignore', '*.lib',
-  \ '--ignore', '.gitignore',
-  \ '--ignore', '.*.*',
-  \ ])
-call denite#custom#var('grep', 'default_opts', [])
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#source('grep', 'matchers', ['matcher/fuzzy'])
-
-" denite/insert モードの時に移動できるようにする
-"call denite#custom#map('insert', "<C-j>" , '<denite:move_to_next_line>', 'noremap')
-"call denite#custom#map('insert', "<down>", '<denite:move_to_next_line>', 'noremap')
-"call denite#custom#map('insert', "<C-k>" , '<denite:move_to_previous_line>', 'noremap')
-"call denite#custom#map('insert', "<up>"  , '<denite:move_to_previous_line>', 'noremap')
-
-" prompt
-call denite#custom#option('_', 'prompt', '>')
-"    }}}
 
 " 検索・ハイライト取り消し
 nmap <silent><Esc> :nohlsearch<CR>:call <SID>trySearchReset()<CR>
