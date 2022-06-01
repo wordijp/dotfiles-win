@@ -722,10 +722,10 @@ nnoremap :dfc :DefxCurrent
 nnoremap :dft :DefxTree
 
 " vim-signify
-nnoremap :sdf :SignifyHunkDiff
-nnoremap :sdfa :SignifyDiff
-nnoremap :ss :SignifyToggle
-nnoremap :sl :SignifyList
+nnoremap :gdf :SignifyHunkDiff
+nnoremap :gdfa :SignifyDiff
+nnoremap :gg :SignifyToggle
+nnoremap :gl :SignifyList
 
 " Sourcetrail
 nnoremap :sa :SourcetrailActivateToken
