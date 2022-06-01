@@ -70,8 +70,8 @@ Plug 'sheerun/vim-polyglot'
 Plug 'wordijp/vim-vimscript-scope-syntax'
 Plug 'wordijp/vim-highlight-references'
 " filetype切り替え
-Plug 'osyo-manga/vim-precious'
-Plug 'Shougo/context_filetype.vim'
+"Plug 'osyo-manga/vim-precious'
+"Plug 'Shougo/context_filetype.vim'
 " 言語サーバープロトコル
 Plug 'wordijp/LanguageClient-neovim', {
   \ 'branch': 'next',
