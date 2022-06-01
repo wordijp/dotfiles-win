@@ -1039,6 +1039,19 @@ function! s:cargo_build_lib()
   echo "cargo build --lib"
 endfunction
 
+" Vue
+augroup vue_settings
+  autocmd!
+  autocmd FileType vue nmap <F1> :LspHover<CR>
+  autocmd FileType vue nmap <F7> :call <SID>lspDocumentDiagnosticsLoc()<CR>
+augroup END
+function! s:lspDocumentDiagnosticsLoc()
+  " 不要なら閉じる
+  if execute(':LspDocumentDiagnostics') =~ 'No diagnostics results'
+    :lclose
+  endif
+endfunction
+
 " Go
 augroup go_settings
   autocmd!
