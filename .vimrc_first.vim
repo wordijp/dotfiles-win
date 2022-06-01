@@ -125,7 +125,7 @@ Plug 'thosakwe/vim-flutter'
 " PHP
 Plug 'stephpy/vim-php-cs-fixer'
 " Utility
-Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
 Plug 'cohama/lexima.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'itchyny/lightline.vim'
@@ -721,12 +721,11 @@ nnoremap :df :Defx
 nnoremap :dfc :DefxCurrent
 nnoremap :dft :DefxTree
 
-" vim-gitgutter
-nnoremap :gdf :GitGutterDiffOrig
-nnoremap :gg :GitGutterToggle
-
-command! GitGutterQuickFixOpen GitGutterQuickFix | copen
-nnoremap :gqf :GitGutterQuickFixOpen
+" vim-signify
+nnoremap :sdf :SignifyHunkDiff
+nnoremap :sdfa :SignifyDiff
+nnoremap :ss :SignifyToggle
+nnoremap :sl :SignifyList
 
 " Sourcetrail
 nnoremap :sa :SourcetrailActivateToken
