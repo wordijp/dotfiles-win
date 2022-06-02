@@ -91,13 +91,9 @@ Plug 'Shougo/ddu-source-line'
 Plug 'wordijp/ddu-source-pt'
 Plug 'hrsh7th/vim-vsnip' " スニペット機能
 Plug 'hrsh7th/vim-vsnip-integ'
-"
-Plug 'prabirshrestha/async.vim'
+
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'tsufeki/asyncomplete-fuzzy-match', {
-  \ 'do': 'cargo build --release',
-  \ }
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 " ビルド、Linter、etc
@@ -288,6 +284,7 @@ let g:ale_linters = {
   \ 'python': [],
   \ 'php': [],
   \ 'rust': [],
+  \ 'vue': [],
   \ 'go': ['golint', 'gobuild'],
   \ 'javascript': ['eslint', 'flow'],
   \ 'typescript': ['tsserver'],
@@ -1313,6 +1310,33 @@ let g:quickfixsync_auto_enable = 0
 "  \ }
 "       }}}
 "    }}}
+
+" asyncomplete.vim {{{
+function! s:fuzzy_preprocessor(options, matches) abort
+  let l:base = a:options["base"]
+  " NOTE: lspによっては先頭に '.' が含まれる場合があるので取り除く
+  "       ex) Vue用の volar-server など
+  if l:base[0] == '.'
+    let l:base = l:base[1:]
+  endif
+
+  let l:items = []
+  for [l:_, l:matches] in items(a:matches)
+    if len(l:base) > 0
+      let l:items = l:items + filter(copy(l:matches['items']), '!empty(matchfuzzy([v:val["word"]], l:base))')
+    else
+      let l:items = l:items + copy(l:matches['items'])
+    endif
+  endfor
+
+  call asyncomplete#preprocess_complete(a:options, l:items)
+endfunction
+
+let g:asyncomplete_preprocessor = [function('s:fuzzy_preprocessor')]
+let g:asyncomplete_enable_for_all = 0
+" }}}
+
+
 augroup enable_lsp
   autocmd!
   autocmd VimEnter * call <SID>enableLsp()
@@ -1326,6 +1350,7 @@ function! s:enableLsp()
     call quickfixsync#enable()
     call mucomplete#auto#enable()
   else
+    call asyncomplete#enable_for_buffer()
     call lsp#enable()
     set omnifunc=lsp#complete
   end
