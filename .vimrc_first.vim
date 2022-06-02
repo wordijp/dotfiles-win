@@ -1113,10 +1113,16 @@ nnoremap ]q :call <SID>cNext()<CR>
 function s:cNext()
   if len(getqflist()) > 0
     :cc
-    :cne
+    try
+      :cne
+    catch
+    endtry
   elseif len(getloclist(0)) > 0
     :ll
-    :lne
+    try
+      :lne
+    catch
+    endtry
   endif
 endfunction
 " 前へ
@@ -1125,10 +1131,16 @@ nnoremap [q :call <SID>cPrev()<CR>
 function s:cPrev()
   if len(getqflist()) > 0
     :cc
-    :cp
+    try
+      :cp
+    catch
+    endtry
   elseif len(getloclist(0)) > 0
     :ll
-    :lp
+    try
+      :lp
+    catch
+    endtry
   endif
 endfunction
 
