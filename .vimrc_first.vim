@@ -1111,46 +1111,72 @@ augroup END
 nnoremap <F4> :call <SID>cNext()<CR>
 nnoremap ]q :call <SID>cNext()<CR>
 function s:cNext()
-  try
+  if len(getqflist()) > 0
     :cc
     :cne
-  catch
-  endtry
+  elseif len(getloclist(0)) > 0
+    :ll
+    :lne
+  endif
 endfunction
 " 前へ
 nnoremap <S-F4> :call <SID>cPrev()<CR>
 nnoremap [q :call <SID>cPrev()<CR>
 function s:cPrev()
-  try
+  if len(getqflist()) > 0
     :cc
     :cp
-  catch
-  endtry
+  elseif len(getloclist(0)) > 0
+    :ll
+    :lp
+  endif
 endfunction
 
 " 最初へ
 nnoremap [Q :call <SID>cFirst()<CR>
 function s:cFirst()
-  :cc
-  while 1
-    try
-      :cp 999
-    catch
-      break
-    endtry
-  endwhile
+  if len(getqflist()) > 0
+    :cc
+    while 1
+      try
+        :cp 999
+      catch
+        break
+      endtry
+    endwhile
+  elseif len(getloclist(0)) > 0
+    :ll
+    while 1
+      try
+        :lp 999
+      catch
+        break
+      endtry
+    endwhile
+ endif
 endfunction
 " 最後へ
 nnoremap ]Q :call <SID>cLast()<CR>
 function s:cLast()
-  :cc
-  while 1
-    try
-      :cne 999
-    catch
-      break
-    endtry
-  endwhile
+  if len(getqflist()) > 0
+    :cc
+    while 1
+      try
+        :cne 999
+      catch
+        break
+      endtry
+    endwhile
+  elseif len(getloclist(0)) > 0
+    :ll
+    while 1
+      try
+        :lne 999
+      catch
+        break
+      endtry
+    endwhile
+  endif
 endfunction
 " }}}
 
