@@ -1340,6 +1340,7 @@ let g:asyncomplete_enable_for_all = 0
 augroup enable_lsp
   autocmd!
   autocmd VimEnter * call <SID>enableLsp()
+  autocmd BufEnter * call <SID>enableAsyncomplete()
 augroup END
 function! s:enableLsp()
   if &ft == 'dart'
@@ -1350,13 +1351,18 @@ function! s:enableLsp()
     call quickfixsync#enable()
     call mucomplete#auto#enable()
   else
-    call asyncomplete#enable_for_buffer()
     call lsp#enable()
     set omnifunc=lsp#complete
   end
 
   set completeopt+=noselect
   set pumheight=15
+endfunction
+function! s:enableAsyncomplete()
+  if &ft == 'dart'
+  else
+    call asyncomplete#enable_for_buffer()
+  endif
 endfunction
 " }}}
 
