@@ -1314,18 +1314,20 @@ let g:quickfixsync_auto_enable = 0
 " asyncomplete.vim {{{
 function! s:fuzzy_preprocessor(options, matches) abort
   let l:base = a:options["base"]
-  " NOTE: lspによっては先頭に '.' が含まれる場合があるので取り除く
+
+  " NOTE: lspによってはメンバ候補の際、base先頭にだけ '.' が含まれる場合があるので整合性を合わせる
   "       ex) Vue用の volar-server など
-  if l:base[0] == '.'
+  if len(l:base) >= 2 && l:base[0] == '.'
     let l:base = l:base[1:]
+    let a:options["startcol"] += 1
   endif
 
   let l:items = []
-  for [l:_, l:matches] in items(a:matches)
+  for l:matches in values(a:matches)
     if len(l:base) > 0
-      let l:items = l:items + filter(copy(l:matches['items']), '!empty(matchfuzzy([v:val["word"]], l:base))')
+      let l:items += filter(copy(l:matches['items']), '!empty(matchfuzzy([v:val["word"]], l:base))')
     else
-      let l:items = l:items + copy(l:matches['items'])
+      let l:items += l:matches['items']
     endif
   endfor
 
