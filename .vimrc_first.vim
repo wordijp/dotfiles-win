@@ -1040,6 +1040,7 @@ endfunction
 augroup vue_settings
   autocmd!
   autocmd FileType vue nmap <F1> :LspHover<CR>
+  autocmd FileType vue nmap <F2> :LspRename<CR>
   autocmd FileType vue nmap <F7> :call <SID>lspDocumentDiagnosticsLoc()<CR>
 augroup END
 function! s:lspDocumentDiagnosticsLoc()
