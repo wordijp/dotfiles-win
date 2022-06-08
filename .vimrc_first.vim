@@ -71,7 +71,7 @@ Plug 'wordijp/vim-vimscript-scope-syntax'
 Plug 'wordijp/vim-highlight-references'
 " filetype切り替え
 "Plug 'osyo-manga/vim-precious'
-"Plug 'Shougo/context_filetype.vim'
+Plug 'Shougo/context_filetype.vim'
 " 言語サーバープロトコル
 Plug 'wordijp/LanguageClient-neovim', {
   \ 'branch': 'next',
@@ -141,7 +141,7 @@ Plug 'luochen1990/rainbow'
 Plug 'tpope/vim-surround'
 Plug 't9md/vim-quickhl'
 Plug 'yami-beta/vim-responsive-tabline'
-Plug 'scrooloose/nerdcommenter'
+Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-operator-user'
 Plug 'haya14busa/vim-operator-flashy'
 "Plug 'vim-scripts/BlockDiff'
@@ -186,14 +186,13 @@ let g:rooter_change_directory_for_non_project_files = 'current'
 "let g:rooter_manual_only = 1
 
 "-----------------
-" NERD comment {{{
-let g:NERDDefaultAlign = 'left'
-" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-
-xmap <Leader>/  <Plug>NERDCommenterToggle
+" tcomment_vim {{{
+xmap <silent> <Leader>/  :call <SID>toggle_comments(context_filetype#get_filetype())<CR>
+function! s:toggle_comments(ft) range
+  exe "'<,'>TCommentAs " . a:ft
+endfunction
 " トグル後次へ(末尾のj)
-nmap <Leader>/  <Plug>NERDCommenterTogglej
+nmap <silent> <Leader>/  :exe ':TCommentAs ' . context_filetype#get_filetype()<CR>j
 " }}}
 
 " --------
