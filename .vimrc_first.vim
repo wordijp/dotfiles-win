@@ -66,7 +66,6 @@ Plug 'vim-jp/vimdoc-ja'
 " Linter
 Plug 'w0rp/ale'
 " 色んな言語のsyntax
-Plug 'sheerun/vim-polyglot'
 Plug 'wordijp/vim-vimscript-scope-syntax'
 Plug 'wordijp/vim-highlight-references'
 " filetype切り替え
