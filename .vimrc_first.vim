@@ -113,6 +113,7 @@ Plug 'othree/yajs.vim'
 "Plug 'MaxMEllon/vim-jsx-pretty'
 " HTML
 Plug 'mattn/emmet-vim'
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 " Go
 "Plug 'fatih/vim-go'
 " Dart
@@ -167,6 +168,11 @@ source $HOME/.vimrc_lib.vim
 "--------------
 " emmet-vim {{{
 let g:user_emmet_removetag_key='<c-t>'
+" }}}
+
+" vim-hexokinase {{{
+let g:Hexokinase_highlighters = [ 'backgroundfull' ]
+let g:Hexokinase_ftEnabled = ['css', 'html', 'vue']
 " }}}
 
 " pretteir {{{
