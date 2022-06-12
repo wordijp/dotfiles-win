@@ -101,7 +101,8 @@ Plug 'thinca/vim-quickrun'
 " 整形
 Plug 'prettier/vim-prettier', {
   \ 'do': 'npm install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html', 'blade'] }
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html', 'blade'],
+  \ 'branch': 'release/0.x'}
 " 辞書
 Plug 'thinca/vim-ref'
 " Sourcetrail(コード分析ツール)
@@ -609,7 +610,7 @@ nmap <Space>j <Plug>(quickhl-cword-toggle)
 " {{{
 nnoremap <C-S-F> :call <SID>format()<CR>
 function! s:format()
-  if index(['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'yaml', 'html'], &ft) >= 0
+  if index(['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'yaml', 'html', 'vue'], &ft) >= 0
     :PrettierAsync
   elseif &ft == 'blade'
     :Prettier
