@@ -17,7 +17,7 @@ augroup fold_settings
   au FileType * set foldmethod=indent
   au FileType vim set foldmethod=marker
 augroup END
-autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
+autocmd BufRead * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
 
 " 書き換え時にyankされるのを防ぐも
 xnoremap <silent> c "_c
