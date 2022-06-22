@@ -174,6 +174,23 @@ let g:user_emmet_settings = {
   \   'typescript': {
   \     'extends': 'tsx',
   \   },
+  \   'vue': {
+  \     'snippets': {
+  \        'vue:3': "<script setup lang=\"ts\">\n"
+  \             . "import { ref } from 'vue';\n"
+  \             . "\n"
+  \             . "let counter = ref<number>(0);\n"
+  \             . "counter.value++;\n"
+  \             . "</script>\n"
+  \             . "\n"
+  \             . "<template>\n"
+  \             . "  Hello Vue, counter: {{ counter }}\n"
+  \             . "</template>\n"
+  \             . "\n"
+  \             . "<style scoped>\n"
+  \             . "</style>\n"
+  \      }
+  \   }
   \ }
 " }}}
 
@@ -1062,6 +1079,8 @@ function! s:lspDocumentDiagnosticsLoc()
   endif
 endfunction
 
+
+
 " Go
 augroup go_settings
   autocmd!
@@ -1098,6 +1117,7 @@ augroup javascript_settings
   autocmd FileType javascript,typescript nmap <F1> :LspHover<CR>
   autocmd FileType javascript,typescript nmap <F2> :LspRename<CR>
   autocmd FileType javascript nmap <F7> :QuickRun eslint-all<CR>
+  autocmd FileType typescript.tsx nmap <F7> :call <SID>lspDocumentDiagnosticsLoc()<CR>
 augroup END
 
 " Python
