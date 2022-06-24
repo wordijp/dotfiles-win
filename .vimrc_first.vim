@@ -475,7 +475,7 @@ call ddu#custom#patch_global({
   \   {
   \     'name': 'file_rec',
   \     'params': {
-  \       'ignoredDirectories': ['.git', 'node_modules', 'vendor'],
+  \       'ignoredDirectories': ['.git', '.nuxt', '.next', 'node_modules', 'vendor'],
   \     }
   \   },
   \ ],
@@ -506,7 +506,7 @@ call ddu#custom#patch_local('grep', {
   \ 'sourceParams' : {
   \   'pt' : {
   \     'args': ['--nogroup', '--nocolor', '--smart-case', '--column', '--hidden'],
-  \     'ignore': ['.git', '.gitignore'],
+  \     'ignore': ['.git', '.gitignore', '.nuxt', '.next'],
   \   },
   \ },
   \ })
