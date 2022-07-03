@@ -102,7 +102,7 @@ Plug 'thinca/vim-quickrun'
 Plug 'prettier/vim-prettier', {
   \ 'do': 'npm install',
   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html', 'blade'],
-  \ 'branch': 'release/0.x'}
+  \ 'branch': 'release/1.x'}
 " 辞書
 Plug 'thinca/vim-ref'
 " Sourcetrail(コード分析ツール)
