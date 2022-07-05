@@ -194,6 +194,11 @@ let g:user_emmet_settings = {
   \ }
 " }}}
 
+" vim-vue {{{
+" NOTE: 高速化の為に、読み込むシンタックスをファイル内の種類に限定する
+let g:vue_pre_processors = 'detect_on_enter'
+" }}}
+
 " vim-hexokinase {{{
 let g:Hexokinase_highlighters = [ 'backgroundfull' ]
 let g:Hexokinase_ftEnabled = ['css', 'html', 'vue']
