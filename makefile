@@ -6,7 +6,6 @@ FILES	= \
 	.gitconfig.local \
 	.gitignore \
 	_vimrc \
-	.vimrc_first.vim \
 	.vimrc_lib.vim \
 	_gvimrc \
 	.pylintrc \
