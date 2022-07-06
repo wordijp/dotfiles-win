@@ -148,7 +148,7 @@ Plug 'haya14busa/vim-operator-flashy'
 "Plug 'vim-scripts/BlockDiff'
 Plug 'mah/BlockDiff' " クリップボード対応版
 Plug 'easymotion/vim-easymotion'
-Plug 'terryma/vim-smooth-scroll'
+Plug 'joeytwiddle/sexy_scroller.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'rhysd/clever-f.vim'
 Plug 'mattesgroeger/vim-bookmarks'
@@ -431,11 +431,10 @@ inoremap <C-7> '
 inoremap <C-F7> '
 inoremap <F7> '
 
-" smooth_scroll.vim {{{
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 1)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 1)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 2)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 2)<CR>
+" sexy_scroller.vim {{{
+let g:SexyScroller_ScrollTime = 16
+let g:SexyScroller_MaxTime = 400
+let g:SexyScroller_EasingStyle = 1
 "    }}}
 
 " easymotion {{{
