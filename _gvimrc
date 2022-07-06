@@ -53,6 +53,27 @@ set splitbelow
 " カラースキーム {{{
 syntax on
 
+autocmd BufRead * call s:changeColorscheme()
+
+function! s:changeColorscheme()
+  if &ft == 'python'
+    call s:ifNeedColorScheme('darkblue')
+  elseif &ft == 'cs'
+    call s:ifNeedColorScheme('slate')
+  elseif &ft == 'markdown'
+    call s:ifNeedColorScheme('peachpuff')
+  else
+    call s:ifNeedColorScheme('desert')
+  end
+endfunction
+
+function! s:ifNeedColorScheme(scheme)
+  if get(g:, 'colors_name', '') != a:scheme
+    execute 'ColorScheme ' . a:scheme
+    doautocmd ColorScheme
+  end
+endfunction
+
 command! -nargs=1 ColorScheme call ColorScheme(<f-args>)
 function! ColorScheme(scheme)
   execute 'colorscheme ' . a:scheme
@@ -62,15 +83,7 @@ function! ColorScheme(scheme)
   endtry
 endfunction
 
-if &ft == 'python'
-  ColorScheme darkblue
-elseif &ft == 'cs'
-  ColorScheme slate
-elseif &ft == 'markdown'
-  ColorScheme peachpuff
-else
-  ColorScheme desert
-end
+call s:changeColorscheme()
 " }}}
 
 " 非アクティブの色を暗めにする
