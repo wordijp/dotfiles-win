@@ -9,7 +9,6 @@ FILES	= \
 	.vimrc_first.vim \
 	.vimrc_lib.vim \
 	_gvimrc \
-	.gvimrc_first.vim \
 	.pylintrc \
 	.pycodestyle \
 	.ycm_extra_conf.py \
