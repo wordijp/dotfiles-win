@@ -386,28 +386,10 @@ packadd! editexisting
 "nmap <C-F1> :set columns=120<CR> :set lines=50<CR>
 
 " 画面リサイズ {{{
-nmap <C-E> [winsize]
-nnoremap <silent> [winsize]^ :resize 5<CR>
-nnoremap <silent> [winsize]_ :call <SID>resizeMax(5)<CR>
-nnoremap <silent> [winsize]\ :call <SID>resizeMax(5)<CR>
-nnoremap <silent> [winsize]- :resize -3<CR>
-nnoremap <silent> [winsize]+ :resize +3<CR>
-nnoremap <silent> [winsize]; :resize +3<CR>
-function! s:resizeMax(invsize)
-  silent! execute "normal! \<C-W>_"
-  silent! execute "resize " . (winheight(0) - a:invsize)
-endfunction
-
-nnoremap <silent> [winsize]m :vertical resize 20<CR>
-nnoremap <silent> [winsize]< :vertical resize -3<CR>
-nnoremap <silent> [winsize], :vertical resize -3<CR>
-nnoremap <silent> [winsize]> :vertical resize +3<CR>
-nnoremap <silent> [winsize]. :vertical resize +3<CR>
-nnoremap <silent> [winsize]/ :call <SID>verticalResizeMax(20)<CR>
-function! s:verticalResizeMax(invsize)
-  silent! execute "normal! \<C-W>|"
-  silent! execute "vertical resize " . (winwidth(0) - a:invsize)
-endfunction
+nnoremap <silent> <S-Up> :resize -3<CR>
+nnoremap <silent> <S-Down> :resize +3<CR>
+nnoremap <silent> <S-Left> :vertical resize -3<CR>
+nnoremap <silent> <S-Right> :vertical resize +3<CR>
 " }}}
 
 " :q等をスペースqでも押せるように
