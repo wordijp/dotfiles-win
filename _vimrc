@@ -167,8 +167,8 @@ source $HOME/.vimrc_lib.vim
 
 "--------------
 " emmet-vim {{{
-let g:user_emmet_removetag_key='<c-t>'
-let g:user_emmet_mode='n'    "only enable normal mode functions.
+let g:user_emmet_leader_key='<c-t>'
+" let g:user_emmet_mode='n'    "only enable normal mode functions.
 let g:user_emmet_settings = {
   \   'typescript': {
   \     'extends': 'tsx',
