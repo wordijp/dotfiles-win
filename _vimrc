@@ -1056,6 +1056,8 @@ augroup vue_settings
   autocmd FileType vue nmap <F1> :LspHover<CR>
   autocmd FileType vue nmap <F2> :LspRename<CR>
   autocmd FileType vue nmap <F7> :call <SID>lspDocumentDiagnosticsLoc()<CR>
+  " template内のDOM改行時のauto indentシンタックス対応までの繋ぎ
+  autocmd FileType vue,html imap <C-Enter> <CR><Up><End><CR>
 augroup END
 function! s:lspDocumentDiagnosticsLoc()
   " 不要なら閉じる
