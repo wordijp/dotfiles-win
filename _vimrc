@@ -1720,8 +1720,8 @@ set guioptions-=m
 
 set conceallevel=2 concealcursor=i
 
-" 目印をnumberカラムに表示する
-set signcolumn=number
+" 目印を表示する
+set signcolumn=yes
 " }}}
 
 xnoremap zm :call <SID>rangeFoldZM()<CR>
