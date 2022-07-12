@@ -1128,13 +1128,13 @@ augroup END
 nnoremap <F4> :call <SID>cNext()<CR>
 nnoremap ]q :call <SID>cNext()<CR>
 function s:cNext()
-  if len(getqflist()) > 0
+  if get(getqflist({'winid': 0}), 'winid', 0) > 0
     :cc
     try
       :cne
     catch
     endtry
-  elseif len(getloclist(0)) > 0
+  elseif get(getloclist(0, {'winid': 0}), 'winid', 0) > 0
     :ll
     try
       :lne
@@ -1146,13 +1146,13 @@ endfunction
 nnoremap <S-F4> :call <SID>cPrev()<CR>
 nnoremap [q :call <SID>cPrev()<CR>
 function s:cPrev()
-  if len(getqflist()) > 0
+  if get(getqflist({'winid': 0}), 'winid', 0) > 0
     :cc
     try
       :cp
     catch
     endtry
-  elseif len(getloclist(0)) > 0
+  elseif get(getloclist(0, {'winid': 0}), 'winid', 0) > 0
     :ll
     try
       :lp
@@ -1164,7 +1164,7 @@ endfunction
 " 最初へ
 nnoremap [Q :call <SID>cFirst()<CR>
 function s:cFirst()
-  if len(getqflist()) > 0
+  if get(getqflist({'winid': 0}), 'winid', 0) > 0
     :cc
     while 1
       try
@@ -1173,7 +1173,7 @@ function s:cFirst()
         break
       endtry
     endwhile
-  elseif len(getloclist(0)) > 0
+  elseif get(getloclist(0, {'winid': 0}), 'winid', 0) > 0
     :ll
     while 1
       try
@@ -1187,7 +1187,7 @@ endfunction
 " 最後へ
 nnoremap ]Q :call <SID>cLast()<CR>
 function s:cLast()
-  if len(getqflist()) > 0
+  if get(getqflist({'winid': 0}), 'winid', 0) > 0
     :cc
     while 1
       try
@@ -1196,7 +1196,7 @@ function s:cLast()
         break
       endtry
     endwhile
-  elseif len(getloclist(0)) > 0
+  elseif get(getloclist(0, {'winid': 0}), 'winid', 0) > 0
     :ll
     while 1
       try
