@@ -59,8 +59,6 @@ Plug 'junegunn/vim-plug', {
   \ }
 
 Plug 'vim-jp/vimdoc-ja'
-" コード補完
-"Plug 'Valloric/YouCompleteMe', { 'for': ['cpp'] }
 " Linter
 Plug 'w0rp/ale'
 " 色んな言語のsyntax
@@ -789,12 +787,6 @@ nmap Y <Plug>(operator-flashy)$
 let g:operator#flashy#flash_time = 120
 let g:operator#flashy#group = "MatchParen"
 
-" -----------------
-" YouCompleteMe {{{
-"let g:ycm_global_ycm_extra_conf = $HOME . '/.ycm_extra_conf.py'
-"let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-" 読み込むかの確認ダイアログを 1:出す 0:出さない
-"let g:ycm_confirm_extra_conf = 0
 " LSPサーバ再起動(補完候補の更新)
 nnoremap <C-Space> :call <SID>lspRestartServer()<CR>
 function s:lspRestartServer()
@@ -819,7 +811,6 @@ function s:lspRestartServer()
     :update
   endtry
 endfunction
-" }}}
 
 " --------
 " tags {{{
