@@ -1335,13 +1335,6 @@ let g:quickfixsync_auto_enable = 0
 function! s:fuzzy_preprocessor(options, matches) abort
   let l:base = a:options["base"]
 
-  " NOTE: lspによってはメンバ候補の際、base先頭にだけ '.' が含まれる場合があるので整合性を合わせる
-  "       ex) Vue用の volar-server など
-  if len(l:base) >= 2 && l:base[0] == '.'
-    let l:base = l:base[1:]
-    let a:options["startcol"] += 1
-  endif
-
   let l:items = []
   for l:matches in values(a:matches)
     if len(l:base) > 0
