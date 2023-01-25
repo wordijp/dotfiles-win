@@ -587,9 +587,11 @@ endfunction
 " ---------------------------------------
 " 検索、大文字と小文字区別 & 単語単位 {{{
 " カーソル単語検索
-nmap * "zyiw:let @/ = '\C\<'.@z.'\>'<CR><Right><S-N>
+nmap <silent> * "zyiw:let @/ = '\C\<'.@z.'\>'<CR>Nn
 " 選択文字列検索
-xmap * "zy:let @/ = @z<CR><Right><S-N>
+xmap * "zy:let @/ = @z<CR>:set hlsearch<CR>Nn
+" 選択文字列のリテラル検索
+xmap + "zy:let @/ = '\V'.escape(@z, '\')<CR>Nn
 
 " 検索・ハイライト取り消し
 nmap <silent><Esc> :nohlsearch<CR>:call <SID>trySearchReset()<CR>
