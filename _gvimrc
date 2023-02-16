@@ -82,8 +82,6 @@ function! ColorScheme(scheme)
   catch
   endtry
 endfunction
-
-call s:changeColorscheme()
 " }}}
 
 " 非アクティブの色を暗めにする
